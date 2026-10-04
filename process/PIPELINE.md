@@ -71,14 +71,14 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### A reviewer's first pass, before the PM sees it
 
-*(Don, 2026-10-04.)* **Before a PR is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass.** The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the precedent ruling the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
 
 - **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue and its recorded precedent, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
 - **Screenshots.** Every changed surface, as each persona it affects, at phone width (390) and laptop width (1280). In SocialUs the personas are `socialus-web/evals/personas.ts`, seeded locally.
 - **Precedent.** The built UI is checked against the precedent recorded in the Issue; an unexplained departure is fixed like a rule violation.
 - **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
 - **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
-- **In the PR body**, under the three steps: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A `needs-don` PR without that section has skipped the pass.
+- **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
 
 **Why:** on 2026-10-04 the screenshot matrix captured every route as every persona on every PR, and no role owned looking at the pictures (`socialus-design/research/PATTERNS.md` § E2). Rule violations reached the PM as if they were judgement calls.
 
