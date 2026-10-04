@@ -55,11 +55,23 @@ Don does not read code, and nothing should ever ask him to. What he looks at is 
 Every PR opens with one of exactly two things, before anything else in the body:
 
 1. **"Don doesn't need to look."** — and one line saying why not.
-2. **The preview link, three numbered steps, and what he should expect to see.** Label the PR `needs-don`.
+2. **The preview link, three numbered steps, and what he should expect to see.** Label the PR `needs-don`. Only after the reviewer's first pass below, which the body lists.
 
 The steps are written for someone holding a phone who has not read the ticket: *"Open the link, tap Create, choose Business."* Not *"navigate to the composer route."* No file paths, no function names, no ticket numbers, no jargon.
 
 **If a change cannot be described that way, that is a signal it needs his eyes more, not less.** Say so in the PR and label it anyway — an agent that cannot explain a change in three plain steps has found something worth his attention, not an excuse to skip him.
+
+### A reviewer's first pass, before the PM sees it
+
+*(Don, 2026-10-04.)* **Before a PR is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass.** The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+
+- **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
+- **Screenshots.** Every changed surface, as each persona it affects, at phone width (390) and laptop width (1280). In SocialUs the personas are `socialus-web/evals/personas.ts`, seeded locally.
+- **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
+- **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
+- **In the PR body**, under the three steps: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A `needs-don` PR without that section has skipped the pass.
+
+**Why:** on 2026-10-04 the screenshot matrix captured every route as every persona on every PR, and no role owned looking at the pictures (`socialus-design/research/PATTERNS.md` § E2). Rule violations reached the PM as if they were judgement calls.
 
 ### When he merges without looking
 
