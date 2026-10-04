@@ -1,6 +1,6 @@
 # STATUS
 
-> ## Generated 2026-10-04 · 18:21 UTC
+> ## Generated 2026-10-04 · 19:38 UTC
 >
 > **Disposable. Regenerating replaces this file wholesale** — nothing here is
 > hand-maintained, and a hand-edit is lost on the next run. `git log -p
@@ -43,7 +43,7 @@ branch or a commit.
 
 ## In the code repo
 
-**70 issues open** in `socialus-web`, 9 launch-blocking:
+**80 issues open** in `socialus-web`, 10 launch-blocking:
 - #220 F078 · Flagged content hides itself on the agent's call, and the poster is told why
 - #221 F080 · No pictures of children, from anyone — detection point needs Don
 - #222 F081 · One signup for everyone: four fields, and the zip sets the metro
@@ -53,6 +53,7 @@ branch or a commit.
 - #329 bug · The location pill at the top doesn't remember the member's metro
 - #330 change · The map opens on the chosen metro, searches within it, and remembers it
 - #331 change · Decide what the map shows by default, and with filters on
+- #332 bug · Sign-in doesn't remember the email or offer autofill
 
 **59 PRs merged in the last fortnight.** The newest five:
 - #322 2026-10-03 change #323: the apply workflow is apply.yml, "Apply migrations"; branches named by Issue number
