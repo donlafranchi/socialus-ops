@@ -1,7 +1,8 @@
 # Process absolutes
 
-How work is done. The member-facing absolutes are in
-`../product/ABSOLUTES.md`; the test below governs both files.
+How work is done, for any project run on this method. Each project keeps its
+member-facing absolutes in its own `product/ABSOLUTES.md` (SocialUs:
+`socialus-plan/product/ABSOLUTES.md`); the test below governs both files.
 
 **The test.** A rule is absolute only if breaking it once causes harm the next
 session can't undo. Four kinds of harm qualify: harm to a member, loss or
@@ -38,7 +39,7 @@ options with a recommendation; agents recommend, they don't decide.
 
 ### ruling-is-dated-line
 
-A ruling exists only when it is one dated line in `../DECISIONS.md`. The code
+A ruling exists only when it is one dated line in the project's `DECISIONS.md`. The code
 says how; `DECISIONS.md` says why; a doc that disagrees with either is the thing
 that's wrong.
 
