@@ -77,6 +77,20 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 Nothing blocks it, and nothing should — his plan has no protection rules, and a gate he can't bypass on his own repo is worse than the problem. Instead the `needs-don` label **stays on after merge**, so `is:merged label:needs-don` is the list of things that shipped without his eyes. It is a list to review, not an alarm.
 
+## Build rules — one machine's load
+
+*(Don, 2026-10-04.)* Builds, tests and browsers share one machine. These keep it usable. Guidelines, with one condition on breaking them (the last line).
+
+- **At most 2 changes building or testing at once.**
+- **Playwright runs with `--workers=2`.**
+- **One dev server port per change**, shut down when the change finishes.
+- **Close headless browsers after every run.**
+- **Persona reviews run as a serial background queue**, with at most 1 build alongside. The queue shares one dev server and one browser, with a separate browser session per persona, and reports per persona as each finishes.
+- **Parallelize network- and model-bound work; serialize browser and build work.** Searches, API reads and subagent thinking can fan out; anything that starts a browser, a dev server or a build waits its turn.
+- **If a rule would slow a deadline, flag it to the PM before breaking it**, naming the rule and why. Never break one silently.
+
+Machine-specific rules (which container runtime, for instance) live in `~/.claude/CLAUDE.md`, not here.
+
 ## Accepted risk
 
 A lint finding ruled acceptable gets recorded once and stops being re-argued. The ruling is the dated line in `DECISIONS.md`; `accepted-risks/` holds one JSON file per finding so an advisor run can be diffed against it — `bash scripts/advisor-diff.sh <export.json>` prints only what isn't already ruled on, plus anything past review.
