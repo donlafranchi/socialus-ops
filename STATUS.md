@@ -1,6 +1,6 @@
 # STATUS
 
-> ## Generated 2026-10-04 · 19:38 UTC
+> ## Generated 2026-10-04 · 20:59 UTC
 >
 > **Disposable. Regenerating replaces this file wholesale** — nothing here is
 > hand-maintained, and a hand-edit is lost on the next run. `git log -p
@@ -13,7 +13,7 @@
 > `bash scripts/status.sh`.
 >
 > **Derived from:** `scripts/state.sh` against `socialus-web` @ `origin/main`
-> `61166d4` (2026-10-04); `accepted-risks/*.json`;
+> `477d532` (2026-10-04); `accepted-risks/*.json`;
 > `planning/scenario-*.md` frontmatter; `ROADMAP.md`.
 >
 > **Answers "where is this project", not "what tickets exist."** The ticket
@@ -43,7 +43,7 @@ branch or a commit.
 
 ## In the code repo
 
-**80 issues open** in `socialus-web`, 10 launch-blocking:
+**78 issues open** in `socialus-web`, 10 launch-blocking:
 - #220 F078 · Flagged content hides itself on the agent's call, and the poster is told why
 - #221 F080 · No pictures of children, from anyone — detection point needs Don
 - #222 F081 · One signup for everyone: four fields, and the zip sets the metro
@@ -55,12 +55,12 @@ branch or a commit.
 - #331 change · Decide what the map shows by default, and with filters on
 - #332 bug · Sign-in doesn't remember the email or offer autofill
 
-**59 PRs merged in the last fortnight.** The newest five:
+**62 PRs merged in the last fortnight.** The newest five:
+- #343 2026-10-04 chore #342: Don's build rules in CLAUDE.md
 - #322 2026-10-03 change #323: the apply workflow is apply.yml, "Apply migrations"; branches named by Issue number
 - #321 2026-10-04 change #317: date and time pickers that are easy to use
 - #319 2026-10-03 change #318: owners can delete their own posts
-- #306 2026-10-02 chore #294: adopt the design tokens without colour
-- #292 2026-10-01 chore #291: the migrations-applied check also runs on main
+- #307 2026-10-04 chore #295: a check that fails on one-off visual values outside the token file
 
 ### Needs a look — not a claim that anything is wrong
 
@@ -114,17 +114,13 @@ counts. Each row needs a look, not a close.*
 - **`deploy-health.yml`** — success, 2026-10-04
   - Ontology declarations still match the code: success
   - Database reachable from the deployment: success
-- **`ci.yml`** — cancelled, 2026-10-04
-  - Lint, types, build: success
-  - Unit tests: success
-  - Browser: cancelled
-  - Migrations applied to production: success
+- **`ci.yml`** — , 2026-10-04
 
 ## Measured, not estimated
 
 - Copy: 584 strings across 118 files — source `docs/copy-inventory.md` on origin/main
 - Routes on origin/main: 23
-- Migrations on origin/main: 70
+- Migrations on origin/main: 71
 
 ## Deferred on purpose — and therefore easy to forget
 
