@@ -1,6 +1,6 @@
 # STATUS
 
-> ## Generated 2026-10-04 · 17:26 UTC
+> ## Generated 2026-10-04 · 18:21 UTC
 >
 > **Disposable. Regenerating replaces this file wholesale** — nothing here is
 > hand-maintained, and a hand-edit is lost on the next run. `git log -p
@@ -43,12 +43,16 @@ branch or a commit.
 
 ## In the code repo
 
-**66 issues open** in `socialus-web`, 5 launch-blocking:
+**70 issues open** in `socialus-web`, 9 launch-blocking:
 - #220 F078 · Flagged content hides itself on the agent's call, and the poster is told why
 - #221 F080 · No pictures of children, from anyone — detection point needs Don
 - #222 F081 · One signup for everyone: four fields, and the zip sets the metro
 - #223 F082 · One self-attestation before a first Page, selling and hosting alike
 - #246 bug · What one member can read about another: the signed-in half of #241, and four member tables open to anyone
+- #328 change · One expanding control at the bottom of Explore: search, filter, metro, map
+- #329 bug · The location pill at the top doesn't remember the member's metro
+- #330 change · The map opens on the chosen metro, searches within it, and remembers it
+- #331 change · Decide what the map shows by default, and with filters on
 
 **59 PRs merged in the last fortnight.** The newest five:
 - #322 2026-10-03 change #323: the apply workflow is apply.yml, "Apply migrations"; branches named by Issue number
@@ -150,7 +154,7 @@ Every open-question marker, found by scanning — nobody maintains this list.
 Oldest first. Rule and grammar: `process/PIPELINE.md` § Open questions.
 
 
-**Waiting on Don** (16)
+**Waiting on Don** (17)
 
 - 30d · "Neighbours, not strangers or creators" vs. "everyone who posts is a creator." A) the north star's refusal is scoped to the word "creator" as a label only —… — [product/foundation/role-language.md:34](product/foundation/role-language.md#L34)
 - 27d · Promise 1 — what "surplus returns to the community" actually means. A) a fixed percentage, decided annually by the founder. B) a member vote or board process… — [product/foundation/goals.md:46](product/foundation/goals.md#L46)
@@ -168,6 +172,7 @@ Oldest first. Rule and grammar: `process/PIPELINE.md` § Open questions.
 - 4d · Does imported content follow relationship-based visibility and the signed-out front door like any announcement? A) Yes, exactly: an imported event is a publi… — [planning/scenario-F096.md:34](planning/scenario-F096.md#L34)
 - 4d · What does the platform do when imported content breaks the sensitive-content ask (children, animals and pets, anyone who can't fend for themselves)? A) Repor… — [planning/scenario-F096.md:36](planning/scenario-F096.md#L36)
 - 2d · Address-with-pin, neighbourhood list, or both, as recommended? Nothing is built until Don confirms. — [#315](https://github.com/donlafranchi/socialus-web/issues/315)
+- 0d · What does the map show by default, and what does it show with filters on? — [#331](https://github.com/donlafranchi/socialus-web/issues/331)
 
 **Cowork owes an answer** (1)
 
