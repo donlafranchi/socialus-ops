@@ -34,19 +34,27 @@ A claim that something works is worth what the check behind it was worth. So say
 - **Unverified work opens as a draft PR**, with the missing check named at the top of the body and what would clear it. Ready-for-review means the check ran.
 - "Tests pass" from a laptop is `unit tests only` until CI says otherwise. There is no test workflow yet — see `LESSONS.md` 19.
 
+## Precedent first (UI)
+
+*(Don, 2026-10-04.)* **Every UI feature begins with precedent research**: what best-in-class products do in that exact situation, with 2–3 named examples and links. Agents adopt the established pattern rather than inventing one.
+
+- **Recorded twice:** in the Issue, before building (a `Precedent:` line with the examples and links), and in the PR body.
+- **Checked:** the reviewer's first pass (below) checks the built UI against the recorded precedent. A departure from it is a finding, unless the Issue says why.
+- **Escalated only when it can't be settled:** precedents that conflict, or none that fits, are judgement calls for the PM, with the options and a recommendation.
+
 ## Who checks what
 
 **Agents own whether a change is correct. Don owns whether it is right.** Correct is testable — it compiles, the tests pass, the migration applies, the rule is enforced. Right is a judgment about the product, and no test has an opinion about it.
 
 Don does not read code, and nothing should ever ask him to. What he looks at is the running app on the preview link.
 
-**He looks when the change:**
+**He looks only at judgement calls** *(Don, 2026-10-04)*:
 
-- alters anything a person sees or does — a screen, a control, copy, an image, an empty state
-- adds a capability for the first time, rather than extending one that already exists
-- touches privacy, money, or public visibility (the address-is-public copy is the type case)
-- has an acceptance criterion containing a judgment word — *clear*, *easy*, *minimal fumbling*. Those are the words only he can score
-- came back with a deviation, or a judgment call the agent had to make on his behalf
+- **tone** — new or changed user-facing copy, which stays a draft until he says otherwise ([public-is-draft])
+- **conflicting precedents**, or no precedent that fits the situation
+- **rulings** — anything touching privacy, money or public visibility (the address-is-public copy is the type case); a deviation from the scenario; an acceptance criterion with a judgment word — *clear*, *easy*, *minimal fumbling*, the words only he can score
+
+**UI that follows its recorded precedent and has passed the reviewer's first pass merges without him** — the PR opens "Don doesn't need to look" and names the precedent.
 
 **He does not look at:** migrations with no visible effect, tests, refactors, docs, infrastructure, dependency bumps.
 
@@ -63,13 +71,14 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### A reviewer's first pass, before the PM sees it
 
-*(Don, 2026-10-04.)* **Before a PR is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass.** The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the precedent ruling the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
 
-- **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
+- **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue and its recorded precedent, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
 - **Screenshots.** Every changed surface, as each persona it affects, at phone width (390) and laptop width (1280). In SocialUs the personas are `socialus-web/evals/personas.ts`, seeded locally.
+- **Precedent.** The built UI is checked against the precedent recorded in the Issue; an unexplained departure is fixed like a rule violation.
 - **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
 - **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
-- **In the PR body**, under the three steps: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A `needs-don` PR without that section has skipped the pass.
+- **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
 
 **Why:** on 2026-10-04 the screenshot matrix captured every route as every persona on every PR, and no role owned looking at the pictures (`socialus-design/research/PATTERNS.md` § E2). Rule violations reached the PM as if they were judgement calls.
 
