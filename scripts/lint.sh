@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Fails on: missing `status` in planning/, any root .md outside the eight, any
 # link to a path that doesn't exist, a scenario whose SPEC runs over 40 lines, a
-# scenario section outside Story/Acceptance/Why/Not this, an absolute cited
+# scenario section outside Story/Acceptance/Why/Not this, a scenario from F103
+# on that doesn't answer the value test, an absolute cited
 # by a slug that no longer exists, or a marker the markers checker rejects. Run
 # from the repo root.
 #
@@ -63,6 +64,38 @@ for f in planning/scenario-*.md; do
     fail=1
   fi
 done
+
+# 1c. The value test (Don, 2026-10-05): every scenario from F103 on answers its
+#     six questions in `## Why`, one line each, led by these exact labels.
+#     F102 and earlier are grandfathered — they were approved before the test.
+VALUE_TEST_FROM=103
+VALUE_TEST_LABELS=("Lives somewhere better?" "Only locals know?" "Gets people together?" "Stays fresh on its own?" "Who keeps it current?" "Better as more people join?")
+value_test_missing() {
+  local n why l
+  n=$(basename "$1" | sed -nE 's/^scenario-F0*([0-9]+)\.md$/\1/p')
+  [ -n "$n" ] && [ "$n" -ge "$VALUE_TEST_FROM" ] || return 0
+  why=$(awk '/^## Why$/{on=1; next} /^## /{on=0} on' "$1")
+  for l in "${VALUE_TEST_LABELS[@]}"; do
+    printf '%s\n' "$why" | grep -qE "^- \*\*${l//\?/\\?}\*\* +[^ ]" || echo "$l"
+  done
+}
+for f in planning/scenario-*.md; do
+  [ -f "$f" ] || continue
+  missing=$(value_test_missing "$f")
+  if [ -n "$missing" ]; then
+    echo "lint: scenario does not answer the value test in ## Why — $f"
+    printf '%s\n' "$missing" | sed 's/^/  missing: /'
+    fail=1
+  fi
+done
+# It proves itself first ([guard-proves-itself]).
+vt=scripts/fixtures/value-test
+[ "$(value_test_missing "$vt/bad/scenario-F999.md" | wc -l | tr -d ' ')" -eq 2 ] ||
+  { echo "lint: value-test check is inert — it should find 2 missing answers in the bad fixture"; fail=1; }
+[ -z "$(value_test_missing "$vt/good/scenario-F999.md")" ] ||
+  { echo "lint: value-test check rejects the good fixture"; fail=1; }
+[ -z "$(value_test_missing "$vt/grandfathered/scenario-F050.md")" ] ||
+  { echo "lint: value-test check does not grandfather a scenario before F$VALUE_TEST_FROM"; fail=1; }
 
 # 2. Root .md files are only the five listed here, plus the generated ones —
 #    README.md (scripts/view.sh) and PLATFORM-*.md (scripts/markers.py platform),
