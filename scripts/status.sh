@@ -26,7 +26,10 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-LAUNCH=2026-10-30
+# Beta is for testing: a soft target, not a hard deadline (2026-10-05).
+BETA=2026-10-30
+FREEZE=2026-10-23
+PRODUCTION="April–May 2027"
 
 # Resolve the code repo. In CI it is checked out beside this one; locally it is
 # usually ../socialus-web from the MAIN checkout, which is not ../ from a
@@ -65,7 +68,9 @@ fi
 export STATUS_STATE="$STATE_OUT"
 export STATUS_CROSS_OK="$CROSS_OK"
 export STATUS_BLOCKED="$BLOCKED"
-export STATUS_LAUNCH="$LAUNCH"
+export STATUS_BETA="$BETA"
+export STATUS_FREEZE="$FREEZE"
+export STATUS_PRODUCTION="$PRODUCTION"
 export STATUS_CODE="${CODE:-}"
 
 # Composed to a temp file and moved into place, so a failed run leaves the
@@ -79,7 +84,9 @@ import datetime, glob, json, os, re, subprocess, sys
 state   = os.environ["STATUS_STATE"]
 cross   = os.environ["STATUS_CROSS_OK"] == "1"
 blocked = os.environ["STATUS_BLOCKED"]
-launch  = datetime.date.fromisoformat(os.environ["STATUS_LAUNCH"])
+beta    = datetime.date.fromisoformat(os.environ["STATUS_BETA"])
+freeze  = datetime.date.fromisoformat(os.environ["STATUS_FREEZE"])
+prod    = os.environ["STATUS_PRODUCTION"]
 today   = datetime.date.today()
 out     = []
 unverified = []
@@ -130,7 +137,8 @@ w(">")
 w("> **Answers \"where is this project\", not \"what tickets exist.\"** The ticket")
 w("> list is `gh issue list`, which is always right; this is not a copy of it.")
 w()
-w(f"Launch **{launch:%Y-%m-%d}**, one metro. {(launch - today).days} days out.")
+w(f"Beta **{beta:%Y-%m-%d}**, one metro — a soft target for testing, not a hard deadline. "
+  f"{(beta - today).days} days out; feature freeze {freeze:%Y-%m-%d}, also soft. Production launch {prod}.")
 
 # Headline counts from the markers, so what is unverified is a number up here and not silence below.
 _code = ["--code", os.environ["STATUS_CODE"]] if os.environ.get("STATUS_CODE") else []
