@@ -4,6 +4,19 @@ How agents build a product with a PM who rules and does not read code. **This re
 
 SocialUs is the first project run on it. Its planning repo is `socialus-plan`, its code `socialus-web`, its design `socialus-design`. The examples and dated failures below are SocialUs's because that is where the method was learned; the rules are not.
 
+## Decision rule
+
+Every agent, every decision. Word for word from Don; how it lands in this method is `process/PIPELINE.md` § Decision rule.
+
+```
+DECISION RULE (2026-10-04, Don)
+1. Look first: before designing or deciding anything, find what established platforms do for this exact use case. Name 2–3 precedents with links (e.g. Google, Apple HIG, Airbnb, Meetup, Yelp, Stripe, Linear).
+2. Choose: pick the most relevant and elegant option for SocialUs, the simplest one that fits our rulings.
+3. Well-worn path: if a clear, established pattern exists, decide and build it yourself. Label the Issue/PR "Path: well-worn", list the precedents, and don't wait for the PM.
+4. New territory: if there's no well-worn path, the precedents conflict, or it touches a ruling, legal or privacy exposure, money, or member trust, label it "Path: new territory" and bring it to the PM as A/B/C with a recommendation before building.
+5. When unsure which it is, say which in one line and lean toward deciding: the PM's time is the scarcest resource.
+```
+
 ## What is here
 
 - `process/ABSOLUTES.md` — the process absolutes and the four-harms test that admits any absolute, process or product. A project keeps its member-facing absolutes in its own `product/ABSOLUTES.md`.
