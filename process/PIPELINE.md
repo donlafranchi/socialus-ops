@@ -34,13 +34,22 @@ A claim that something works is worth what the check behind it was worth. So say
 - **Unverified work opens as a draft PR**, with the missing check named at the top of the body and what would clear it. Ready-for-review means the check ran.
 - "Tests pass" from a laptop is `unit tests only` until CI says otherwise. There is no test workflow yet — see `LESSONS.md` 19.
 
-## Precedent first (UI)
+## Decision rule — look first, then decide
 
-*(Don, 2026-10-04.)* **Every UI feature begins with precedent research**: what best-in-class products do in that exact situation, with 2–3 named examples and links. Agents adopt the established pattern rather than inventing one.
+Word for word, as Don gave it. It applies to every agent and every decision, not only UI, and it is why most work never reaches the PM.
 
-- **Recorded twice:** in the Issue, before building (a `Precedent:` line with the examples and links), and in the PR body.
-- **Checked:** the reviewer's first pass (below) checks the built UI against the recorded precedent. A departure from it is a finding, unless the Issue says why.
-- **Escalated only when it can't be settled:** precedents that conflict, or none that fits, are judgement calls for the PM, with the options and a recommendation.
+```
+DECISION RULE (2026-10-04, Don)
+1. Look first: before designing or deciding anything, find what established platforms do for this exact use case. Name 2–3 precedents with links (e.g. Google, Apple HIG, Airbnb, Meetup, Yelp, Stripe, Linear).
+2. Choose: pick the most relevant and elegant option for SocialUs, the simplest one that fits our rulings.
+3. Well-worn path: if a clear, established pattern exists, decide and build it yourself. Label the Issue/PR "Path: well-worn", list the precedents, and don't wait for the PM.
+4. New territory: if there's no well-worn path, the precedents conflict, or it touches a ruling, legal or privacy exposure, money, or member trust, label it "Path: new territory" and bring it to the PM as A/B/C with a recommendation before building.
+5. When unsure which it is, say which in one line and lean toward deciding: the PM's time is the scarcest resource.
+```
+
+- **How it lands in this method.** The `Path:` line goes on every Issue and PR in the code repo, and a lint there fails one without it ([guard-proves-itself]). The precedents and their links go beside it, in the Issue before building and in the PR body. The reviewer's first pass (below) checks the build against them, and an unexplained departure is a finding.
+- **Beside the absolutes, not over them.** "Don't wait for the PM" does not reach new user-facing copy, which stays a draft until he approves it ([public-is-draft]), or anything else an absolute reserves for him ([production-asks-don], [don-decides]).
+- "SocialUs" and "our rulings" in the rule mean the project the method is running.
 
 ## Who checks what
 
@@ -48,13 +57,13 @@ A claim that something works is worth what the check behind it was worth. So say
 
 Don does not read code, and nothing should ever ask him to. What he looks at is the running app on the preview link.
 
-**He looks only at judgement calls** *(Don, 2026-10-04)*:
+**He looks only at new territory and tone** *(Don, 2026-10-04, the decision rule above)*:
 
+- **`Path: new territory`** — no well-worn path, conflicting precedents, or it touches a ruling, legal or privacy exposure, money or member trust. It reaches him as A/B/C with a recommendation *before* building, so the PR that follows rarely needs his eyes again
 - **tone** — new or changed user-facing copy, which stays a draft until he says otherwise ([public-is-draft])
-- **conflicting precedents**, or no precedent that fits the situation
-- **rulings** — anything touching privacy, money or public visibility (the address-is-public copy is the type case); a deviation from the scenario; an acceptance criterion with a judgment word — *clear*, *easy*, *minimal fumbling*, the words only he can score
+- **a deviation** from the scenario, or an acceptance criterion with a judgment word — *clear*, *easy*, *minimal fumbling*, the words only he can score
 
-**UI that follows its recorded precedent and has passed the reviewer's first pass merges without him** — the PR opens "Don doesn't need to look" and names the precedent.
+**`Path: well-worn` work that has passed the reviewer's first pass merges without him** — the PR opens "Don doesn't need to look" and lists the precedents.
 
 **He does not look at:** migrations with no visible effect, tests, refactors, docs, infrastructure, dependency bumps.
 
@@ -71,11 +80,11 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### A reviewer's first pass, before the PM sees it
 
-*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the precedent ruling the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the decision rule the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
 
-- **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue and its recorded precedent, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
+- **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue and its recorded precedents, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
 - **Screenshots.** Every changed surface, as each persona it affects, at phone width (390) and laptop width (1280). In SocialUs the personas are `socialus-web/evals/personas.ts`, seeded locally.
-- **Precedent.** The built UI is checked against the precedent recorded in the Issue; an unexplained departure is fixed like a rule violation.
+- **Precedents.** The build is checked against the precedents listed beside the Issue's `Path:` line; an unexplained departure is fixed like a rule violation.
 - **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
 - **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
 - **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
