@@ -88,7 +88,17 @@ The steps are written for someone holding a phone who has not read the ticket: *
 - **Precedents.** The build is checked against the precedents listed beside the Issue's `Path:` line; an unexplained departure is fixed like a rule violation.
 - **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
 - **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
-- **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
+- **UX checklist** *(the PM, 2026-10-05)*. The reviewer ticks each line in the PR body, or writes why it doesn't apply:
+  - [ ] **WCAG 2.1 AA:** contrast through the colour tokens; visible focus in a logical order; every control labelled and every image has alt text; tap targets at least 44px.
+  - [ ] **Every state is present:** empty, loading, error, offline or slow, signed out.
+  - [ ] **One primary action** per screen.
+  - [ ] **Thumb reach on a phone:** the main action sits in the lower half or a fixed bar.
+  - [ ] **No horizontal scroll at 390.**
+  - [ ] **Copy follows the project's voice rules** (in SocialUs, `socialus-plan product/foundation/voice-and-tone.md`).
+  - [ ] **A quick Nielsen pass:** the system's status is visible; there's a way back or an undo; it's consistent with the rest of the app; errors are prevented before they're explained.
+  - [ ] **Images are optimised** (no raw `<img>` lint warnings added, sizes set).
+- **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, the UX checklist ticked, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
+- **Never skipped silently.** If the pass can't run (no local stack, no browser), the PR is labelled `review-skipped` with the reason in the body, and the pass runs when it can. In SocialUs a check fails a UI PR that has neither a `Reviewed by:` section with the checklist nor that label, so an unattended merge can't take it.
 
 **Why:** on 2026-10-04 the screenshot matrix captured every route as every persona on every PR, and no role owned looking at the pictures (`socialus-design/research/PATTERNS.md` § E2). Rule violations reached the PM as if they were judgement calls.
 
