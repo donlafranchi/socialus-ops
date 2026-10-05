@@ -313,6 +313,41 @@ for mode, title in (("index", "Open questions"), ("coverage", "Guard coverage"),
         w(f"`python3 scripts/markers.py {mode}` failed this run.")
         unverified.append(f"**{title}** — the section did not generate.")
 
+# ---------------------------------------------------------- docs by review age
+# An authored doc goes stale quietly: on 2026-10-05 the member journey still
+# described maker profiles four days after "no public member profile" was ruled.
+# So every authored doc shows its age: frontmatter `reviewed:`, else its last
+# commit (which counts any edit as a review, and says so). Precedent: GOV.UK's
+# tech-docs template, `last_reviewed_on` plus `review_in`.
+STALE_DAYS = 30
+docs = []
+for path in sorted(glob.glob("product/**/*.md", recursive=True) + glob.glob("planning/**/*.md", recursive=True)):
+    head = open(path, encoding="utf-8").read(2000)
+    m = re.search(r"^reviewed:\s*(\d{4}-\d{2}-\d{2})", head, re.M) if head.startswith("---") else None
+    if m:
+        when, how = m.group(1), "reviewed"
+    else:
+        r = subprocess.run(["git", "log", "-1", "--format=%cs", "--", path], capture_output=True, text=True)
+        when, how = r.stdout.strip(), "last commit"
+    try:
+        age = (today - datetime.date.fromisoformat(when)).days
+    except ValueError:
+        continue
+    docs.append((age, path, when, how))
+if docs:
+    docs.sort(reverse=True)
+    old = [d for d in docs if d[0] > STALE_DAYS]
+    w()
+    w("## Docs by review age")
+    w()
+    unreviewed = sum(1 for d in docs if d[3] != "reviewed")
+    w(f"{len(docs)} authored docs in `product/` and `planning/`; **{len(old)} not reviewed in {STALE_DAYS} days**, "
+      f"and **{unreviewed} carry no `reviewed:` date** (their age is their last commit, which any edit resets).")
+    w("Reviewing one means reading it against `DECISIONS.md` and setting `reviewed:` in its frontmatter.")
+    w()
+    for age, path, when, how in docs[:10]:
+        w(f"- `{path}` — {age} days ({how} {when})")
+
 # ------------------------------------------------------- could not verify
 # Never empty by default. If a run really did verify everything, it says so.
 w()
