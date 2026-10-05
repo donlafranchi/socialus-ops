@@ -5,6 +5,11 @@
 # by a slug that no longer exists, or a marker the markers checker rejects. Run
 # from the repo root.
 #
+# One script for both repos. In the method repo (ops-pattern) the project
+# checks find nothing to check and the fixtures still prove the checkers; in a
+# project repo (socialus-plan, which vendors this copy) everything runs. The
+# process absolutes live in the method repo, so a project finds them there.
+#
 # `## Why` (added 2026-09-17) carries rationale — why this shape, what was
 # rejected, how it relates to a neighbouring scenario. It exists because 12 of
 # 37 scenarios already carried exactly that content under a dozen different
@@ -19,6 +24,18 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 fail=0
+
+if [ -f process/ABSOLUTES.md ]; then
+  METHOD="$ROOT"
+else
+  METHOD=""
+  for c in "${METHOD_REPO:-}" "$ROOT/../ops-pattern" "$HOME/Projects/ops-pattern"; do
+    [ -n "$c" ] && [ -f "$c/process/ABSOLUTES.md" ] && { METHOD="$(cd "$c" && pwd)"; break; }
+  done
+  [ -n "$METHOD" ] || { echo "lint: no ops-pattern checkout found — the process absolutes live there; set METHOD_REPO"; exit 1; }
+fi
+absolutes="$METHOD/process/ABSOLUTES.md"
+[ -f product/ABSOLUTES.md ] && absolutes="$absolutes product/ABSOLUTES.md"
 
 # 1. Every planning/*.md carries a status field.
 for f in planning/*.md; do
@@ -82,7 +99,7 @@ check_links() {
   done
 }
 
-for f in CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md process/*.md planning/*.md; do
+for f in CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md process/*.md planning/*.md templates/*.md; do
   [ -f "$f" ] || continue
   out="$(check_links "$f")"
   if [ -n "$out" ]; then
@@ -94,10 +111,9 @@ done
 # 4. Every bracketed absolute-slug citation resolves to a heading in one of the
 #    two ABSOLUTES files. This is the point of slugs: a renamed or deleted
 #    absolute breaks the build instead of leaving a citation that reads fine and
-#    points at nothing. DECISIONS.md is exempt — it is append-never-edit, so its
-#    frozen "rule N" citations cannot be rewritten; the 2026-09-16 line there
-#    maps those old numbers to these slugs.
-slugs="$(grep -hoE '^### [a-z][a-z0-9-]+$' process/ABSOLUTES.md product/ABSOLUTES.md | sed 's/^### //')"
+#    points at nothing. DECISIONS.md is exempt: its older lines cite absolutes
+#    by number, and the 2026-09-16 line there maps those numbers to these slugs.
+slugs="$(grep -hoE '^### [a-z][a-z0-9-]+$' $absolutes | sed 's/^### //')"
 for hit in $(grep -roE '\[[a-z][a-z0-9]*(-[a-z0-9]+)+\]' --include='*.md' --exclude=DECISIONS.md --exclude-dir=fixtures . | sort -u); do
   slug="${hit##*:[}"; slug="${slug%]}"
   if ! printf '%s\n' "$slugs" | grep -qx "$slug"; then
@@ -106,7 +122,7 @@ for hit in $(grep -roE '\[[a-z][a-z0-9]*(-[a-z0-9]+)+\]' --include='*.md' --excl
   fi
 done
 
-# 5. Markers (process/LIVING-DOCS.md): open
+# 5. Markers (process/LIVING-DOCS.md in ops-pattern): open
 #    questions, guard claims (full or partial), decision bindings and whether a
 #    code-binding ruling names its work, platform needs, accepted-risk dates, and
 #    the generated files they build. The checker proves itself first, every run
@@ -143,7 +159,7 @@ python3 scripts/never.py scripts/fixtures/never/good.md >/dev/null || { echo "li
 if [ "${NEVER_LINT:-0}" = "1" ] && ! out="$(python3 scripts/never.py)"; then
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
-if ! out="$(python3 scripts/markers.py lint)"; then
+if [ -f DECISIONS.md ] && ! out="$(python3 scripts/markers.py lint)"; then
   echo "$out" | sed 's/^/lint: /'
   fail=1
 fi

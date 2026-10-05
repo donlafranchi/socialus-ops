@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Emits the facts STATUS.md is built from.
-# Judgement sections are NOT produced here — see process/LIVING-DOCS.md.
+# Judgement sections are NOT produced here — see ops-pattern/process/LIVING-DOCS.md.
 #
 # Usage: bash scripts/state.sh [path-to-socialus-web]   (default ../socialus-web)
 set -euo pipefail
