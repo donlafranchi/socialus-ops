@@ -130,6 +130,9 @@ Nothing blocks it, and nothing should — his plan has no protection rules, and 
 - **Persona reviews run as a serial background queue**, with at most 1 build alongside. The queue shares one dev server and one browser, with a separate browser session per persona, and reports per persona as each finishes.
 - **Parallelize network- and model-bound work; serialize browser and build work.** Searches, API reads and subagent thinking can fan out; anything that starts a browser, a dev server or a build waits its turn.
 - **Worktrees are removed the day their branch merges** *(the PM, 2026-10-05)*: after a merge, the agent that merged it runs `git worktree remove` for that branch's worktree (when its tree is clean and nothing is unpushed) and then `git worktree prune`. Why: 136 stale worktrees used 78GB and filled the build machine's disk on 2026-10-05.
+- **Dependencies and build output do not multiply per worktree** *(disk root-cause analysis, 2026-10-05)*: seed a worktree's `node_modules` with an APFS clone of the main checkout's (`cp -cR`), never a fresh `npm ci` per branch, and delete `.next` when a run finishes. At most 10 live worktrees per repo; a read-only or docs session reuses one.
+- **No second clone of a repo under `~/Projects`.** A repo has one checkout and its worktrees. A retired checkout is removed once its untracked files (`.env`) are saved.
+- **Weekly sweep, by whoever starts the week's first build session:** `docker builder prune --filter until=168h`, `npm cache verify`, and `git worktree prune` in each repo. Nothing is pruned that a running build is using.
 - **If a rule would slow a deadline, flag it to the PM before breaking it**, naming the rule and why. Never break one silently.
 
 ### Economy
