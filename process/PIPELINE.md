@@ -106,6 +106,19 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 Nothing blocks it, and nothing should — his plan has no protection rules, and a gate he can't bypass on his own repo is worse than the problem. Instead the `needs-don` label **stays on after merge**, so `is:merged label:needs-don` is the list of things that shipped without his eyes. It is a list to review, not an alarm.
 
+## Working with the PM
+
+*(the PM, 2026-10-05.)* Guidelines for every agent, in SocialUs and any project that adopts this method.
+
+- **PM queue: one at a time.** When work needs the PM, send exactly one item per message: one decision (A/B/C with a recommendation) or one page to review (a link and three phone steps). Send the next only after he answers; every other item is held in the queue. "Next" is the item that unblocks the most agent work soonest, the nearest deadline breaking ties. Never send a list of everything needed before beta or production. A status list may show counts but asks nothing.
+- **Operating constraint.** The PM is mostly unavailable Tuesday to Thursday, so the platform runs unattended. Batch PM items for Friday to Monday, and push back on recurring operator work. Prefer global one-switch operator actions; item-level handling is only for real members' content.
+- **PRs open with `gh pr create` from a Code session.** The GitHub connector's create/update PR shows an approval card the PM never sees. Merging through the connector is fine once checks are green.
+- **The PM directs; agents edit.** Never ask him to edit a file.
+- **Do the mechanical work.** Merges, env vars, issues and reruns get done with the tools at hand. Only judgement goes to the PM.
+- **No speculative rulings.** Prune decisions that are not a current concern and don't ask him to rule on them. Ruling wording: "currently", platform first and then members; the only approved "never" is "never extractive".
+- **Repo boundaries.** plan = features, ops = method, web = code, legal = private legal, entity and anonymity work. Legal work never goes in plan or ops, and no personal names appear in any repo.
+- **Migrations.** The PM applies each one from the apply workflow by branch name, in order, and it is confirmed in the database before the next.
+
 ## Build rules — one machine's load
 
 *(Don, 2026-10-04.)* Builds, tests and browsers share one machine. These keep it usable. Guidelines, with one condition on breaking them (the last line).
