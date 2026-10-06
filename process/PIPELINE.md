@@ -129,6 +129,7 @@ Nothing blocks it, and nothing should — his plan has no protection rules, and 
 - **Close headless browsers after every run.**
 - **Persona reviews run as a serial background queue**, with at most 1 build alongside. The queue shares one dev server and one browser, with a separate browser session per persona, and reports per persona as each finishes.
 - **Parallelize network- and model-bound work; serialize browser and build work.** Searches, API reads and subagent thinking can fan out; anything that starts a browser, a dev server or a build waits its turn.
+- **Worktrees are removed the day their branch merges** *(the PM, 2026-10-05)*: after a merge, the agent that merged it runs `git worktree remove` for that branch's worktree (when its tree is clean and nothing is unpushed) and then `git worktree prune`. Why: 136 stale worktrees used 78GB and filled the build machine's disk on 2026-10-05.
 - **If a rule would slow a deadline, flag it to the PM before breaking it**, naming the rule and why. Never break one silently.
 
 ### Economy
