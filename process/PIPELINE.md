@@ -118,6 +118,16 @@ Nothing blocks it, and nothing should — his plan has no protection rules, and 
 - **Parallelize network- and model-bound work; serialize browser and build work.** Searches, API reads and subagent thinking can fan out; anything that starts a browser, a dev server or a build waits its turn.
 - **If a rule would slow a deadline, flag it to the PM before breaking it**, naming the rule and why. Never break one silently.
 
+### Economy
+
+*(the PM, 2026-10-05.)* The plan's limits (CI minutes, deployments, model use) ran out in one day of heavy building. These keep the spend proportionate.
+
+- **Push once, when a change is ready,** not after every commit: every push runs CI. **Keep stacks at most two PRs deep.**
+- **Batch migrations.** Where several pending branches each add a migration, bundle them into fewer applies, one migration PR per milestone where practical, and keep them strictly ordered.
+- **Match the model to the work.** A cheaper model for routine work: status, merges, doc sweeps, conflict catch-ups. The top model for design and tricky builds.
+- **Restart long agent sessions daily,** with a handoff note (in SocialUs, `socialus-plan handoff/latest.md`), rather than carrying a day's context forward.
+- **No new paid tools before beta** unless one replaces PM time.
+
 Machine-specific rules (which container runtime, for instance) live in `~/.claude/CLAUDE.md`, not here.
 
 ## Accepted risk
