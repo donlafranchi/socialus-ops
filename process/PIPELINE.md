@@ -118,6 +118,7 @@ Nothing blocks it, and nothing should — his plan has no protection rules, and 
 - **No speculative rulings.** Prune decisions that are not a current concern and don't ask him to rule on them. Ruling wording: "currently", platform first and then members; the only approved "never" is "never extractive".
 - **Repo boundaries.** plan = features, ops = method, web = code, legal = private legal, entity and anonymity work. Legal work never goes in plan or ops, and no personal names appear in a public repo (currently `socialus-web`); plan and ops keep them until they go public, when they are scrubbed.
 - **Migrations.** The PM applies each one from the apply workflow by branch name, in order, and it is confirmed in the database before the next.
+- **Through Dispatch** (modes, copy-paste, scheduled runs, folders, the weekly tidy): `process/DISPATCH.md`.
 
 ## Build rules — one machine's load
 
