@@ -9,5 +9,5 @@
 5. **Folders.** Design files go in `~/Projects/socialus-design`; files with no home yet in `~/Projects/agent-temp`; repos keep the `socialus-*` naming.
 6. **Deliverables are markdown, by PR,** in the right `socialus-*` repo. Never a Docs or Design artifact.
 7. **Name the work, not its number.** Never refer to work by a ticket or Issue number alone: say what it is, the number in brackets.
-8. **Scheduled runs.** 5am handoff, 9pm overnight queue, Sunday 8am disk cleanup. Dispatch messages the PM on events, not on timers.
+8. **Scheduled runs.** The handoff runs at 5am and 5pm daily (a morning and an afternoon work session), plus the 9pm overnight queue and the Sunday 8am disk cleanup. Dispatch messages the PM on events, not on timers.
 9. **A weekly tidy of long agent-facing lists** (`DECISIONS.md`, `STATUS.md`, `LESSONS.md` and the like), sorted by topic and then newest first, when that helps agents decide. Superseded items stay out of the live file (`[newer-decision-wins]`) and history lives in git through `[replaces]` tags. There is no separate history file for the PM.
