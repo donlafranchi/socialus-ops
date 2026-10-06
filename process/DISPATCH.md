@@ -23,3 +23,4 @@
 - **Shifts** are 5am–5pm and 5pm–5am. Lanes write a handoff note in their PR and stop at the handoff. Dispatch starts the next shift's lanes (each needs a desktop approval, so in phone mode the current lanes keep running). Migrations are serialized through Dispatch.
 - **At each handoff** Dispatch recommends which areas get lanes, by what is furthest behind for beta, and opens with "Beta: X of Y done, Z days left, behind: <areas>".
 - **Research tangents** go to a separate research task and come back as one-at-a-time decisions (the PM queue).
+- **The beta dashboard** (`DASHBOARD.md` in the planning repo, written by `scripts/dashboard.py` from `socialus-web` Issues and PRs) is regenerated at each 5am and 5pm handoff and committed by PR. The PM reads it in the GitHub iOS app, so it stays markdown, never an artifact. A stage with no data shows `?`, not a guess.

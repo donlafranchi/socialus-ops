@@ -98,15 +98,16 @@ vt=scripts/fixtures/value-test
   { echo "lint: value-test check does not grandfather a scenario before F$VALUE_TEST_FROM"; fail=1; }
 
 # 2. Root .md files are only the five listed here, plus the generated ones —
-#    README.md (scripts/view.sh) and PLATFORM-*.md (scripts/markers.py platform),
+#    README.md (scripts/view.sh), PLATFORM-*.md (scripts/markers.py platform) and
+#    DASHBOARD.md (scripts/dashboard.py),
 #    never hand-edited, so not link-checked below.
-allowed="CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md"
+allowed="CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
 for f in *.md; do
   [ -f "$f" ] || continue
   case " $allowed " in
     *" $f "*) ;;
     *)
-      echo "lint: root .md outside the five (+ generated README.md, PLATFORM-*.md) — $f"
+      echo "lint: root .md outside the five (+ generated README.md, PLATFORM-*.md, DASHBOARD.md) — $f"
       fail=1
       ;;
   esac
