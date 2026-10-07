@@ -196,6 +196,22 @@
 
 Across a 12-hour shift with 3 lanes sharing 2 build slots, expect about 3–4 area batches a shift, limited by build slots. The PM's look (15) is outside this clock and batched Friday to Monday.
 
+## Day and night
+
+*(The PM, 2026-10-06.)* Part of the pipeline runs overnight, so the day is spent building and the heavy checks arrive ready.
+
+**Day, per push:** only build, tests, lint, the capture bundle for the changed screens (step 9–11's input), and the quick reviewer pass. Nothing slow.
+
+**Night:** scheduled GitHub Actions on `socialus-web`'s free minutes, plus Code lanes, run the heavy and slow work, with results ready for the 5am handoff:
+- full builder journeys (step 9, every area);
+- the full visibility matrix across all personas (step 10);
+- a full-app screenshot sweep, with the five-reviewer pass over it (step 11);
+- the live smoke check of everything merged that day (step 14);
+- dependency and advisor checks;
+- the dashboard refresh (`DASHBOARD.md` and `dashboard/index.html`).
+
+A failure found overnight is a finding in the next shift's fix loop (step 12), filed as a `bug ·` Issue in its area. The nightly cron for each job is set by whoever builds it: items 4, 6, 8, 9 and 10 in (e).
+
 ## (e) What to build, in order
 
 Each is a `chore ·` Issue in `area:ops` unless noted; times are estimates.
