@@ -1,3 +1,5 @@
+> **SETTLED — do not re-raise:** members are the investors and the only people paid out. "Ownership, not profit-share" is rejected. Legal/securities questions about this go to `socialus-legal` for counsel and never come back to the PM as a decision.
+
 # ops-pattern — the method
 
 How agents build a product with a PM who rules and does not read code. **This repo holds the method only; nothing here belongs to one product.** Which folder holds what: `~/.claude/CLAUDE.md` § The repos.
