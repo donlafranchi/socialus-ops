@@ -7,6 +7,12 @@ Every member gets the same live facts brief plus one role. Members run in parall
 - Settled, never re-raised: members are the investors and the only people paid out; SocialUs takes transaction income on member commerce. Legal questions go to counsel, not the PM.
 - The operator is away Tue–Thu: anything needing a person midweek (other than child safety) fails.
 
+## Tuning a run with PM context (2026-10-07)
+- Before each council run, Dispatch asks the PM for (or reuses) context constraints and puts them at the top of the shared facts brief: runway (months the PM can keep it afloat), monthly budget ceiling, the PM's available hours, hard dates, and any priority he names.
+- Every member must re-weigh against them. Example: with a 6-month runway, Cost to run and Income weigh more; anything adding monthly cost or delaying income drops; the Skeptic tests each IN item against the runway and flags anything that doesn't pay for itself or protect the platform within it.
+- The chair states in the merge which constraints were applied and how they changed the result versus the last run.
+- No constraint given = say so in the brief; don't invent one.
+
 ## Income — what sets up contributions and transaction income later; cheap groundwork costly to retrofit. Must not: build payments early, or revenue that works better when a member is stuck.
 ## Legal and risk — what must be true before strangers use it: privacy, child safety, Terms/consent, data exposure, content kept after removal, third-party IP. Must not: make legal rulings; names what counsel must see.
 ## Member benefit — what makes a member come back in week one. Must not: count built-but-unverified as working.
