@@ -97,6 +97,8 @@ The steps are written for someone holding a phone who has not read the ticket: *
   - [ ] **Copy follows the project's voice rules** (in SocialUs, `socialus-plan product/foundation/voice-and-tone.md`).
   - [ ] **A quick Nielsen pass:** the system's status is visible; there's a way back or an undo; it's consistent with the rest of the app; errors are prevented before they're explained.
   - [ ] **Images are optimised** (no raw `<img>` lint warnings added, sizes set).
+  - [ ] **Tidy and contained** *(the PM, 2026-10-06)*: each group of related information sits in its own card or section with a clear header; one edit or action affordance per card, in the card header, never scattered inline; consistent spacing and alignment; long or rarely used content collapsed (accordion); nothing floats loose between sections. Precedents: Apple HIG grouped lists, Material cards, Google Business Profile editor.
+  - [ ] **Tidiness verdict** *(the PM, 2026-10-06)*: the reviewer answers in one line, at 390 and 1280, "Is the information on this screen neat, tidy and organized? What's the one thing that looks most cluttered?" and fixes rule-level clutter before the PM sees it.
 - **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, the UX checklist ticked, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
 - **Never skipped silently.** If the pass can't run (no local stack, no browser), the PR is labelled `review-skipped` with the reason in the body, and the pass runs when it can. In SocialUs a check fails a UI PR that has neither a `Reviewed by:` section with the checklist nor that label, so an unattended merge can't take it.
 

@@ -88,3 +88,5 @@ Read before proposing any change to structure or process. Each lesson names the 
 48. **Beta progress was only visible by asking.** On 2026-10-06 the state of the beta lived in chat replies and 70 scattered Issues, and the PM, who reads on a phone, had no single page to open. A generated `DASHBOARD.md` (stages per area, from Issues and PRs) replaces asking. `process/DISPATCH.md`.
 
 49. **Applying every migration by hand cost the PM time with no member data to protect.** On 2026-10-06, with no real member yet, each migration waited on the PM. He ruled a time-boxed exception: agents apply them in order, confirming each before the next and stopping on failure, until the first real member signs up. `[production-asks-don]` in `process/ABSOLUTES.md`.
+
+50. **The checklist had no tidiness item, so a messy page passed review.** On 2026-10-06 the PM found the Edit page messy (Edit buttons everywhere, no sections) after it had passed the reviewer's first pass. The UX checklist now has "Tidy and contained" and a one-line tidiness verdict at 390 and 1280. `PIPELINE.md` § A reviewer's first pass.
