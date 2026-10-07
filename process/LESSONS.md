@@ -86,3 +86,5 @@ Read before proposing any change to structure or process. Each lesson names the 
 47. **Rules that lived only in Dispatch's memory were lost when the memory was wiped.** The PM's Dispatch memory was wiped several times, and each time the working agreements (modes, how to hand over a command, how to name a migration, what runs on a schedule) had to be re-taught. Repo docs and git are the durable home; memory is a cache. `process/DISPATCH.md`.
 
 48. **Beta progress was only visible by asking.** On 2026-10-06 the state of the beta lived in chat replies and 70 scattered Issues, and the PM, who reads on a phone, had no single page to open. A generated `DASHBOARD.md` (stages per area, from Issues and PRs) replaces asking. `process/DISPATCH.md`.
+
+49. **Applying every migration by hand cost the PM time with no member data to protect.** On 2026-10-06, with no real member yet, each migration waited on the PM. He ruled a time-boxed exception: agents apply them in order, confirming each before the next and stopping on failure, until the first real member signs up. `[production-asks-don]` in `process/ABSOLUTES.md`.

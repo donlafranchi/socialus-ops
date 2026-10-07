@@ -23,6 +23,14 @@ leaving a pointer that reads fine and means nothing.
 Anything that reaches production or can't be undone — deploy to main,
 destructive migration, deleting data, rewriting history — asks Don first.
 
+**Time-boxed exception (2026-10-06, the PM).** Until SocialUs has live users,
+agents apply migrations themselves via the apply workflow, strictly in order,
+confirming each in the database before the next and stopping on failure.
+Because there is no real member data at risk and hand-applying cost the PM
+time. **It ends the day the first real (non-builder) member signs up;** from
+then on, migrations ask the PM first again. Only migrations are covered:
+deploys to main, deleting data and rewriting history still ask.
+
 ## Public
 
 ### public-is-draft
