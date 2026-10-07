@@ -12,8 +12,8 @@ Five kinds of work. Each has its own path; only one goes through design. Everyth
 
 ## Paths
 
-- **Scenario:** `IMAGINE.md` → `planning/scenario-*.md` (draft) → Cowork review flips it to approved → Code opens an Issue with the architecture note and builds → all acceptance checks closed → `sync` deletes the scenario.
-- **Change / Bug / Chore:** Issue → Code builds → PR closes it. No scenario, no handoff, no review file. Don sees a preview link, not a document.
+The build pipeline, fifteen steps from intake to the PM's look, and which steps each kind of work runs, is `process/PIPELINE-build.md` (the PM approved the shape, 2026-10-06). It replaces the Scenario and Change/Bug/Chore bullets that stood here.
+
 - **Process:** name the failure, make the change on a branch, open the PR, log it. Cowork merges. Small fixes any time. A reorganisation of the tree is rare, in one session, with a git tag first.
 
 ## Rules of the road (guidelines)
@@ -56,7 +56,7 @@ DECISION RULE (2026-10-04, Don)
 
 **Agents own whether a change is correct. Don owns whether it is right.** Correct is testable — it compiles, the tests pass, the migration applies, the rule is enforced. Right is a judgment about the product, and no test has an opinion about it.
 
-Don does not read code, and nothing should ever ask him to. What he looks at is the running app on the preview link.
+Don does not read code, and nothing should ever ask him to. What he looks at is the running page on socialus.org after merge (from the freeze, the labelled preview).
 
 **He looks only at new territory and tone** *(Don, 2026-10-04, the decision rule above)*:
 
@@ -73,7 +73,7 @@ Don does not read code, and nothing should ever ask him to. What he looks at is 
 Every PR opens with one of exactly two things, before anything else in the body:
 
 1. **"Don doesn't need to look."** — and one line saying why not.
-2. **The preview link, three numbered steps, and what he should expect to see.** Label the PR `needs-don`. Only after the reviewer's first pass below, which the body lists.
+2. **The page on socialus.org (after merge; from the freeze, the labelled preview), three numbered steps, and what he should expect to see.** Label the PR `human-review`. Only after the reviewer's first pass below, which the body lists.
 
 The steps are written for someone holding a phone who has not read the ticket: *"Open the link, tap Create, choose Business."* Not *"navigate to the composer route."* No file paths, no function names, no ticket numbers, no jargon.
 
@@ -81,7 +81,7 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### A reviewer's first pass, before the PM sees it
 
-*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `needs-don`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the decision rule the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `human-review`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the decision rule the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
 
 - **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work. It reads the diff, the Issue and its recorded precedents, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
 - **Screenshots.** Every changed surface, as each persona it affects, at phone width (390) and laptop width (1280). In SocialUs the personas are `socialus-web/evals/personas.ts`, seeded locally.
@@ -106,7 +106,7 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### When he merges without looking
 
-Nothing blocks it, and nothing should — his plan has no protection rules, and a gate he can't bypass on his own repo is worse than the problem. Instead the `needs-don` label **stays on after merge**, so `is:merged label:needs-don` is the list of things that shipped without his eyes. It is a list to review, not an alarm.
+Nothing blocks it, and nothing should — his plan has no protection rules, and a gate he can't bypass on his own repo is worse than the problem. Instead the `human-review` label **stays on after merge**, so `is:merged label:human-review` is the list of things that shipped without his eyes. It is a list to review, not an alarm.
 
 ## Working with the PM
 
