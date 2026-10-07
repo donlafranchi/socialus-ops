@@ -22,6 +22,7 @@ DECISION RULE (2026-10-04, Don)
 ## What is here
 
 - `process/ABSOLUTES.md` — the process absolutes and the four-harms test that admits any absolute, process or product. A project keeps its member-facing absolutes in its own `product/ABSOLUTES.md`.
+- `process/council-roles.md` — the roles, lens and word limits for a council (parallel cheap-model members, one strong chair) that puts an A/B/C to the PM.
 - `process/PIPELINE.md` — the five kinds of work (scenario, change, bug, process, chore), who checks what, open questions, accepted risk.
 - `process/LIVING-DOCS.md` — facts inline, cross-cutting views generated from markers, authored docs pruned, git as the archive. Every marker kind and the failure it answers.
 - `process/LESSONS.md` — append-only. A process change names the dated failure that earned it.
