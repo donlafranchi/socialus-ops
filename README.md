@@ -114,7 +114,7 @@ Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet ex
 
 ## 7. Meta layer: skills that review and improve the pipeline (**TRIAL**, started 2026-10-10)
 
-The pipeline has three layers. > **TRIAL.** The PM's instruction: *stick with this and keep improving it.* Three pieces are built (guard, `score-ci-health`, `score-doc-drift`); four scores and the reviewer are not. Tracker, health and next step: pinned Issue [#89](https://github.com/donlafranchi/socialus-ops/issues/89). Trial review **2026-10-24**: keep, adjust or drop.
+The pipeline has three layers. > **TRIAL.** The PM's instruction: *stick with this and keep improving it.* Three pieces are built (guard, `score-ci-health`, `score-doc-drift`); four scores and the reviewer are not. Tracker, health and next step: pinned Issue [#89](https://github.com/donlafranchi/socialus-ops/issues/89). The trial is tuning, not a go/no-go: dropping the layer is not an option. Tuning review **2026-10-24**: is each score measuring what it should (false reds and misses, with examples), what to adjust (threshold, source, formula), which score to build next.
 
 Layer 1 builds the product. Layer 2a describes what is true. Layer 2b judges the pipeline itself and proposes changes to it. Layers 2a and 2b never build product.
 
@@ -189,7 +189,7 @@ L1 chain runs  ->  L2a reports (dashboard, feature reports, capabilities)
 
 - **Every Friday** the launch report and the dashboard carry a "Meta-layer trial" block (`scripts/trial_health.py --block`): the tracker link, trial health, the next score to build.
 - **Trial health** = built scores read within 8 days, meta PRs proposed / approved / rejected, and whether any score moved. `late` is printed in the block.
-- **2026-10-24:** that day's report asks keep, adjust or drop.
+- **Every Friday and on 2026-10-24:** the Friday run writes `scores/tuning/YYYY-MM-DD.md`: is each score measuring what it should (false reds and misses, with examples), what to adjust (threshold, source, formula), which score to build next. The block shows the newest notes. The layer is not up for dropping; the measures are what get tuned.
 - Readings live in `scores/` (`history.tsv` plus a dated report per score); the scripts are `scripts/score_*.py`.
 
 ### What must exist first [P]
@@ -212,6 +212,7 @@ L1 chain runs  ->  L2a reports (dashboard, feature reports, capabilities)
 - **`dispatch-handoff` skill** is not in the library, so it cannot be versioned or regenerated. [V]
 - **No scheduled tasks** exist in the desktop scheduler, so nothing runs the Friday report, `regen-capabilities` or `regen-dashboard`. [V]
 - **`socialus-design`** has no remote. [V]
+- **The guard does not cover the scoring code.** Its protected paths are `score-*/` skill folders, `review-pipeline/`, and the guard itself, but the formulas and thresholds live in `scripts/score_*.py` and `scripts/trial_health.py`, which are unprotected, so governance rule 3 is not enforced for them. The fix changes the guard, so it is open as a `meta-change` PR waiting for the PM's `pm-approved`. [V]
 - **No layer 2b.** Nothing scores the pipeline or proposes a change from a score; `found-by-pm` has never been used (0 Issues). [V]
 
 ### Assumed (not checked)
