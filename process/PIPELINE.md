@@ -24,7 +24,7 @@ The build pipeline, fifteen steps from intake to the PM's look, and which steps 
 - A fourth section, **Why**, carries rationale — why this shape, what was rejected, how it relates to a neighbouring scenario. **It is not counted toward the 40 lines**, because the cap exists to keep a spec small enough to hold in your head and rationale is not spec. *(Added 2026-09-17: 12 of 37 scenarios already carried exactly this content under a dozen ad-hoc headings, which is what kept `scripts/lint.sh` red. Deleting it to satisfy a linter would have destroyed the reasoning behind ratified decisions; giving it one name makes it checkable.)*
 - A scenario says what it needs from a native platform — push, a deep link, the camera or photos, location, background work, a native sign-in, a store review topic — with a `[platform …]` marker, or `[platform none]`. Required from 2026-09-29; `process/LIVING-DOCS.md` § Platform readiness. When `sync` deletes a shipped scenario, its markers move to the spine entry for what shipped.
 - If a Change starts needing acceptance checks, it's a Scenario. If a Bug fix changes what a scenario promises, it's a Change to the scenario first.
-- Launch-blocking work displaces everything else. When a new launch-blocker lands, `sync` names what moved to Next.
+- Launch-blocking work displaces everything else. When a new launch-blocker lands, `sync-roadmap` names what moved to Next.
 - When something arrives that fits none of the five, don't force it — log it in `LESSONS.md` as a gap and pick the nearest path for now.
 
 ## Verified or not
@@ -181,7 +181,7 @@ A question nobody has answered yet is marked **inline, where it was raised**, an
 - The answer changes one line of code or one migration and nothing above it → **a comment on that line**.
 - **Never** in a PR description, a commit message or an Issue comment: none is scanned, and a merged PR or a commit cannot be edited, so the marker could never be closed. **Never** in `DECISIONS.md`, which holds answers. An Issue that restates a scenario's question points at the scenario instead.
 
-**Who writes one.** Whoever raises a question they cannot answer and will not answer this session — Cowork in `plan` and `review`, Code in `ticket` and `build`. An agent that would otherwise write *"open"*, *"TBD"* or *"needs a ruling"* writes the marker.
+**Who writes one.** Whoever raises a question they cannot answer and will not answer this session — Cowork in `scope-scenario` and `review-draft-scenario`, Code in `write-tickets` and `build-ticket`. An agent that would otherwise write *"open"*, *"TBD"* or *"needs a ruling"* writes the marker.
 
 **What closes one.**
 
