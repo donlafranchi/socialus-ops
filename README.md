@@ -52,7 +52,7 @@ Look first (2-3 precedents), choose the simplest, label the work `Path: well-wor
 ### Feature intake council, run by `plan-feature`
 - **Does:** turns "[who] can [outcome] when [situation]" into a Feature Brief: Stage 0 facts (verified/assumed), prerequisites, nine roles in parallel (Person, Maker, Money, Architect, Developer, Tester, Operator, Guardian, Scout) on a cheap model, a chair on the strongest, three build sizes.
 - **Input:** one sentence plus PM context. **Output:** `socialus-plan/planning/briefs/YYYY-MM-DD-slug.md`, `status: awaiting-approval`, with binary `criteria`. **Trigger:** the PM asks.
-- **Stops** at the brief. It may not create a scenario, Issue or code. The PM sets `status: approved` and `size`. [V] `skills/feature-plan/SKILL.md`; the council prompt is still V0 (`planning/council/feature-intake.md`, status `draft`).
+- **Stops** at the brief. It may not create a scenario, Issue or code. The PM sets `status: approved` and `size`. [V] `skills/plan-feature/SKILL.md`; the council prompt is still V0 (`planning/council/feature-intake.md`, status `draft`).
 - **Sibling:** the beta-scope council (`2026-10-07-beta-mvp.md`, roles in `process/council-roles.md`) decided what ships, once.
 
 ### Any feature, every phase: `run-feature-pipeline` and `regen-feature-report`
@@ -108,7 +108,7 @@ Rule: a top-level doc is a snapshot regenerated from live sources, not maintaine
 
 Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet exercised: no brief, report or capabilities file exists, so none of the new skills has run on real work. [V]
 
-**Naming convention going forward:** the phase verb for work (`plan-feature`, `run-feature-pipeline`, `record-pm-review`), `regen-<doc>` for a document, `launch-report` kept for its audience. On 2026-10-10 every skill was renamed to verb-object (`review-draft-scenario`, `review-pr-bundle`, `review-live-design` were three different things all called review). `skills/README.md` is the index. [V]
+**Naming:** verb-object for work, `regen-<doc>` for a document. On 2026-10-10 every skill was renamed to verb-object (`review-draft-scenario`, `review-pr-bundle`, `review-live-design` were three different things all called review). `skills/README.md` is the index. [V]
 
 ## 7. Gaps
 
