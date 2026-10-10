@@ -2,26 +2,26 @@
 
 The operating manual for building SocialUs: who does what, what triggers it, what it produces, and where it is broken. No product code here. `CLAUDE.md` holds the rules; this file is the map.
 
-**Snapshot, 2026-10-10.** This file is a point-in-time picture, regenerated from the live repos, never hand-maintained (see [Docs are generated](#docs-are-generated)). Every claim carries **[V]** verified (read or run on the snapshot date, source named) or **[A]** assumed (not checked). **[P]** marks a proposal that does not exist yet.
+**Snapshot, 2026-10-10 (regenerated after the plan/build skills were built).** This file is a point-in-time picture, regenerated from the live repos, never hand-maintained (see [Docs are generated](#docs-are-generated)). Every claim carries **[V]** verified (read or run on the snapshot date, source named) or **[A]** assumed (not checked). **[P]** marks a proposal that does not exist yet.
 
 ## 1. The chain
 
 ```
 request / story
-  -> intake council (design + plan)        [V] prompt only, no skill
+  -> feature-plan (council: design + plan) [V] skill, stops at the brief
   -> Feature Brief (3 sizes)
-  -> PM approval                            [V] by convention, nothing enforces it
+  -> PM approval                            [V] brief status: approved; feature-build refuses otherwise
   -> scenario (<=40 lines) -> Issues        [V] plan, review, ticket skills
-  -> build (TDD) -> PR                      [V] build skill, 20 CI workflows
+  -> feature-build: ticket, build (TDD), PR [V] skills exist, never run end to end [A]
   -> reviewer first pass -> merge           [V] review-bundle skill, review.yml
   -> deploy health, live smoke              [V] deploy-health.yml, smoke-live.yml
-  -> review report                          [A] PR "Reviewed by:" section; no roll-up
-  -> features-and-functionality report      [V] launch-report skill, manual only
-  -> dashboard                              [V] dashboard.py, reads Issues/PRs, not reports
-  -> PM review (Fri-Mon)
+  -> build report (build-log/reports/)      [V] defined in feature-build; no reports exist yet
+  -> regen-capabilities (can / cannot do)   [V] skill; first run not done
+  -> dashboard (each phase counted alone)   [V] dashboard.py, per-phase columns
+  -> pm-review (labels pm-reviewed / found-by-pm) [V] skill; labels exist in socialus-web
 ```
 
-The chain exists end to end only by hand. Seams: the council is not a skill (section 4), approval is not a gate, review output is not collected, and the capability report does not feed the dashboard.
+Every link now has a named skill or script, but the chain has not run once end to end. Open seams: `dashboard.py` does not yet read `capabilities.json`, and no build report exists to read.
 
 ## 2. Repos
 
@@ -51,11 +51,17 @@ Shifts 5am-5pm and 5pm-5am, at most 3 area lanes (areas: page-editing, sign-in-y
 ### Decision rule
 Look first (2-3 precedents), choose the simplest, label the work `Path: well-worn` (build it) or `Path: new territory` (bring A/B/C to the PM). Input: any design question. Output: a labelled Issue/PR. Trigger: every decision. [V] `CLAUDE.md`.
 
-### Feature intake council (the "committee")
+### Feature intake council, run by `feature-plan`
 - **Does:** turns "[who] can [outcome] when [situation]" into a Feature Brief: Stage 0 facts (verified/assumed), prerequisites, nine roles in parallel (Person, Maker, Money, Architect, Developer, Tester, Operator, Guardian, Scout) on a cheap model, a chair on the strongest, three build sizes.
-- **Input:** one sentence plus PM context (dates, hours, runway, what leaves scope). **Output:** a Feature Brief using `feature-brief-template.md`. **Trigger:** manual.
-- **State:** V0, status `draft`, a prompt and a template, two worked runs. No skill, no script, no approval step, no record of runs beyond the worked-runs file. [V] `socialus-plan/planning/council/`.
-- **Sibling:** the beta-scope council (`2026-10-07-beta-mvp.md`, roles in `process/council-roles.md`) decides what ships, once. Its MVP list is the first input to `launch-report`.
+- **Input:** one sentence plus PM context. **Output:** `socialus-plan/planning/briefs/YYYY-MM-DD-slug.md`, `status: awaiting-approval`, with binary `criteria`. **Trigger:** the PM asks.
+- **Stops** at the brief. It may not create a scenario, Issue or code. The PM sets `status: approved` and `size`. [V] `skills/feature-plan/SKILL.md`; the council prompt is still V0 (`planning/council/feature-intake.md`, status `draft`).
+- **Sibling:** the beta-scope council (`2026-10-07-beta-mvp.md`, roles in `process/council-roles.md`) decided what ships, once.
+
+### Build and report, run by `feature-build`
+- **Input:** an `approved` brief; refuses otherwise. **Chain:** `ticket` -> `build` -> `review-bundle` -> `respond`. **Output:** Issues, PRs, and `socialus-web/build-log/reports/<brief-id>.md` listing each criterion as met / partly / not-met with named evidence, reviewer findings, and what was not built; smoke appended after deploy. [V] skill written; no report exists yet.
+
+### PM review, run by `pm-review`
+The PM says "<thing> ok" or "<thing> broken: why" in one line. The skill resolves it to an Issue and applies `pm-reviewed` or `found-by-pm` plus a comment, and lists what is waiting for review by area. The dashboard's "PM looked" column reads `pm-reviewed`. [V] skill; both labels exist in `socialus-web`.
 
 ### Planning skills (Cowork, in `socialus-plan`)
 | Skill | Does | Output |
@@ -64,13 +70,15 @@ Look first (2-3 precedents), choose the simplest, label the work `Path: well-wor
 | `review` | Architecture/design pre-flight on a draft scenario | Verdict before `approved` |
 | `sync` | Reconcile shipped work into ROADMAP and scenario status | Updated tracking docs |
 | `trim` | Cut product docs that restate the code | Smaller docs |
-| `socialus-next-moves` | Next-phase planning | Phone-readable summary |
-| `launch-report` | Regenerate two docs from scratch: public "what you can do today", private "not yet, and how close" | Two docs (Docs tool; fallback `handoff/`) |
+| `launch-report` | Public "what you can do today" and private "not yet, and how close", built from `handoff/capabilities.md` | Two docs |
+| `feature-plan` | Council to Feature Brief; stops for approval | `planning/briefs/` |
+| `regen-capabilities` | What the app can and cannot do, from build reports, Issues, smoke | `handoff/capabilities.md` + `.json` |
+| `regen-status`, `regen-dashboard`, `regen-decisions` | Regenerate the same-named doc | The doc |
 
-[V] `skills/*/SKILL.md`, `link.sh`. `launch-report` is in `link.sh` but not yet symlinked on this machine until `link.sh` is re-run [V: `ls socialus-plan/.claude/skills`].
+`socialus-next-moves` was retired: it read claude.ai project docs and published Artifacts, against the rule that deliverables are markdown by PR. [V] `skills/*/SKILL.md`, `link.sh`, relinked 2026-10-10.
 
 ### Build skills (Code, in `socialus-web`)
-`ticket` (approved scenario or change -> Issues), `build` (Issue -> TDD -> PR), `diagnose` (root cause before fixing), `respond` (act on review feedback), `design-review` (live visual QA), `review-bundle` (reviewer's first pass from the CI `review-bundle` artifact; five reviewers by concern, or one for small PRs). Cross-cutting: `verify` (evidence before "done"), `author` (writing skills). [V]
+`feature-build` and `pm-review` (above), `ticket` (approved scenario or change -> Issues), `build` (Issue -> TDD -> PR), `diagnose` (root cause before fixing), `respond` (act on review feedback), `design-review` (live visual QA), `review-bundle` (reviewer's first pass from the CI `review-bundle` artifact; five reviewers by concern, or one for small PRs). Cross-cutting: `verify` (evidence before "done"), `author` (writing skills). [V]
 
 ### CI (`socialus-web`, 20 workflows) [V `gh workflow list`]
 - **Gate a merge:** `ci`, `ci-docs-only`, `boundaries`, `issue-lint`, `review`, `migrations (check)`.
@@ -83,46 +91,39 @@ Look first (2-3 precedents), choose the simplest, label the work `Path: well-wor
 ### Generated documents
 | Doc | Generator | Trigger | State |
 |---|---|---|---|
-| `STATUS.md` | `status.sh` via `status.yml` | push + daily 13:05 UTC | **Stale**: header says 2026-10-07; last runs failed [V] |
+| `STATUS.md` | `status.sh` via `status.yml`; or `regen-status` | push + daily 13:05 UTC | Regenerated by hand 2026-10-10; workflow cannot start (billing) [V] |
 | `README.md` (plan) | `view.sh` | `status.yml` | Same workflow [V] |
-| `DASHBOARD.md` + `dashboard/status-dashboard.html` | `dashboard.py` (reads `socialus-web` Issues and PRs via `gh`) | Manual, at handoffs | Regenerated 2026-10-10; shows "0 of 88 done", many stage cells `?` [V] |
+| `handoff/capabilities.md` | `regen-capabilities` | Friday, launches | Not yet run [V] |
+| `DASHBOARD.md` + `dashboard/status-dashboard.html` | `dashboard.py` / `regen-dashboard` | Handoffs | Counts each phase alone (n/N per area); Smoke 0/88; many cells `?` [V] |
 | `handoff/latest.md` | Dispatch `dispatch-handoff` | 5am/5pm | [A] not inspected |
 | Launch reports | `launch-report` skill | Asked; Friday not yet scheduled | No schedule exists [V: no scheduled tasks] |
-| `socialus-ops/README.md` | **none** | by hand | This file |
-| `CLAUDE.md`, `process/*` | **none** | by hand | Authored rules, not snapshots |
+| `socialus-ops/README.md` | `regen-readme` | Process changes | This file |
+| `CLAUDE.md`, `process/*` | none, by design | by hand | Authored rules, not snapshots |
 
 ## 5. Docs are generated
 
-Rule: a top-level doc is a snapshot regenerated from live sources, not maintained. Authored rule files (`CLAUDE.md`, `process/ABSOLUTES.md`, `LESSONS.md`) stay hand-written; they are rules, not state. Everything that describes *state* gets a generator named after it. Today only `STATUS`, plan `README` and `DASHBOARD` have one.
+Rule: a top-level doc is a snapshot regenerated from live sources, not maintained. Authored rule files (`CLAUDE.md`, `process/ABSOLUTES.md`, `LESSONS.md`) stay hand-written; they are rules, not state. Everything that describes *state* gets a generator named after it. Generators now: `STATUS`, plan `README`, `DASHBOARD`, `DECISIONS` (prune only), `capabilities`, this README. `ROADMAP` stays under `sync`; `handoff/latest.md` is made by Dispatch's `dispatch-handoff` skill, which is not in the skills library [V].
 
-## 6. Proposed design (nothing below exists; Phase 2 builds it on approval)
+## 6. Built 2026-10-10 (PM approved the design)
 
-### (a) Split the committee into two skills **[P]**
-- **`feature-plan`** (Cowork, plan repo). Input: the one-sentence request. Runs Stage 0 and the nine roles, writes `planning/briefs/YYYY-MM-DD-slug.md` with status `awaiting-approval`, then **stops**. It may not create a scenario, an Issue or code. Approval is the PM flipping `status: approved` (and choosing size S/M/L) in the brief; the skill refuses to proceed without it.
-- **`feature-build`** (Code, web repo). Input: an `approved` brief. Runs `ticket` -> `build` -> `review-bundle` as one chain, then writes `build-log/reports/<brief-id>.md`: what was built, which acceptance criteria are met (each verified by a named check), what is not, PR links, reviewer findings. It stops at merge-ready; deploy health and smoke append to the same report.
-- **Handoff contract:** the brief's frontmatter (`id`, `status`, `size`, `criteria[]`) is the only interface. Neither skill reads the other's internals.
-- **Why two:** different repos and roles; the stop for approval becomes structural instead of a habit.
+Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet exercised: no brief, report or capabilities file exists, so none of the new skills has run on real work. [V]
 
-### (b) `features-and-functionality` skill **[P]**
-Regenerates "what the app can and can't do" from scratch each run. Inputs: all `build-log/reports/*.md`, open and closed Issues, scenario criteria, latest smoke. Output: one doc with **Can do** (criteria met and smoke-verified), **Partly**, **Can't yet** (wanted, not built), **Gaps in evidence** (closed but no report). Writes `planning/CAPABILITIES.md` and a `capabilities.json` that `dashboard.py` reads, replacing its `?` cells with report-backed stages. `launch-report` becomes a thin view of this file (public bullets and private table) instead of its own research pass. Scheduled Fridays.
-
-### (c) One regenerate-skill per top-level doc **[P]**
-A generator named after the doc, each with the same three steps: regenerate from live sources, prune what no longer applies, label verified/assumed. Proposed set: `regen-readme` (this file), `regen-status`, `regen-dashboard` (wraps `dashboard.py`), `regen-roadmap`, `regen-decisions` (prune superseded lines, keep git as the archive), `regen-handoff`. One shared template in `author` so adding a doc means adding a row, not inventing a pattern. Existing scripts stay; the skills call them.
+**Naming convention going forward:** the phase verb for work (`feature-plan`, `feature-build`, `pm-review`), `regen-<doc>` for a document, `launch-report` kept for its audience. Older single-word skills (`plan`, `build`, `review`, `sync`, `trim`, `ticket`, `diagnose`, `respond`) keep their names; the table in `skills/README.md` is the index. [A] A rename sweep of those is not done.
 
 ## 7. Gaps
 
 ### Verified
-- **STATUS.md is 3 days stale.** Header 2026-10-07; the `status` workflow failed on its last 4 runs, each in 4 seconds. The cause is unknown (logs expired). [V `gh run list`]
-- **Nightly live smoke is red** for 2026-10-10 (3 runs). The guard spec failing is by design; which real spec failed was not determined. [V `gh run list`; cause A]
-- **Dashboard cannot tell progress.** "0 of 88 done" and `?` in most stage cells because stages come from labels, not reports. [V `DASHBOARD.md`]
-- **Council has no skill, no approval gate, no run log.** [V `planning/council/`, `skills/`]
-- **No review roll-up.** Reviewer output lives in each PR body only. [V `process/PIPELINE.md` § reviewer pass]
-- **Process contradiction:** `PIPELINE.md` says "Cowork merges" method PRs; `CLAUDE.md` says self-merge on green lint. [V]
-- **Stale names:** `skills/README.md` and `link.sh` say `ops-pattern`; a duplicate `~/Projects/ops-pattern` checkout exists. [V]
+- **Plan-repo Actions cannot start.** `socialus-plan` is private; every run fails with "recent account payments have failed or your spending limit needs to be increased". This kills `status.yml`, plan `lint.yml` and any scheduled job there. `socialus-web` and `socialus-ops` are public and unaffected. [V annotation on run 38079310793]
+- **`status.sh` was also broken** by an unescaped quote in the SETTLED banner, so fixing billing alone would not have worked. Fixed 2026-10-10. [V]
+- **Nightly live smoke is red** (`socialus-web`, public, so a real failure, not billing). Which spec fails is not determined. [V `gh run list`; cause A]
+- **Dashboard data holes.** Smoke 0/88; "Reviewed" counts a PR with no `Reviewed by:` section as passed (`·`), so 88/88 is not evidence. [V `dashboard.py`]
+- **The new chain has never run.** No brief, no build report, no `capabilities.md`. [V]
+- **Process contradiction:** `PIPELINE.md` says "Cowork merges" method PRs; `CLAUDE.md` says self-merge on green lint. Unresolved; practice has been self-merge. [V]
+- **Stale names remain:** a duplicate `~/Projects/ops-pattern` checkout of this remote; `ops-pattern` in `~/.claude/CLAUDE.md`, `DISPATCH.md` and `PIPELINE.md` paths. [V]
 - **`dashboard/index.html`** in `DISPATCH.md` vs real `dashboard/status-dashboard.html`. [V]
-- **Docs without a generator:** this README, `ROADMAP`, `DECISIONS`, `handoff/latest.md`. [V]
-- **No scheduled launch report**; no scheduled tasks exist in the desktop scheduler. [V `list_scheduled_tasks`]
-- **Missing repos:** `socialus-design` has no remote. [V]
+- **`dispatch-handoff` skill** is not in the library, so it cannot be versioned or regenerated. [V]
+- **No scheduled tasks** exist in the desktop scheduler, so nothing runs the Friday report, `regen-capabilities` or `regen-dashboard`. [V]
+- **`socialus-design`** has no remote. [V]
 
 ### Assumed (not checked)
 - Timezone fix vs the 2026-11-01 DST change; AI first read shadow-only; Sentry DSN unset (beta-watch items from the previous README).
@@ -133,8 +134,9 @@ A generator named after the doc, each with the same three steps: regenerate from
 
 ## 8. What the PM needs to do
 
-1. Approve or amend section 6 so Phase 2 can start.
-2. Say which repo owns method-PR merges (the contradiction above).
+1. Decide how plan-repo Actions get minutes: fix billing, or make the repo public (it holds private planning, so probably not), or run `regen-*` locally.
+2. Run one real feature through `feature-plan` and `feature-build` to prove the chain.
+3. Schedule the Friday run of `regen-capabilities`, `regen-dashboard`, `launch-report`.
 
 ## 9. Commands
 
