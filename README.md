@@ -6,6 +6,8 @@ The operating manual for building SocialUs: who does what, what triggers it, wha
 
 ## 1. The chain
 
+Three layers: build (1), observe (2a), improve the pipeline (2b, proposed, section 7).
+
 ```
 request / story
   -> plan-feature (council: design + plan)  [V] skill, stops at the brief
@@ -110,7 +112,84 @@ Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet ex
 
 **Naming:** verb-object for work, `regen-<doc>` for a document. On 2026-10-10 every skill was renamed to verb-object (`review-draft-scenario`, `review-pr-bundle`, `review-live-design` were three different things all called review). `skills/README.md` is the index. [V]
 
-## 7. Gaps
+## 7. Meta layer: skills that review and improve the pipeline (proposed, nothing here exists yet)
+
+The pipeline has three layers. Layer 1 builds the product. Layer 2a describes what is true. Layer 2b judges the pipeline itself and proposes changes to it. Layers 2a and 2b never build product.
+
+```
+L1  build      plan-feature, run-feature-pipeline, scope-scenario, write-tickets, build-ticket, review-*, ...
+L2a observe    dashboard, STATUS, feature reports, capabilities, launch report, retrospective     [exists]
+L2b improve    score-* skills -> review-pipeline -> PRs to skills / process docs -> PM approves    [P]
+```
+
+### Today's skills by layer [V: `skills/`, `scripts/`, `process/`]
+
+| Layer | What | Notes |
+|---|---|---|
+| **2a observe (meta, exists)** | `regen-dashboard` / `dashboard.py` | counts each phase on its own |
+| | `regen-status` / `status.sh` | STATUS.md |
+| | `regen-feature-report` | criterion-level truth per feature |
+| | `regen-capabilities` | what the app can and cannot do |
+| | `write-launch-report` | public and private launch docs |
+| | `regen-readme`, `regen-decisions`, `sync-roadmap`, `trim-product-docs` | keep docs matching live state |
+| | the 2026-10-10 retrospective by area | one-off; no skill, not repeatable |
+| **Guards (meta, exists, not skills)** | `scripts/lint.sh`, `markers.py`, `never.py`, `risks-due.sh`, `advisor-diff.sh`, `issue-lint`, `review`, `uat-close` | enforce rules; none reports on whether a rule is working |
+| **2b improve (partial)** | `author-skill`, `process/LESSONS.md` | manual: a person notices a failure and writes it down. No scoring, no cadence |
+| **Layer 1 (builds product)** | everything else | |
+
+Observation exists. **Nothing scores the pipeline or proposes a change from a score.** That is the whole gap.
+
+### Proposed layer 2b: six scoring skills and one reviewer
+
+Each `score-*` skill is read-only: it computes one number from live sources, with a window, a green / amber / red threshold, and a trend against the previous run. Thresholds are [A] until two weeks of baseline exist.
+
+| Skill | Signal (scored) | Source | Reading today | Can propose changes to |
+|---|---|---|---|---|
+| `score-rework` | Share of merged PRs needing a fix loop or a follow-up bug within 14 days; Issues reopened | `gh` PRs, Issues, `bug - live:` titles | 7 live bugs filed in 14 days against 157 merged PRs [V] | `build-ticket`, `write-tickets`, `respond-to-review` |
+| `score-pm-overrule` | How often the PM overrules a plan: briefs rejected or resized, `[replaces]` of an agent-made decision, UAT boxes left unticked, `found-by-pm` per `pm-reviewed` | briefs, `DECISIONS.md`, UAT Issues, labels | Not measurable: 0 `found-by-pm` Issues exist and no brief has been run [V]. `record-pm-review` must write these first | `plan-feature`, `scope-scenario`, the council prompts |
+| `score-ci-health` | PRs failing CI on first run; red scheduled workflows; days Actions could not start | `gh run list` | CI: 76 success, 14 failure, 10 cancelled in 14 days; smoke 7 red of 10; plan-repo Actions down on billing [V] | `build-ticket`, CI workflows, `diagnose-bug` |
+| `score-doc-drift` | Docs older than their generator cadence; README, `link.sh` and skills directory disagreeing; scenario status vs Issue state; claims in generated docs vs `gh` | file dates, `gh`, `ls` | STATUS was 3 days stale on 2026-10-10; Smoke column 0/88 because the match is wrong [V] | `regen-*` skills, `sync-roadmap`, workflows |
+| `score-gap-leakage` | Closed Issues whose criteria are unbuilt or unchecked (the F081 and F082 pattern); share of built criteria with no marked check | feature reports | F081 closed with 3 of 9 unbuilt; F082 closed with 1 unmet and 4 unchecked [V] | `write-tickets`, `verify-before-done`, `build-ticket` |
+| `score-review-coverage` | Share of PRs merged with the review skipped; `human-review` PRs merged with no PM look; PM queue age | PR labels and bodies | 39 of 157 merged PRs were `review-skipped`; 65 `human-review` PRs have no `pm-reviewed` [V, 14 days from 2026-09-26] | `review-pr-bundle`, `record-pm-review`, `run-feature-pipeline` |
+
+Considered and left out until there is data: cycle time per phase (needs the report timestamps), cost per feature (needs usage data, [A] available), skill-fit from session transcripts ([A] searchable). Add one only with a source named.
+
+### The reviewer: `review-pipeline`
+
+- **Input:** the latest score from each `score-*` skill, the previous run, and `process/LESSONS.md`.
+- **Does:** ranks signals by how far they are from green and by trend, picks at most three, and for each reads the skills that signal can change.
+- **Output:** one PR per proposed change, to `skills` or `socialus-ops`, each with: the signal and its number, a dated failure example (the `LESSONS.md` format), the exact diff, a predicted effect on the score, and how the next run will show whether it worked. Label `meta-change`.
+- **Trigger:** weekly, after `regen-capabilities` and `regen-dashboard`; or when a score turns red.
+- **Output on a good week:** a short report saying nothing changed and why. No PR for the sake of a PR.
+
+### Governance: nothing edits itself
+
+1. **PM approval is the only merge path for meta PRs.** Docs PRs self-merge on green lint; a `meta-change` PR does not. The PM approves by applying the label `pm-approved` (from the phone, in the GitHub app).
+2. **A guard enforces it** [P]: a workflow in `skills` and `socialus-ops` fails any PR that touches a `score-*` or `review-pipeline` path, or carries `meta-change`, unless `pm-approved` was applied by the repo owner.
+3. **No self-edits.** `review-pipeline` may not propose a change to its own `SKILL.md`, to a `score-*` formula or threshold, or to the guard. Those changes are authored by a person or a separate session and need the same approval.
+4. **Scores are read-only on the product.** `score-*` skills write one report file and nothing else; they never open Issues, relabel, or touch code.
+5. **One change per PR, reversible.** Each PR names the previous behaviour so reverting is one click, and the next run reports the effect or says it cannot yet tell.
+6. **Same method as everything else.** The proposing session classifies the change (`Path: well-worn` or `new territory`), cites precedents, and adds the `LESSONS.md` line.
+
+### Where it sits in the chain
+
+```
+L1 chain runs  ->  L2a reports (dashboard, feature reports, capabilities)
+                        |
+                 score-* x6 read the same sources  ->  score file (dated, with trend)
+                        |
+                 review-pipeline  ->  up to 3 meta-change PRs  ->  PM applies pm-approved  ->  merge
+                        |
+                 next week's scores show whether it helped
+```
+
+### What must exist first [P]
+1. `record-pm-review` writes `found-by-pm`, and `plan-feature` writes `rejected` / `resized` onto briefs, so `score-pm-overrule` has data.
+2. Smoke tied to merge commits, so `score-ci-health` and the dashboard stop reading 0/88.
+3. A `reports/` folder in `socialus-web/build-log` with at least a few weeks of feature reports for `score-gap-leakage` to trend.
+4. The `pm-approved` guard.
+
+## 8. Gaps
 
 ### Verified
 - **Plan-repo Actions cannot start.** `socialus-plan` is private; every run fails with "recent account payments have failed or your spending limit needs to be increased". This kills `status.yml`, plan `lint.yml` and any scheduled job there. `socialus-web` and `socialus-ops` are public and unaffected. [V annotation on run 38079310793]
@@ -124,6 +203,7 @@ Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet ex
 - **`dispatch-handoff` skill** is not in the library, so it cannot be versioned or regenerated. [V]
 - **No scheduled tasks** exist in the desktop scheduler, so nothing runs the Friday report, `regen-capabilities` or `regen-dashboard`. [V]
 - **`socialus-design`** has no remote. [V]
+- **No layer 2b.** Nothing scores the pipeline or proposes a change from a score; `found-by-pm` has never been used (0 Issues). [V]
 
 ### Assumed (not checked)
 - Timezone fix vs the 2026-11-01 DST change; AI first read shadow-only; Sentry DSN unset (beta-watch items from the previous README).
@@ -132,13 +212,13 @@ Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet ex
 - Many open Issues are done but never closed.
 - The 5am/5pm handoff and 9pm queue actually fire; their scheduler was not inspected.
 
-## 8. What the PM needs to do
+## 9. What the PM needs to do
 
 1. Decide how plan-repo Actions get minutes: fix billing, or make the repo public (it holds private planning, so probably not), or run `regen-*` locally.
 2. Run one real feature through `plan-feature` and `run-feature-pipeline` to prove the chain.
 3. Schedule the Friday run of `regen-capabilities`, `regen-dashboard`, `write-launch-report`.
 
-## 9. Commands
+## 10. Commands
 
 ```
 scripts/lint.sh                       # all checkers + fixtures
@@ -147,6 +227,6 @@ python3 scripts/markers.py coverage   # guard coverage
 ./link.sh                             # in the skills repo, after any skill change
 ```
 
-## 10. Changing the method
+## 11. Changing the method
 
 Branch `process-YYYY-MM-DD-slug`, commit `docs: what`, add a `LESSONS.md` line naming the dated failure, open a PR, merge when `lint` is green. This repo is public: nothing secret, legal or personal goes in it.
