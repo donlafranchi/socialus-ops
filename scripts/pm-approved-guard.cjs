@@ -3,7 +3,7 @@
 // applied after the last commit. Usage: node scripts/pm-approved-guard.cjs --self-test
 // LIMIT, stated plainly: agents here act with the owner's own token, so a label applied by an agent also reads as the owner.
 // This is a tripwire and an audit trail (who, when), not a lock. A separate agent identity is the real fix.
-const PROTECTED = [/^score-[^/]+\//, /^review-pipeline\//, /^scripts\/pm-approved-guard\.cjs$/, /^\.github\/workflows\/pm-approved-guard\.yml$/]
+const PROTECTED = [/^score-[^/]+\//, /^review-pipeline\//, /^scripts\/pm-approved-guard\.cjs$/, /^scripts\/score_[^/]+\.py$/, /^scripts\/trial_health\.py$/, /^\.github\/workflows\/pm-approved-guard\.yml$/]
 
 function needsApproval(files, labels, baseHas = () => true) {
   if (labels.includes('meta-change')) return true
@@ -29,6 +29,8 @@ function selfTest() {
   const cases = [
     ['score file', needsApproval(['score-ci-health/SKILL.md'], []), true],
     ['reviewer', needsApproval(['review-pipeline/SKILL.md'], []), true],
+    ['score formulas', needsApproval(['scripts/score_ci_health.py'], []), true],
+    ['trial health', needsApproval(['scripts/trial_health.py'], []), true],
     ['guard itself', needsApproval(['scripts/pm-approved-guard.cjs'], []), true],
     ['meta label', needsApproval(['README.md'], ['meta-change']), true],
     ['plain docs', needsApproval(['README.md', 'plan-feature/SKILL.md'], []), false],
