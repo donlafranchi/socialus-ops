@@ -1,0 +1,38 @@
+name: pm-approved-guard
+# TRIAL (started 2026-10-10). A PR that changes a score-* skill, review-pipeline, this guard, or carries `meta-change`
+# must have `pm-approved` applied by the repo owner after the last commit. Every other PR passes untouched.
+# Tripwire, not a lock: see the LIMIT note in scripts/pm-approved-guard.cjs.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Self-test
+        run: node scripts/pm-approved-guard.cjs --self-test
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const { needsApproval, approvalProblem } = require(`${process.env.GITHUB_WORKSPACE}/scripts/pm-approved-guard.cjs`);
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const files = (await github.paginate(github.rest.pulls.listFiles, { owner, repo, pull_number: pr.number, per_page: 100 })).map((f) => f.filename);
+            const labels = pr.labels.map((l) => l.name);
+            const { execSync } = require('child_process');
+            const baseHas = (f) => { try { execSync(`git cat-file -e origin/${pr.base.ref}:${f}`, { stdio: 'ignore' }); return true; } catch { return false; } };
+            if (!needsApproval(files, labels, baseHas)) { core.info('Not a meta change; nothing to approve.'); return; }
+            const events = await github.paginate(github.rest.issues.listEvents, { owner, repo, issue_number: pr.number, per_page: 100 });
+            const commit = await github.rest.repos.getCommit({ owner, repo, ref: pr.head.sha });
+            const problem = approvalProblem(events, owner, commit.data.commit.committer.date);
+            if (problem) core.setFailed(`Meta change needs the PM: ${problem}.`);
+            else core.info('pm-approved by the owner after the last commit.');
