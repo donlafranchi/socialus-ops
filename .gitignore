@@ -17,3 +17,4 @@ node_modules/
 *.m4a
 *.mp3
 *.wav
+__pycache__/

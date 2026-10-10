@@ -112,9 +112,11 @@ Skills PR: `donlafranchi/skills#4`; dashboard PR: `socialus-plan#59`. Not yet ex
 
 **Naming:** verb-object for work, `regen-<doc>` for a document. On 2026-10-10 every skill was renamed to verb-object (`review-draft-scenario`, `review-pr-bundle`, `review-live-design` were three different things all called review). `skills/README.md` is the index. [V]
 
-## 7. Meta layer: skills that review and improve the pipeline (proposed, nothing here exists yet)
+## 7. Meta layer: skills that review and improve the pipeline (**TRIAL**, started 2026-10-10)
 
-The pipeline has three layers. Layer 1 builds the product. Layer 2a describes what is true. Layer 2b judges the pipeline itself and proposes changes to it. Layers 2a and 2b never build product.
+The pipeline has three layers. > **TRIAL.** The PM's instruction: *stick with this and keep improving it.* Three pieces are built (guard, `score-ci-health`, `score-doc-drift`); four scores and the reviewer are not. Tracker, health and next step: pinned Issue [#89](https://github.com/donlafranchi/socialus-ops/issues/89). Trial review **2026-10-24**: keep, adjust or drop.
+
+Layer 1 builds the product. Layer 2a describes what is true. Layer 2b judges the pipeline itself and proposes changes to it. Layers 2a and 2b never build product.
 
 ```
 L1  build      plan-feature, run-feature-pipeline, scope-scenario, write-tickets, build-ticket, review-*, ...
@@ -145,16 +147,16 @@ Each `score-*` skill is read-only: it computes one number from live sources, wit
 
 | Skill | Signal (scored) | Source | Reading today | Can propose changes to |
 |---|---|---|---|---|
-| `score-rework` | Share of merged PRs needing a fix loop or a follow-up bug within 14 days; Issues reopened | `gh` PRs, Issues, `bug - live:` titles | 7 live bugs filed in 14 days against 157 merged PRs [V] | `build-ticket`, `write-tickets`, `respond-to-review` |
-| `score-pm-overrule` | How often the PM overrules a plan: briefs rejected or resized, `[replaces]` of an agent-made decision, UAT boxes left unticked, `found-by-pm` per `pm-reviewed` | briefs, `DECISIONS.md`, UAT Issues, labels | Not measurable: 0 `found-by-pm` Issues exist and no brief has been run [V]. `record-pm-review` must write these first | `plan-feature`, `scope-scenario`, the council prompts |
-| `score-ci-health` | PRs failing CI on first run; red scheduled workflows; days Actions could not start | `gh run list` | CI: 76 success, 14 failure, 10 cancelled in 14 days; smoke 7 red of 10; plan-repo Actions down on billing [V] | `build-ticket`, CI workflows, `diagnose-bug` |
-| `score-doc-drift` | Docs older than their generator cadence; README, `link.sh` and skills directory disagreeing; scenario status vs Issue state; claims in generated docs vs `gh` | file dates, `gh`, `ls` | STATUS was 3 days stale on 2026-10-10; Smoke column 0/88 because the match is wrong [V] | `regen-*` skills, `sync-roadmap`, workflows |
-| `score-gap-leakage` | Closed Issues whose criteria are unbuilt or unchecked (the F081 and F082 pattern); share of built criteria with no marked check | feature reports | F081 closed with 3 of 9 unbuilt; F082 closed with 1 unmet and 4 unchecked [V] | `write-tickets`, `verify-before-done`, `build-ticket` |
-| `score-review-coverage` | Share of PRs merged with the review skipped; `human-review` PRs merged with no PM look; PM queue age | PR labels and bodies | 39 of 157 merged PRs were `review-skipped`; 65 `human-review` PRs have no `pm-reviewed` [V, 14 days from 2026-09-26] | `review-pr-bundle`, `record-pm-review`, `run-feature-pipeline` |
+| `score-rework` (not built) | Share of merged PRs needing a fix loop or a follow-up bug within 14 days; Issues reopened | `gh` PRs, Issues, `bug - live:` titles | 7 live bugs filed in 14 days against 157 merged PRs [V] | `build-ticket`, `write-tickets`, `respond-to-review` |
+| `score-pm-overrule` (not built) | How often the PM overrules a plan: briefs rejected or resized, `[replaces]` of an agent-made decision, UAT boxes left unticked, `found-by-pm` per `pm-reviewed` | briefs, `DECISIONS.md`, UAT Issues, labels | Not measurable: 0 `found-by-pm` Issues exist and no brief has been run [V]. `record-pm-review` must write these first | `plan-feature`, `scope-scenario`, the council prompts |
+| `score-ci-health` (**trial, built**) | Failed CI runs; red scheduled workflows; smoke red share; repos whose Actions cannot start | `gh run list` | 2026-10-10: CI fail 27.9% (red), smoke 66.7% red (red), plan-repo Actions blocked (red) [V, `scores/`] | `build-ticket`, CI workflows, `diagnose-bug` |
+| `score-doc-drift` (**trial, built**) | Docs older than their generator cadence; skills dirs, `link.sh` and README table disagreeing; README claims vs `gh`; approved scenarios whose Issues are all closed | file dates, `gh`, `ls` | 2026-10-10: 11 drift items (red): 9 approved scenarios with every Issue closed, 1 skill missing from the table, workflow count off by one [V, `scores/`] | `regen-*` skills, `sync-roadmap`, workflows |
+| `score-gap-leakage` (not built) | Closed Issues whose criteria are unbuilt or unchecked (the F081 and F082 pattern); share of built criteria with no marked check | feature reports | F081 closed with 3 of 9 unbuilt; F082 closed with 1 unmet and 4 unchecked [V] | `write-tickets`, `verify-before-done`, `build-ticket` |
+| `score-review-coverage` (not built) | Share of PRs merged with the review skipped; `human-review` PRs merged with no PM look; PM queue age | PR labels and bodies | 39 of 157 merged PRs were `review-skipped`; 65 `human-review` PRs have no `pm-reviewed` [V, 14 days from 2026-09-26] | `review-pr-bundle`, `record-pm-review`, `run-feature-pipeline` |
 
 Considered and left out until there is data: cycle time per phase (needs the report timestamps), cost per feature (needs usage data, [A] available), skill-fit from session transcripts ([A] searchable). Add one only with a source named.
 
-### The reviewer: `review-pipeline`
+### The reviewer: `review-pipeline` (not built; after three scores have two weeks of readings)
 
 - **Input:** the latest score from each `score-*` skill, the previous run, and `process/LESSONS.md`.
 - **Does:** ranks signals by how far they are from green and by trend, picks at most three, and for each reads the skills that signal can change.
@@ -165,7 +167,7 @@ Considered and left out until there is data: cycle time per phase (needs the rep
 ### Governance: nothing edits itself
 
 1. **PM approval is the only merge path for meta PRs.** Docs PRs self-merge on green lint; a `meta-change` PR does not. The PM approves by applying the label `pm-approved` (from the phone, in the GitHub app).
-2. **A guard enforces it** [P]: a workflow in `skills` and `socialus-ops` fails any PR that touches a `score-*` or `review-pipeline` path, or carries `meta-change`, unless `pm-approved` was applied by the repo owner.
+2. **A guard enforces it** (**trial, built**: `.github/workflows/pm-approved-guard.yml` and `scripts/pm-approved-guard.cjs` in both repos; the script proves itself and lint runs the self-test): a workflow fails any PR that touches a `score-*` or `review-pipeline` path, or carries `meta-change`, unless `pm-approved` was applied by the repo owner after the last commit. **Limit:** agents act with the owner's own token, so a label applied by an agent also reads as the owner. It is a tripwire and an audit trail, not a lock; a separate agent identity is the real fix. [V]
 3. **No self-edits.** `review-pipeline` may not propose a change to its own `SKILL.md`, to a `score-*` formula or threshold, or to the guard. Those changes are authored by a person or a separate session and need the same approval.
 4. **Scores are read-only on the product.** `score-*` skills write one report file and nothing else; they never open Issues, relabel, or touch code.
 5. **One change per PR, reversible.** Each PR names the previous behaviour so reverting is one click, and the next run reports the effect or says it cannot yet tell.
@@ -182,6 +184,13 @@ L1 chain runs  ->  L2a reports (dashboard, feature reports, capabilities)
                         |
                  next week's scores show whether it helped
 ```
+
+### How the trial reminds the PM
+
+- **Every Friday** the launch report and the dashboard carry a "Meta-layer trial" block (`scripts/trial_health.py --block`): the tracker link, trial health, the next score to build.
+- **Trial health** = built scores read within 8 days, meta PRs proposed / approved / rejected, and whether any score moved. `late` is printed in the block.
+- **2026-10-24:** that day's report asks keep, adjust or drop.
+- Readings live in `scores/` (`history.tsv` plus a dated report per score); the scripts are `scripts/score_*.py`.
 
 ### What must exist first [P]
 1. `record-pm-review` writes `found-by-pm`, and `plan-feature` writes `rejected` / `resized` onto briefs, so `score-pm-overrule` has data.
