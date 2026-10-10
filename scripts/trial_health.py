@@ -52,23 +52,32 @@ elif not rows:
 else:
     health = 'on schedule'
 nxt = QUEUE[0]
-decision = ''
-if today >= REVIEW_DATE:
-    decision = f'**Trial review is due ({REVIEW_DATE.isoformat()}): keep, adjust or drop?**'
+# tuning notes: the newest scores/tuning/*.md, written by the Friday run
+tdir = os.path.join(ROOT, 'scores', 'tuning')
+tfiles = sorted(f for f in os.listdir(tdir) if f.endswith('.md')) if os.path.isdir(tdir) else []
+if tfiles:
+    t = open(os.path.join(tdir, tfiles[-1])).read()
+    secs = re.split(r'^## ', t, flags=re.M)[1:]
+    tuning = f'Tuning notes ({tfiles[-1][:-3]}):\n' + '\n'.join('- **' + sec.split('\n')[0].strip() + '** ' + ' '.join((l[2:] if l.startswith('- ') else l).strip() for l in sec.split('\n')[1:] if l.strip())[:420] for sec in secs)
 else:
-    decision = f'Trial review: {REVIEW_DATE.isoformat()} ({(REVIEW_DATE - today).days} days).'
+    tuning = 'Tuning notes: none written yet. The Friday run must add `scores/tuning/YYYY-MM-DD.md`.'
+if today >= REVIEW_DATE:
+    decision = f'**Tuning review is due ({REVIEW_DATE.isoformat()}):** for each score, is it measuring what it should (false reds and misses, with examples), what to adjust (threshold, source, formula), and which score to build next.'
+else:
+    decision = f'Tuning review: {REVIEW_DATE.isoformat()} ({(REVIEW_DATE - today).days} days). Each Friday: false reds and misses with examples, what to adjust, which score next.'
 
 lines = [
     f'**Trial health: {health}.** {on_time} of {len(BUILT)} built scores read within the last 8 days: ' + '; '.join(f'{s} ({last or "never"})' for s, last, _, _ in sched) + '.',
     f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open.',
     'Scores that moved: ' + ('; '.join(moved) if moved else 'none yet (needs two readings).'),
     f'Not built yet: ' + ', '.join(f'`{q}`' for q, _ in QUEUE) + f'. Next: `{nxt[0]}`, waiting on {nxt[1]}.',
+    tuning,
     decision,
 ]
 health_md = '\n\n'.join(lines)
 
 if '--block' in sys.argv:
-    print(f'### Meta-layer trial\n\nWhy: "stick with this and keep improving it" (trial started 2026-10-10). Tracker: {TRACKER}\n\n' + health_md)
+    print(f'### Meta-layer trial (tuning the scores)\n\nWhy: "stick with this and keep improving it" (trial started 2026-10-10). Tracker: {TRACKER}\n\n' + health_md)
 elif '--issue' in sys.argv:
     n = sys.argv[sys.argv.index('--issue') + 1]
     body = sh(['gh', 'issue', 'view', n, '-R', OPS, '--json', 'body', '-q', '.body'])
