@@ -6,9 +6,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from score_lib import *
 
 TRACKER = 'https://github.com/donlafranchi/socialus-ops/issues/89'
-BUILT = ['score-ci-health', 'score-doc-drift']
+BUILT = ['score-ci-health', 'score-doc-drift', 'score-gap-leakage']
 QUEUE = [  # next to build first
-    ('score-gap-leakage', 'a few weeks of `build-log/reports/` feature reports (first batch lands 2026-10-10)'),
     ('score-review-coverage', 'a PR-label scan; can start any time, needs `record-pm-review` in use for the PM-look half'),
     ('score-rework', 'smoke tied to merge commits, so a follow-up bug can be traced to the PR that caused it'),
     ('score-pm-overrule', 'briefs recording rejected/resized, and `record-pm-review` writing `found-by-pm`; nothing to measure until the pipeline has run'),
