@@ -184,6 +184,23 @@ echo "$cov" | grep -q '^- \*\*1\*\* — \[' && echo "$cov" | grep -q '^- \*\*2\*
   { echo "lint: coverage map is inert — it does not tell a partial claim from a full one"; fail=1; }
 mk lint "$fx/good.md" "$fx/binds-good/DECISIONS.md" >/dev/null && mk risks "$fx/risks-good" >/dev/null ||
   { echo "lint: marker checker rejects a good fixture"; fail=1; }
+# Criterion reports (2026-10-10): the roll-up must refuse every broken sidecar and compute the good ones exactly.
+cf=scripts/fixtures/criteria
+cout=$(python3 scripts/criteria.py check "$cf/bad" 2>&1)
+for want in 'F911-x.json: criterion 1: built is '"'"'partly' 'F912-x.json: criteria[0]: missing "reviewed"' \
+  'F913-x.md: no F913-x.json' 'F914-x.md: generated block does not match' 'F915-x.json: criterion 1: kind' \
+  'F916-x.json: sits in alpha/' 'F917-x.json: cannot read JSON' 'F918-x.json: criterion 1: built is no, so'; do
+  echo "$cout" | grep -qF "$want" || { echo "lint: criteria checker is inert — it let through: $want"; fail=1; }
+done
+[ "$(echo "$cout" | grep -c '/F9')" -eq 8 ] || { echo "lint: criteria checker reports other than the 8 planted faults"; fail=1; }
+ct=$(mktemp -d); cp -R "$cf/good/." "$ct"
+if python3 scripts/criteria.py rollup "$ct" >/dev/null; then
+  grep -qF '| **All** | 5 | 2/5 (1?) | 1/5 | 1/5 (1?) | 2/5 (1?) | 0/5 (3?) | 0/5 | 3 |' "$ct/README.md" ||
+    { echo "lint: criteria roll-up miscounts the good fixture"; fail=1; }
+else
+  echo "lint: criteria checker rejects the good fixture"; fail=1
+fi
+rm -rf "$ct"
 # The "never" lint (Don, 2026-09-30: the only approved "never" is "never extractive").
 # The checker proves itself on every run; the scan of real docs is off until Don approves
 # the rewording. Turn it on with NEVER_LINT=1.

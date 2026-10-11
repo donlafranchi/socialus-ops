@@ -1,0 +1,4 @@
+{"schema": 1, "feature": "F916", "title": "a plain feature", "area": "beta", "area_source": "guess", "gates": "none", "retired": false, "as_of": "2026-10-09",
+ "criteria": [
+  {"id": "1", "text": "Unknown build", "kind": ["coverage"], "status": "active", "built": "unknown", "checked": "no", "reviewed": "unknown", "shipped": "unknown", "smoked": "unknown", "pm_looked": "no", "issues": [], "note": "Not read"}
+ ]}
