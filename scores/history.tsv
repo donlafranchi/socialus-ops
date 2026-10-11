@@ -3,3 +3,6 @@
 2026-10-10	score-ci-health	smoke_red_pct	66.7	red
 2026-10-10	score-ci-health	actions_blocked	1	red
 2026-10-10	score-doc-drift	drift_items	11	red
+2026-10-11	score-gap-leakage	closed_parent_unmet	16	red
+2026-10-11	score-gap-leakage	untracked_unmet	21	red
+2026-10-11	score-gap-leakage	unchecked_built_pct	74.5	red

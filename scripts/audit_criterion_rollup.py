@@ -35,7 +35,7 @@ lab = lambda i: {l['name'] for l in i['labels']}
 ms_scen = [i for i in ms if 'scenario' in lab(i)]
 gap_re = re.compile(r'^F\d{3} · (criterion|check|guard)', re.I)
 gaps = [i for i in ms if gap_re.match(i['title'])]
-# the 5pm all-feature report run (2026-10-10 17:00 PT = 2026-10-11 00:00Z) filed most gap Issues; four were filed earlier that day
+# the 5pm all-criterion report run (2026-10-10 17:00 PT = 2026-10-11 00:00Z) filed most gap Issues; four were filed earlier that day
 RUN_CUT = '2026-10-11T00:00:00Z'
 before = ms_total - len([g for g in gaps if g['createdAt'] >= RUN_CUT])
 closed_parent_unmet = []
@@ -73,7 +73,7 @@ def last(path, repo=PLAN):
 smoke = (gh_json(['run', 'list', '-R', WEB, '-w', 'smoke-live.yml', '-L', '1', '--json', 'conclusion,createdAt']) or [{}])[0]
 sched = {os.path.basename(os.path.dirname(p)): read(p) for p in glob.glob(os.path.expanduser('~/.claude/scheduled-tasks/*/SKILL.md'))}
 friday = next((t for k, t in sched.items() if 'friday' in k), '')
-sched_reports = 'criteria.py' in friday and 'regen-feature-report' in friday
+sched_reports = 'criteria.py' in friday and 'regen-criterion-report' in friday
 dpy = read(os.path.join(PLAN, 'scripts', 'dashboard.py'))
 has_ramp = "RAMP=['#b91c1c'" in dpy; has_red = 'f.blocked' in dpy
 repo_dates = sh(['git', '-C', webdir, 'log', '--format=%ad', '--date=short', '--', 'build-log/reports']).split()
@@ -117,7 +117,7 @@ w('```')
 w('  scenario criteria (plan)     UAT lists        guards markers / evals       PR review    smoke')
 w('        |                        |                      |                      |           |')
 w('        v                        v                      v                      v           v')
-w('  feature report <--- agent run: regen-feature-report (one per feature, build-log/reports/)')
+w('  criterion report <--- agent run: regen-criterion-report (one per feature, build-log/reports/)')
 w('        |   rows: Built, Reviewed per criterion; roll-up lines GENERATED from the rows')
 w('        v')
 w('  scripts/criteria.py: Checked = markers.py (same as STATUS); Smoked = green smoke after last merge;')
@@ -179,7 +179,7 @@ w('')
 w('| Step | Skill or script | Trigger | Last ran | Status |')
 w('|---|---|---|---|---|')
 w('| Write criteria | Cowork `scope-scenario`, PM approval | a scenario is written | per scenario | **V** |')
-w(f'| Score criteria per feature | `regen-feature-report` | one-time run 2026-10-10; Friday refresh ' + ('scheduled' if sched_reports else 'NOT scheduled') + f'; {len(stale)} reports are stale now | reports last committed {rep_last} | **{V(sched_reports)}** |')
+w(f'| Score criteria per feature | `regen-criterion-report` | one-time run 2026-10-10; Friday refresh ' + ('scheduled' if sched_reports else 'NOT scheduled') + f'; {len(stale)} reports are stale now | reports last committed {rep_last} | **{V(sched_reports)}** |')
 w(f'| Parse and roll up | `scripts/criteria.py` | every dashboard run | with the dashboard | **V** |')
 w(f'| Capabilities doc | `criteria.py --capabilities`, `regen-capabilities` | Friday task | {last("handoff/capabilities.md")} | **V** |')
 w(f'| Dashboard | `dashboard.yml` workflow every 6 hours (also handoffs, Friday) | schedule, dispatch | {last("DASHBOARD.md")}; workflow {wf_run.get("conclusion", "never run")} ({str(wf_run.get("createdAt", ""))[:16]}) | **{V(wf_dash and wf_run.get("conclusion") == "success")}** |')
