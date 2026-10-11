@@ -1,5 +1,7 @@
 # Performance — the method
 
+**As of 2026-10-08** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 How a product keeps itself fast with a PM who does not read code (Don, 2026-10-08: "I want this as a system"). Nothing here belongs to one product; SocialUs is the first. Its pieces live in `socialus-web` (`evals/speed/`, `src/lib/speed/`, `.github/workflows/smoke-live.yml`).
 
 ## What "fast" means

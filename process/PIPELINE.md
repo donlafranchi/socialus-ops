@@ -1,5 +1,7 @@
 # Pipeline — how work moves
 
+**As of 2026-10-10** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 Five kinds of work. Each has its own path; only one goes through design. Everything that isn't listed here is one of these five, or it's a decision (`DECISIONS.md`).
 
 | Kind | What it is | Opened by | Approval | Tracked as |
