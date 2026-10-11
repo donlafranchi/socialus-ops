@@ -72,6 +72,41 @@ if os.path.isdir(pdir):
         if s and s.group(1) in ('approved', 'building') and st.get(m.group(1)) == {'CLOSED'}:
             items.append(('scenario-status', f'{m.group(1)} is {s.group(1)} but every Issue for it is closed'))
 
+# f. socialus-web's committed doc inventory (docs/DOC-INVENTORY.md, rebuilt weekly by regen-doc-inventory)
+import base64
+inv = gh_json(['api', 'repos/' + WEB + '/contents/docs/DOC-INVENTORY.md'])
+inv_text = base64.b64decode(inv['content']).decode() if inv and inv.get('content') else None
+if inv_text is None:
+    items.append(('doc-inventory', 'socialus-web docs/DOC-INVENTORY.md is missing; run regen-doc-inventory'))
+else:
+    am = re.search(r'\*\*As of (\d{4}-\d{2}-\d{2})\.\*\*', inv_text)
+    inv_age = (date.today() - date.fromisoformat(am.group(1))).days if am else None
+    if inv_age is None or inv_age > 8:
+        items.append(('doc-inventory', f'docs/DOC-INVENTORY.md is {inv_age} days old (limit 8)' if inv_age is not None else 'docs/DOC-INVENTORY.md has no as-of date'))
+    for title, label in [('Needs review', 'needs review'), ('Undated', 'undated'), ('Stale or aging', 'stale or aging'),
+                         ('Broken links', 'has a broken link'), ('Dead references', 'has a dead reference')]:
+        sec = re.search(r'^## ' + title + r'\n\n(.*?)(?=^## |\Z)', inv_text, re.M | re.S)
+        for line in (sec.group(1).splitlines() if sec else []):
+            if line.startswith('- '):
+                path = line[2:].split(' (')[0].split(':')[0].strip('`')
+                items.append(('doc-inventory', f'socialus-web {path} {label}' if label.startswith('has') else f'socialus-web {path} is {label}'))
+
+# g. the cross-repo doc gardening (tend-docs): the counts it wrote to scores/tend-docs/latest.json. Thresholds [A], tuned in the Friday notes.
+import json as _json
+_td = os.path.join(PROJECTS, 'socialus-ops', 'scores', 'tend-docs', 'latest.json')
+tend = _json.load(open(_td)) if os.path.exists(_td) else None
+if tend is None:
+    items.append(('tend-docs', 'scores/tend-docs/latest.json is missing; run tend-docs'))
+else:
+    _a = (date.today() - date.fromisoformat(tend['as_of'])).days
+    if _a > 8:
+        items.append(('tend-docs', f'the tend-docs reading is {_a} days old (limit 8)'))
+    for _k, _lim, _what in [('duplicates', 0, 'duplicate or overlapping docs'), ('undated', 10, 'docs with no date'), ('non_conforming', 25, 'docs without the standard header'), ('superseded', 0, 'superseded docs not yet removed'), ('broken_links', 0, 'broken links')]:
+        if tend[_k] > _lim:
+            items.append(('tend-docs', f'{tend[_k]} {_what} (limit {_lim})'))
+    if tend['hand_written_share'] > 0.85:
+        items.append(('tend-docs', f"hand-written share {tend['hand_written_share']:.0%} of {tend['in_scope']} in-scope docs (limit 85%); derivable: {tend['derivable']}"))
+
 n = len(items)
 b = band(n, 2, 6)
 by = {}
@@ -84,7 +119,7 @@ for c, ws in by.items():
     lines.append('')
 if not items:
     lines.append('No drift found.')
-lines += ['Checks: generated-doc age vs cadence; skills dirs vs `link.sh` vs `skills/README.md`; README mentions every skill; README workflow count vs `gh`; approved/building scenarios whose Issues are all closed. Thresholds [A]: green ≤2, amber ≤6.']
+lines += ['Checks: generated-doc age vs cadence; skills dirs vs `link.sh` vs `skills/README.md`; README mentions every skill; README workflow count vs `gh`; approved/building scenarios whose Issues are all closed; socialus-web `docs/DOC-INVENTORY.md` age and the docs it lists. tend-docs counts (duplicates, undated, non-conforming, superseded, broken links, hand-written share) from `scores/tend-docs/latest.json`. Thresholds [A]: green ≤2, amber ≤6.']
 body = '\n'.join(lines) + '\n'
 print(body)
 if '--no-write' not in sys.argv:
