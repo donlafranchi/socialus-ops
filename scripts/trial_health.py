@@ -68,12 +68,20 @@ if today >= REVIEW_DATE:
 else:
     decision = f'Tuning review: {REVIEW_DATE.isoformat()} ({(REVIEW_DATE - today).days} days). Each Friday: false reds and misses with examples, what to adjust, which score next.'
 
+_td = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'scores', 'tend-docs', 'latest.json')
+if os.path.exists(_td):
+    _d = json.load(open(_td))
+    docs_line = f"Doc gardening (`tend-docs`, {_d['as_of']}): {_d['in_scope']} docs in scope, {_d['duplicates']} duplicate, {_d['undated']} undated, {_d['non_conforming']} without the standard header, {_d['broken_links']} broken links, hand-written share {_d['hand_written_share']:.0%}."
+else:
+    docs_line = 'Doc gardening: `tend-docs` has not written scores/tend-docs/latest.json yet.'
+
 lines = [
     f'**Trial health: {health}.** {on_time} of {len(BUILT)} built scores read within the last 8 days: ' + '; '.join(f'{s} ({last or "never"})' for s, last, _, _ in sched) + '.',
     f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open. Bookkeeping (renames, lists, counts) merged without the PM: {len(book)}.',
     'Scores that moved: ' + ('; '.join(moved) if moved else 'none yet (needs two readings).'),
     f'Not built yet: ' + ', '.join(f'`{q}`' for q, _ in QUEUE) + f'. Next: `{nxt[0]}`, waiting on {nxt[1]}.',
     tuning,
+    docs_line,
     decision,
 ]
 health_md = '\n\n'.join(lines)
