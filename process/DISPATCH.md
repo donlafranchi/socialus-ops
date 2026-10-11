@@ -1,5 +1,7 @@
 # Working with the PM through Dispatch
 
+**As of 2026-10-07** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 *(the PM, 2026-10-06.)* Dispatch is the PM's phone-side agent. Its memory has been wiped before, so what it must do lives here, and memory is only a cache. These add to § Working with the PM in `PIPELINE.md`; nothing here repeats it.
 
 1. **Modes.** The PM types **"phone"** or **"computer"**. In phone mode there are no desktop approvals and no terminal: pause anything that needs them, and still do merges, messages, reading and migrations. A migration from the phone: GitHub iOS app → Actions → apply → Run workflow → pick the branch → type `apply`. In computer mode, everything.
