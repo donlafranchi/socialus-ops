@@ -27,6 +27,20 @@ for label, text, pat, limit in [
     elif a > limit:
         items.append(('doc-age', f'{label} is {a} days old (limit {limit})'))
 
+# a2. the handoff snapshot and the roadmap (limits [A], tuned in the Friday notes)
+_st = sorted(f for f in os.listdir(os.path.join(PROJECTS, 'socialus-plan', 'handoff', 'state')) if re.match(r'\d{4}-\d{2}-\d{2}\.md$', f)) if os.path.isdir(os.path.join(PROJECTS, 'socialus-plan', 'handoff', 'state')) else []
+if not _st:
+    items.append(('doc-age', 'socialus-plan/handoff/state: no snapshot'))
+else:
+    _h = (date.today() - date.fromisoformat(_st[-1][:10])).days
+    if _h > 2:
+        items.append(('doc-age', f'newest handoff snapshot ({_st[-1][:10]}) is {_h} days old (limit 2)'))
+_rm = sh(['git', '-C', os.path.join(PROJECTS, 'socialus-plan'), 'log', '-1', '--format=%cs', '--', 'ROADMAP.md']).strip()
+if _rm:
+    _r = (date.today() - date.fromisoformat(_rm)).days
+    if _r > 14:
+        items.append(('doc-age', f'socialus-plan/ROADMAP.md last changed {_r} days ago (limit 14)'))
+
 # b. skills library: directories vs link.sh vs the README table
 sk = os.path.join(PROJECTS, 'skills')
 dirs = {d for d in os.listdir(sk) if os.path.exists(os.path.join(sk, d, 'SKILL.md'))}
