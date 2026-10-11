@@ -1,5 +1,7 @@
 # Lessons — why this repo is the shape it is
 
+**As of 2026-10-11** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 Read before proposing any change to structure or process. Each lesson names the evidence. If a proposed change contradicts one, the proposal must say why the lesson no longer holds.
 
 ## What we learned, May–September 2026
