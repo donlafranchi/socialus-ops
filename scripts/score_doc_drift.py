@@ -61,6 +61,13 @@ for i in iss:
     f = re.match(r'^(F\d{3})\b', i['title'])
     if f:
         st.setdefault(f.group(1), set()).add(i['state'])
+import json as _rj
+_ru = sh(['gh', 'api', 'repos/' + WEB + '/contents/build-log/reports/rollup.json', '-H', 'Accept: application/vnd.github.raw'])
+try:
+    unbuilt = {f['feature']: sum(1 for c in f['criteria'] if c['status'] == 'active' and c['built'] != 'yes') for f in _rj.loads(_ru)['features']}
+except Exception:
+    unbuilt = {}
+info = []  # shown, not counted
 pdir = os.path.join(PROJECTS, 'socialus-plan', 'planning')
 if os.path.isdir(pdir):
     for fn in sorted(os.listdir(pdir)):
@@ -70,7 +77,11 @@ if os.path.isdir(pdir):
         head = open(os.path.join(pdir, fn)).read(800)
         s = re.search(r'^status:\s*(\w+)', head, re.M)
         if s and s.group(1) in ('approved', 'building') and st.get(m.group(1)) == {'CLOSED'}:
-            items.append(('scenario-status', f'{m.group(1)} is {s.group(1)} but every Issue for it is closed'))
+            n_unbuilt = unbuilt.get(m.group(1))
+            if n_unbuilt:
+                items.append(('scenario-status', f'{m.group(1)} is {s.group(1)} but every Issue for it is closed and its report shows {n_unbuilt} criteria not built'))
+            else:
+                info.append(f'{m.group(1)} is {s.group(1)} and every Issue for it is closed; its report shows nothing unbuilt' if n_unbuilt == 0 else f'{m.group(1)} is {s.group(1)} and every Issue for it is closed; no feature report yet')
 
 # f. socialus-web's committed doc inventory (docs/DOC-INVENTORY.md, rebuilt weekly by regen-doc-inventory)
 import base64
@@ -119,6 +130,8 @@ for c, ws in by.items():
     lines.append('')
 if not items:
     lines.append('No drift found.')
+if info:
+    lines += ['**informational, not counted**'] + [f'- {w}' for w in info] + ['']
 lines += ['Checks: generated-doc age vs cadence; skills dirs vs `link.sh` vs `skills/README.md`; README mentions every skill; README workflow count vs `gh`; approved/building scenarios whose Issues are all closed; socialus-web `docs/DOC-INVENTORY.md` age and the docs it lists. tend-docs counts (duplicates, undated, non-conforming, superseded, broken links, hand-written share) from `scores/tend-docs/latest.json`. Thresholds [A]: green ≤2, amber ≤6.']
 body = '\n'.join(lines) + '\n'
 print(body)
