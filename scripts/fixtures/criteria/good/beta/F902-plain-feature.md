@@ -22,6 +22,6 @@ Not built: none. Built unknown: 1. Spec conflict: none.
 
 | Gap | Criteria | Next skill |
 |---|---|---|
-| UNKNOWN | 1 | `regen-feature-report`: find the evidence |
+| UNKNOWN | 1 | `regen-criterion-report`: find the evidence |
 
 <!-- criteria:end -->

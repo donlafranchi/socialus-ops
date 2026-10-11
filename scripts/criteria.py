@@ -20,7 +20,7 @@ CRITERION_KEYS = {'id', 'text', 'kind', 'status', 'issues', 'note', *PHASES}
 # Gap types in the order run-feature-pipeline takes them, and the skill each goes to.
 GAPS = [
     ('SPEC-CONFLICT', '`scope-scenario`; `Path: new territory` goes to the PM as A/B/C'),
-    ('UNKNOWN', '`regen-feature-report`: find the evidence'),
+    ('UNKNOWN', '`regen-criterion-report`: find the evidence'),
     ('NOT-BUILT', '`write-tickets` then `build-ticket`'),
     ('INVARIANT-UNPROVEN', '`write-tickets` (guard) then `build-ticket`'),
     ('NO-CHECK', '`write-tickets` (check) then `build-ticket`, tests seen failing'),
