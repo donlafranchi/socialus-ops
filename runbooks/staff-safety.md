@@ -1,0 +1,82 @@
+# Staff safety runbook
+
+<!-- generated 2026-10-11 by scripts/regen_safety_runbook.py; rulings-hash: baa1b35b7e48; never hand-edited -->
+
+**Generated 2026-10-11 from the moderation rulings (F078, F100, F101, F102 and the child-safety decision of 2026-10-06). Not legal advice; counsel reviews it before launch.** Read it on your phone: find the tier, do the numbered steps, stop.
+
+## Before anything
+
+- **You are never the last line of defence for your own wellbeing.** If an item upsets you, stop, step away, and come back later. Nothing here needs speed except tier 1, and tier 1 needs care more than speed.
+- **Hidden is already done.** The system hides reported content at once, tier 1 and threats regardless of any setting. Your job is the decision and the record, not the rescue.
+- **Never copy, download, screenshot, forward, message or post abusive material, even to report it.** Describe it in words in your report. (IFTAS, a nonprofit for social-web moderators, says to describe it, not store it; Thorn says never to share it even to report it.)
+- **If anyone is in danger right now, call 911.** The platform is not an emergency service.
+
+## The four tiers
+
+| Tier | Name | What lands here |
+|---|---|---|
+| 1 | Child safety or illegal | children (any image of a child, F080), anything illegal |
+| 2 | Threats and harassment | threat of harm, violence, harassment |
+| 3 | Sensitive or adult | nudity; sensitive content other than children (animals and pets, anyone who can't fend for themselves) |
+| 4 | Spam and other | spam, other |
+
+Tier is the highest among a row's open reports. You see it as a badge on the **Posts** page (operators only). Thumbnails for tiers 1 to 3 are blurred until pressed and held.
+
+## Tier 1: child safety or illegal (apparent child sexual abuse material, CSAM)
+
+**What the system did for you:** hid it at any bar, stopped all AI processing of it (suspected tier 1 is never sent to an AI provider), checked any image against known-CSAM hashes first, and sent you a text. It never restores itself and never goes back to the poster for an answer.
+
+1. **Do not open it unless you must.** The text and the row tell you why it is here. View only as much as you need to decide that it is apparent child abuse, once, then stop. Do not zoom, save, or show anyone.
+2. **Do not delete it.** The law requires keeping reported content, in a secure place with limited access, for a year after you report it (18 U.S.C. 2258A, law.cornell.edu/uscode/text/18/2258A). Leave it hidden where it is. If it is not already hidden, hide it (Remove), then do not touch it again.
+3. **Report it to NCMEC as soon as reasonably possible. Do not wait for the Friday batch.** During beta, use NCMEC's public CyberTipline form at **report.cybertip.org**, or call **1-800-THE-LOST (1-800-843-5678)**, 24 hours. The public form cannot take images or video: write what it is, the account, the page address, and the times, in words.
+4. **Write down the report number** NCMEC gives you on the row, with the date and time. Keep that record.
+5. **Do not contact the poster, the reporter or anyone else about it.** Do not investigate, try to identify anyone, or confront anyone.
+6. **Never Approve it.** Approving tier 1 takes an extra confirm on purpose; if you are unsure, do not approve.
+7. **Look after yourself.** Take a break before the next row.
+
+*Rulings this comes from:*
+- 2026-10-06 — Apparent child sexual abuse material (the child-safety tier, severity 1) is a legal requirement, not a moderation judgement: it never auto-restores, never goes back to the poster for an answer, gets no AI processing, and is preserved and reported to NCMEC per the plan. Because a US provider must report apparent CSAM to NCMEC's CyberTipline "as soon as reasonably possible" once aware (18 U.S.C. 2258A) and preserve it (socialus-legal safety/ncmec-plan.md, ruled 2026-10-05). F102's poster-answers-first rule and narrow auto-restore apply to every other tier. Scenario: F102 (criterion 14). The weekend batch does not govern this tier; counsel is asked whether the plan's 72-hour target meets the duty.
+- *F100 criterion 12:* Suspected severity-1 content is never sent to an AI provider (the PM, 2026-10-05). A report whose category is severity 1 (child safety or illegal, F101) skips the AI call; any image is first checked against known-CSAM hashes (Cloudflare's CSAM Scanning Tool), and the row goes to a person with the hash result.
+- *F078 criterion 8:* A children or threat-of-harm flag hides regardless of the bar. Pictures of children are not permitted (F080), and a threat of harm cannot wait on a score, so no bar setting may leave either up.
+- *F102 criterion 14:* Child-safety content (severity 1, apparent CSAM) is a legal tier, not a moderation judgement (18 U.S.C. 2258A; socialus-legal safety/ncmec-plan.md): it never auto-restores, never goes back to the poster for an answer, gets no AI processing (F100 criterion 12), and is preserved and reported to NCMEC per the plan. The poster-answers-first rule (criteria 1–4) and narrow auto-restore (12) apply to every other tier.
+- *F101 criterion 13:* Thumbnails for severities 1–3 are blurred until pressed and held. Severity 4 shows plain.
+
+**Changes at entity setup and at production launch** (a dated reminder is on the dashboard's launch checklist and in the Friday report): register SocialUs with the CyberTipline, switch off the manual form, enable Cloudflare CSAM scanning. Entity specifics live in `socialus-legal`, not here.
+
+## Tier 2: threats and harassment
+
+**What the system did for you:** a threat of harm hides regardless of any bar and texts you at once. Harassment and violence hide at the current bar and wait in the batch.
+
+1. **If someone may be in danger now, call 911 first**, then come back.
+2. **Read the row:** the content, who reported it and why, the AI suggestion (shown beside it; it changes nothing in beta), and the poster's answer if there is one.
+3. **Decide with one tap:** Remove keeps it down; Approve restores it. A threat of harm is not approved without a good reason written on the row.
+4. **For a credible threat, keep the record:** leave the content preserved, note the account and the times, and tell the PM. Whether to contact police is a judgement for the PM and counsel; do not promise anyone a result.
+5. **Do not message the poster yourself.** The poster is told the category and the reporter's reason in the app, and gets one answer (fix and repost, or say the report is wrong).
+
+*Rulings:*
+- *F078 criterion 5:* Threat-of-harm or children-category flags text the PM's phone (SMS) immediately regardless of confidence; everything else queues in a mobile review view for whenever he's free.
+- *F102 criterion 9:* Tuesday to Thursday, with no person: severities 2–4 stay hidden with any answer recorded and wait for the batch. Severity 1 stays hidden and the PM is texted (F078 criterion 5), with no expectation of same-day action.
+- *F102 criterion 10:* Report copy for threat of harm tells the reporter to call 911 if someone is in danger now, kindly, before sending ([public-is-draft]).
+
+## Tier 3: sensitive or adult
+
+1. **Open the row; the picture is blurred until you press and hold.**
+2. **Judge against the rules:** nudity, and sensitive content such as animals and pets or anyone who cannot fend for themselves.
+3. **Remove or Approve.** One tap or one swipe (right approves, left removes). Undo is there for five seconds.
+4. **If you see anything that looks like a child in a sensitive situation, stop and treat it as tier 1.**
+
+## Tier 4: spam and other
+
+1. **Skim, then Approve or Remove.** These are the quickest rows.
+2. **Beta only:** the system restores a tier 4 row by itself, but only when the poster answered, both AI reads say approve at 95% or more, nothing looks like coordinated reporting, and the test set has cleared its targets. Anything else waits for you.
+
+## Tuesday to Thursday
+
+Nobody is expected midweek. Tiers 2 to 4 stay hidden and wait for the Friday to Monday batch. **Only tier 1 and a threat of harm text you.** Even then the expectation is care, not same-day heroics, except that a tier 1 report to NCMEC should not wait for the batch.
+
+## Not decided here
+
+- **Counsel review:** whether the plan's own reporting target meets "as soon as reasonably possible", and whether the preservation steps hold up. The public ruling already says counsel is asked.
+- **Not verified in this runbook:** NCMEC's current provider registration steps (its page would not load for the research; confirm with NCMEC), and an official "do not forward" wording from NCMEC or the Department of Justice (the closest official line is NCMEC's Take It Down FAQ, which tells people not to download or share explicit images).
+- **Planned:** a link to this page from the admin reports page.
+
