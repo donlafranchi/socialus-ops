@@ -25,7 +25,7 @@ Not built: none. Built unknown: none. Spec conflict: none.
 | NO-CHECK | 1 | `write-tickets` (check) then `build-ticket`, tests seen failing |
 | NOT-REVIEWED | 1 | `review-pr-bundle` |
 | NOT-SHIPPED | 1 | CI: `deploy-health` green on the merge commit |
-| NOT-SMOKED | 1 | CI: `smoke-live` tied to the merge commit |
+| NOT-SMOKED | 1 | CI: a `smoke-live` run that covers the route |
 | NOT-LOOKED | 1 | `record-pm-review` (UAT Issue), after the rows above |
 
 <!-- criteria:end -->

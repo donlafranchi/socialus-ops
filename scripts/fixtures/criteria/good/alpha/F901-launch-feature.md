@@ -27,10 +27,10 @@ Not built: 2b, 3. Built unknown: none. Spec conflict: 3. Launch blockers: 2, 2b,
 | Gap | Criteria | Next skill |
 |---|---|---|
 | SPEC-CONFLICT | 3 | `scope-scenario`; `Path: new territory` goes to the PM as A/B/C |
-| NOT-BUILT | 2b, 3 | `write-tickets` then `build-ticket` |
+| NOT-BUILT | 2b | `write-tickets` then `build-ticket` |
 | INVARIANT-UNPROVEN | 2 | `write-tickets` (guard) then `build-ticket` |
 | NOT-REVIEWED | 2 | `review-pr-bundle` |
-| NOT-SMOKED | 1, 2 | CI: `smoke-live` tied to the merge commit |
+| NOT-SMOKED | 1, 2 | CI: a `smoke-live` run that covers the route |
 | NOT-LOOKED | 1, 2 | `record-pm-review` (UAT Issue), after the rows above |
 
 <!-- criteria:end -->
