@@ -172,7 +172,9 @@ The PM's instruction: *stick with this and keep improving it.* The trial is **tu
 | `score-doc-drift` | generated-doc age, skill list vs `link.sh` vs table, README claims, approved scenarios with every Issue closed | last reading 2026-10-10: 11 items (red) [V `scores/`] |
 | `score-gap-leakage` | closed Issues hiding unmet criteria; unmet criteria with no open Issue; built criteria with no marked check | 16 features, 21 criteria, 74.5% (all red; first reading, with tuning notes on what is likely a false red) [V `scores/`] |
 
-**Governance.** PM approval is the only merge path for `meta-change` PRs; a score skill, formula, `trial_health.py` or the guard is never edited by an agent on its own. The guard is a tripwire, not a lock: agents act with the owner's token, and in `skills` (private, Actions blocked) it runs by hand (`scripts/pm-approved-check.cjs`). [V]
+**Governance** (trimmed 2026-10-11, PM-approved). A PR that touches a score skill, a score script, `trial_health.py` or the guard is one of two kinds. `meta-change`: what a score measures or its target changes; the PR body says in plain words what it measured before and after, and only the PM's `pm-approved` label after the last commit merges it. `meta-bookkeeping`: renames, lists, counts, wording; merges on green and the PM never sees it. A protected-file PR with neither label fails until the agent picks one. The guard is a tripwire, not a lock: agents act with the owner's token, so `trial_health.py` counts bookkeeping merges for the Friday review, and in `skills` (private, Actions blocked) the guard runs by hand (`scripts/pm-approved-check.cjs`). Precedents: Kubernetes requires a `kind/*` label on every PR and lets cleanup kinds skip release review (https://prow.k8s.io/command-help, `require-matching-label`); Rust's `rollup=always` marks trivial PRs that merge in batches without their own review (https://forge.rust-lang.org/release/rollups.html); Dependabot's `automerge` label (https://docs.github.com/en/code-security/dependabot). [V]
+
+**Still to build from the same ruling:** a Pipeline health panel at the top of the daily dashboard showing only the two numbers the PM owns, docs current (stale or undated docs under 5) and overrule rate (how often the PM reverses an agent's plan or recommendation; lower is better); and three silent alarms, main green (95%+), reviews happen (90%+), nothing closes half-built (0), surfaced to the PM only if one stays red. Tracked in the Issue this ruling opened. [P]
 
 **Reminder.** Every Friday the launch report and the dashboard carry a "Meta-layer trial" block (`trial_health.py --block`) and the run writes `scores/tuning/YYYY-MM-DD.md`.
 
@@ -186,7 +188,6 @@ The PM's instruction: *stick with this and keep improving it.* The trial is **tu
 - **Checked is 17%** (40 of 235 criteria have a marked test). [V]
 - **Two criterion-report tracks** (section 4): the markdown parser the dashboard reads, and the JSON-sidecar tool in this repo with `socialus-web` #659 and `skills` #17 open. #17 also edits `regen-feature-report`, which is now `regen-criterion-report`, so it will conflict. [V]
 - **The guard cannot run in `skills`** (private; Actions blocked on billing). Merges there rely on the by-hand check. [V]
-- **Open meta-change items waiting on the PM:** `scripts/trial_health.py` still counts two built scores and lists `score-gap-leakage` as next; `score-doc-drift/SKILL.md` still names `regen-feature-report`. Both are guard-protected, so each is a `meta-change` PR for the PM's `pm-approved`. [V]
 - **Process contradiction:** `PIPELINE.md` says "Cowork merges" method PRs; `CLAUDE.md` says self-merge on green lint. Practice has been self-merge. [V]
 - **Stale names:** `~/Projects/ops-pattern` duplicate checkout; `ops-pattern` in `~/.claude/CLAUDE.md`, `DISPATCH.md` and `PIPELINE.md` paths; `dashboard/index.html` in `DISPATCH.md` vs the real `status-dashboard.html`. [V]
 - **`dispatch-handoff`** is not in the skills library. **`socialus-design`** has no remote. [V]
@@ -201,8 +202,7 @@ The PM's instruction: *stick with this and keep improving it.* The trial is **tu
 
 1. Tick boxes on the phone checklist (#519), launch-gated sittings first.
 2. Approve or answer: the moderation scoring A/B/C, the Charter A/B/C, the F092 wording, the worktree cleanup.
-3. Apply `pm-approved` to the two open `meta-change` PRs if they look right, so the trial's health numbers stay true.
-4. Choose one criterion-report format (markdown parser or JSON sidecar).
+3. Choose one criterion-report format (markdown parser or JSON sidecar).
 
 ## 10. Commands
 

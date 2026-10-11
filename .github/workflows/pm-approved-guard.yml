@@ -1,6 +1,7 @@
 name: pm-approved-guard
-# TRIAL (started 2026-10-10). A PR that changes a score-* skill, review-pipeline, this guard, or carries `meta-change`
-# must have `pm-approved` applied by the repo owner after the last commit. Every other PR passes untouched.
+# TRIAL (started 2026-10-10; trimmed 2026-10-11, PM-approved). A PR that changes a score-* skill, review-pipeline, a score script,
+# trial_health.py or this guard is `meta-change` (what a score measures or its target changes: the repo owner's `pm-approved`
+# after the last commit) or `meta-bookkeeping` (renames, lists, counts: merges on green). Neither label fails. Every other PR passes.
 # Tripwire, not a lock: see the LIMIT note in scripts/pm-approved-guard.cjs.
 on:
   pull_request:
@@ -23,14 +24,17 @@ jobs:
       - uses: actions/github-script@v8
         with:
           script: |
-            const { needsApproval, approvalProblem } = require(`${process.env.GITHUB_WORKSPACE}/scripts/pm-approved-guard.cjs`);
+            const { metaKind, approvalProblem, UNLABELLED } = require(`${process.env.GITHUB_WORKSPACE}/scripts/pm-approved-guard.cjs`);
             const { owner, repo } = context.repo;
             const pr = context.payload.pull_request;
             const files = (await github.paginate(github.rest.pulls.listFiles, { owner, repo, pull_number: pr.number, per_page: 100 })).map((f) => f.filename);
             const labels = pr.labels.map((l) => l.name);
             const { execSync } = require('child_process');
             const baseHas = (f) => { try { execSync(`git cat-file -e origin/${pr.base.ref}:${f}`, { stdio: 'ignore' }); return true; } catch { return false; } };
-            if (!needsApproval(files, labels, baseHas)) { core.info('Not a meta change; nothing to approve.'); return; }
+            const kind = metaKind(files, labels, baseHas);
+            if (kind === 'plain') { core.info('Not a meta change; nothing to approve.'); return; }
+            if (kind === 'bookkeeping') { core.info('meta-bookkeeping (renames, lists, counts); merges on green without the PM.'); return; }
+            if (kind === 'unlabelled') { core.setFailed(`Meta PR: ${UNLABELLED}.`); return; }
             const events = await github.paginate(github.rest.issues.listEvents, { owner, repo, issue_number: pr.number, per_page: 100 });
             const commit = await github.rest.repos.getCommit({ owner, repo, ref: pr.head.sha });
             const problem = approvalProblem(events, owner, commit.data.commit.committer.date);

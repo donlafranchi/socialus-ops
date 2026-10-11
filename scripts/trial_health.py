@@ -35,6 +35,9 @@ proposed = len(prs)
 approved = sum(1 for p in prs if p['mergedAt'])
 rejected = sum(1 for p in prs if p['state'] == 'CLOSED' and not p['mergedAt'])
 open_ = sum(1 for p in prs if p['state'] == 'OPEN')
+book = []
+for repo in (SKILLS, OPS):
+    book += gh_json(['pr', 'list', '-R', repo, '-l', 'meta-bookkeeping', '-s', 'merged', '-L', '100', '--json', 'number']) or []
 
 # 3. did any score move
 moved = []
@@ -68,7 +71,7 @@ else:
 
 lines = [
     f'**Trial health: {health}.** {on_time} of {len(BUILT)} built scores read within the last 8 days: ' + '; '.join(f'{s} ({last or "never"})' for s, last, _, _ in sched) + '.',
-    f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open.',
+    f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open. Bookkeeping (renames, lists, counts) merged without the PM: {len(book)}.',
     'Scores that moved: ' + ('; '.join(moved) if moved else 'none yet (needs two readings).'),
     f'Not built yet: ' + ', '.join(f'`{q}`' for q, _ in QUEUE) + f'. Next: `{nxt[0]}`, waiting on {nxt[1]}.',
     tuning,
