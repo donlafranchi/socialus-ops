@@ -1,0 +1,8 @@
+{"schema": 1, "feature": "F901", "title": "a launch feature", "area": "alpha", "area_source": "label", "gates": "launch", "retired": false, "as_of": "2026-10-10",
+ "criteria": [
+  {"id": "1", "text": "Something works", "kind": ["behavior"], "status": "active", "built": "yes", "checked": "yes", "reviewed": "yes", "shipped": "yes", "smoked": "unknown", "pm_looked": "no", "issues": [], "note": "Built in #1 [V]"},
+  {"id": "2", "text": "Nothing leaks", "kind": ["invariant"], "status": "active", "built": "yes", "checked": "no", "reviewed": "no", "shipped": "yes", "smoked": "unknown", "pm_looked": "no", "issues": [12], "note": "No standing guard | yet"},
+  {"id": "2b", "text": "A thing not built", "kind": ["behavior", "external"], "status": "active", "built": "no", "checked": "no", "reviewed": "no", "shipped": "no", "smoked": "no", "pm_looked": "no", "issues": [13], "note": "Missing"},
+  {"id": "3", "text": "Collides with a ruling", "kind": ["behavior"], "status": "spec-conflict", "built": "no", "checked": "no", "reviewed": "no", "shipped": "no", "smoked": "no", "pm_looked": "no", "issues": [], "note": "SPEC-CONFLICT"},
+  {"id": "4", "text": "Replaced later", "kind": ["behavior"], "status": "retired", "built": "yes", "checked": "no", "reviewed": "no", "shipped": "yes", "smoked": "unknown", "pm_looked": "no", "issues": [], "note": "Overtaken"}
+ ]}
