@@ -72,6 +72,25 @@ if os.path.isdir(pdir):
         if s and s.group(1) in ('approved', 'building') and st.get(m.group(1)) == {'CLOSED'}:
             items.append(('scenario-status', f'{m.group(1)} is {s.group(1)} but every Issue for it is closed'))
 
+# f. socialus-web's committed doc inventory (docs/DOC-INVENTORY.md, rebuilt weekly by regen-doc-inventory)
+import base64
+inv = gh_json(['api', 'repos/' + WEB + '/contents/docs/DOC-INVENTORY.md'])
+inv_text = base64.b64decode(inv['content']).decode() if inv and inv.get('content') else None
+if inv_text is None:
+    items.append(('doc-inventory', 'socialus-web docs/DOC-INVENTORY.md is missing; run regen-doc-inventory'))
+else:
+    am = re.search(r'\*\*As of (\d{4}-\d{2}-\d{2})\.\*\*', inv_text)
+    inv_age = (date.today() - date.fromisoformat(am.group(1))).days if am else None
+    if inv_age is None or inv_age > 8:
+        items.append(('doc-inventory', f'docs/DOC-INVENTORY.md is {inv_age} days old (limit 8)' if inv_age is not None else 'docs/DOC-INVENTORY.md has no as-of date'))
+    for title, label in [('Needs review', 'needs review'), ('Undated', 'undated'), ('Stale or aging', 'stale or aging'),
+                         ('Broken links', 'has a broken link'), ('Dead references', 'has a dead reference')]:
+        sec = re.search(r'^## ' + title + r'\n\n(.*?)(?=^## |\Z)', inv_text, re.M | re.S)
+        for line in (sec.group(1).splitlines() if sec else []):
+            if line.startswith('- '):
+                path = line[2:].split(' (')[0].split(':')[0].strip('`')
+                items.append(('doc-inventory', f'socialus-web {path} {label}' if label.startswith('has') else f'socialus-web {path} is {label}'))
+
 n = len(items)
 b = band(n, 2, 6)
 by = {}
@@ -84,7 +103,7 @@ for c, ws in by.items():
     lines.append('')
 if not items:
     lines.append('No drift found.')
-lines += ['Checks: generated-doc age vs cadence; skills dirs vs `link.sh` vs `skills/README.md`; README mentions every skill; README workflow count vs `gh`; approved/building scenarios whose Issues are all closed. Thresholds [A]: green ≤2, amber ≤6.']
+lines += ['Checks: generated-doc age vs cadence; skills dirs vs `link.sh` vs `skills/README.md`; README mentions every skill; README workflow count vs `gh`; approved/building scenarios whose Issues are all closed; socialus-web `docs/DOC-INVENTORY.md` age and the docs it lists. Thresholds [A]: green ≤2, amber ≤6.']
 body = '\n'.join(lines) + '\n'
 print(body)
 if '--no-write' not in sys.argv:
