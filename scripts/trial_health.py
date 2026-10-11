@@ -6,9 +6,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from score_lib import *
 
 TRACKER = 'https://github.com/donlafranchi/socialus-ops/issues/89'
-BUILT = ['score-ci-health', 'score-doc-drift']
+BUILT = ['score-ci-health', 'score-doc-drift', 'score-gap-leakage']
 QUEUE = [  # next to build first
-    ('score-gap-leakage', 'a few weeks of `build-log/reports/` feature reports (first batch lands 2026-10-10)'),
     ('score-review-coverage', 'a PR-label scan; can start any time, needs `record-pm-review` in use for the PM-look half'),
     ('score-rework', 'smoke tied to merge commits, so a follow-up bug can be traced to the PR that caused it'),
     ('score-pm-overrule', 'briefs recording rejected/resized, and `record-pm-review` writing `found-by-pm`; nothing to measure until the pipeline has run'),
@@ -35,6 +34,9 @@ proposed = len(prs)
 approved = sum(1 for p in prs if p['mergedAt'])
 rejected = sum(1 for p in prs if p['state'] == 'CLOSED' and not p['mergedAt'])
 open_ = sum(1 for p in prs if p['state'] == 'OPEN')
+book = []
+for repo in (SKILLS, OPS):
+    book += gh_json(['pr', 'list', '-R', repo, '-l', 'meta-bookkeeping', '-s', 'merged', '-L', '100', '--json', 'number']) or []
 
 # 3. did any score move
 moved = []
@@ -75,7 +77,7 @@ else:
 
 lines = [
     f'**Trial health: {health}.** {on_time} of {len(BUILT)} built scores read within the last 8 days: ' + '; '.join(f'{s} ({last or "never"})' for s, last, _, _ in sched) + '.',
-    f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open.',
+    f'Meta PRs: {proposed} proposed, {approved} approved and merged, {rejected} rejected, {open_} open. Bookkeeping (renames, lists, counts) merged without the PM: {len(book)}.',
     'Scores that moved: ' + ('; '.join(moved) if moved else 'none yet (needs two readings).'),
     f'Not built yet: ' + ', '.join(f'`{q}`' for q, _ in QUEUE) + f'. Next: `{nxt[0]}`, waiting on {nxt[1]}.',
     tuning,

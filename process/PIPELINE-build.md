@@ -1,5 +1,7 @@
 # The build pipeline: fifteen steps, intake to the PM's look
 
+**As of 2026-10-10** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 *(The PM approved the 15-step shape, 2026-10-06. This section replaces § Paths in `process/PIPELINE.md`; everything else in that file stands. Facts below were read on 2026-10-06 from `socialus-web` main; anything assumed is marked as an assumption.)*
 
 **The speed idea, in one line:** builds are the only thing the PM's machine has to do. Browser work moves to CI (`socialus-web` is public, so standard-runner Actions minutes are free), one capture run per area batch feeds every reviewer, reviewers run as parallel subagents that only find problems, the lane fixes everything in one pass, and the PM sees one area at a time.
