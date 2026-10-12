@@ -6,22 +6,28 @@
 
 ```mermaid
 flowchart TD
-  A[Idea] --> B[Imagine / Unplaced<br/>waiting room]
-  B --> C[Product spine<br/>what each thing is]
-  C --> D[Planning filter<br/>council + brief]
-  D -->|PM approves| E[Approved scenario<br/>criteria + rulings inline]
-  E --> F[Tickets]
-  F --> G[Build, test first]
-  G --> H[Review]
-  H --> I[Merge and deploy]
-  I --> J[Handoff and dashboard]
-  J --> K[Weekly refine pass]
-  K -.condense, clarify.-> C
-  D -.new territory: A/B/C.-> PM((PM))
-  G -.escalation.-> PM
-  H -.needs a call.-> PM
-  J -.waiting on you.-> PM
-  PM -.ruling.-> E
+  subgraph S1[1 Shape]
+    direction LR
+    A[Idea] --> B[Imagine /<br/>Unplaced] --> C[Product<br/>spine]
+  end
+  subgraph S2[2 Plan]
+    direction LR
+    D[Planning<br/>filter] --> E[Approved scenario<br/>rulings inline] --> F[Tickets]
+  end
+  subgraph S3[3 Build]
+    direction LR
+    G[Build,<br/>test first] --> H[Review] --> I[Merge and<br/>deploy]
+  end
+  subgraph S4[4 Learn]
+    direction LR
+    J[Handoff and<br/>dashboard] --> K[Weekly<br/>refine pass]
+  end
+  S1 --> S2 --> S3 --> S4
+  K -. condense .-> C
+  PM((PM)) -. rules, approves .-> E
+  D -. A/B/C .-> PM
+  J -. waiting on you .-> PM
+  G -. escalation .-> PM
 ```
 
 ## How we build, step by step
