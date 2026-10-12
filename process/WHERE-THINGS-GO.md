@@ -27,7 +27,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 ## Generated: human docs, never edited
 
-**House style for every human view:** each section opens with 1–3 plain lines, the key phrase in bold (what we do and why); below it a folded `<details><summary>Details</summary>` block holds only what the PM might look up. No scripts, paths or commands: the how stays in agent docs. With every block folded, the overviews fit about one phone screen. Template: the `regen-readme` skill. Who reads what, PM or agent, and both skeletons: `process/PM-AND-AGENTS.md`.
+**House style for every human view:** each section opens with 1–3 plain lines, the key phrase in bold (what we do and why); below it a folded `<details><summary>Details</summary>` block holds only what the PM might look up. No scripts, paths or commands: the how stays in agent docs. With every block folded, the overviews fit about one phone screen. Template: the `regen-readme` skill. Who reads what: `process/PM-AND-AGENTS.md`; both skeletons: `~/.claude/templates/patterns.md` § Docs.
 
 | Snapshot | Built by | When |
 |---|---|---|
