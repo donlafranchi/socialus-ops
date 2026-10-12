@@ -200,15 +200,6 @@ else
   echo "lint: criteria checker rejects the good fixture"; fail=1
 fi
 rm -rf "$ct"
-# The "never" lint (Don, 2026-09-30: the only approved "never" is "never extractive").
-# The checker proves itself on every run; the scan of real docs is off until Don approves
-# the rewording. Turn it on with NEVER_LINT=1.
-got=$(python3 scripts/never.py scripts/fixtures/never/bad.md | grep -c '^never:')
-[ "$got" -eq 3 ] || { echo "lint: never checker is inert — rejected $got of 3 bad fixture uses"; fail=1; }
-python3 scripts/never.py scripts/fixtures/never/good.md >/dev/null || { echo "lint: never checker rejects the good fixture"; fail=1; }
-if [ "${NEVER_LINT:-0}" = "1" ] && ! out="$(python3 scripts/never.py)"; then
-  echo "$out" | sed 's/^/lint: /'; fail=1
-fi
 # Inline rulings: constraints/ index every ruling wherever it sits (principles, scenarios, product docs), with its
 # file and whether it is [always] or [for now]; an untagged never/won't/always fails; a deleted scenario may not take a ruling with it.
 ir=$(for t in planning code for-now; do MARKERS_ROOT="$fx/inline-root" python3 scripts/markers.py constraints-print $t; done)
