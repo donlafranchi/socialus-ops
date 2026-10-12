@@ -8,7 +8,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 |---|---|---|---|---|
 | Principle: the why behind the Charter and rulings | `PRINCIPLES.md` (the lint fails any non-principle and names its home) | PM rules; planning agent words it | Reworded in place as rulings sharpen it; old wording pruned (15k) | Dated rulings, copy, criteria, process, history |
 | Never-break rules | `product/ABSOLUTES.md`; method: `process/ABSOLUTES.md` here | PM | Four-harms test admits (3k) | Preferences, feature rules |
-| Dated ruling with `[binds]` | Under `## Rulings` in the scenario it governs; moves verbatim to the spine or system doc when the scenario ships | PM rules; planning agent records | Words never edited; deleted when superseded (its scope's budget) | Rationale essays, copy strings, who-said-it |
+| Dated ruling with `[binds]`; one that says never / won't / always / anywhere also says `[always]` (every version) or `[for now]` (revisited at the next release) | Under `## Rulings` in the scenario it governs; moves verbatim to the spine or system doc when the scenario ships (the lint blocks deleting it first). A ruling spanning many features goes to the area's spine doc or becomes a principle, never one scenario | PM rules; planning agent records | Words never edited; deleted when superseded (its scope's budget) | Rationale essays, copy strings, who-said-it |
 | What a thing is, and its status | `product/` spine: nouns, verbs, surfaces | planning agent | Fixed the session a mismatch is seen (30k each) | A second description |
 | How a thing works | `product/systems/` | planning agent | `trim-product-docs` (10k each) | Whether it ships |
 | Acceptance criteria | the scenario file | planning agent | Amended in place; deleted on ship (8k) | Restated rulings |
@@ -27,7 +27,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 ## Generated: human docs, never edited
 
-**House style for every human view:** each section opens with 1–3 plain lines, the key phrase in bold (what we do and why); below it a folded `<details><summary>Details</summary>` block holds only what the PM might look up. No scripts, paths or commands: the how stays in agent docs. With every block folded, the overviews fit about one phone screen. Template: the `regen-readme` skill.
+**House style for every human view:** each section opens with 1–3 plain lines, the key phrase in bold (what we do and why); below it a folded `<details><summary>Details</summary>` block holds only what the PM might look up. No scripts, paths or commands: the how stays in agent docs. With every block folded, the overviews fit about one phone screen. Template: the `regen-readme` skill. Who reads what, PM or agent, and both skeletons: `process/PM-AND-AGENTS.md`.
 
 | Snapshot | Built by | When |
 |---|---|---|
@@ -36,6 +36,8 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or the weekly full screenshot run's CI artifact; never committed |
 | This repo's README: a workflow diagram, then one step per box | `regen-readme` | After a process change; committed |
 | `STATUS.md`, plan README, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
+| **`[for now]` review list**: every ruling to revisit at the next release | `markers.py constraints` → `constraints/for-now.md` | With constraints; the release-planning pass reads it |
+| **Lost since last look**: approved criteria that left, stopped being built, or lost their test | `scripts/dashboard.py` | With the dashboard |
 | Capabilities, criterion reports, launch report | `regen-*` skills | On request; not committed |
 | Build history | git and PR bodies | Never written as files |
 
