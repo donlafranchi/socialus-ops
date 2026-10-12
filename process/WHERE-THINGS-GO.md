@@ -29,8 +29,11 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 | Snapshot | Built by | When |
 |---|---|---|
+| **Where we are**: the dashboard | `regen-dashboard` | Each handoff; committed |
+| **Where we're going**: the dashboard's Now / Next / Later section, from scenario `status` + `rank` and Issue milestones (replaces `ROADMAP.md`) | `scripts/dashboard.py` | With the dashboard |
+| **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or nightly CI artifact; never committed |
 | `STATUS.md`, READMEs, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
-| Dashboard, capabilities, roadmap (from scenario `rank`), criterion reports, launch report | `regen-*` skills | On request; not committed |
+| Capabilities, criterion reports, launch report | `regen-*` skills | On request; not committed |
 | Build history | git and PR bodies | Never written as files |
 
 ## Refinement
@@ -40,4 +43,4 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 **Leaving the junk drawer:** every item goes to its row above, an open-question marker, `IMAGINE.md`, an Issue, or is deleted. The line is then removed, never copied or annotated.
 
-**Tests in order:** Is it why? Use a principle. Did the PM rule it on a date? Use a ruling. Does it have a noun, verb or surface? Use the spine. Is it a pass/fail line? Use the scenario. Is it words members read? Use copy. Is it how agents work? Use method. Is it for a human to look at? Generate it. Still unsure? Use the junk drawer, and don't stall.
+**Tests in order:** Is it why? Use a principle. Did the PM rule it on a date? Use a ruling. Does it have a noun, verb or surface? Use the spine. Is it a pass/fail line? Use the scenario. Is it words members read? Use copy. Is it how agents work? Use method. Is it for a human to look at? It is the dashboard or the storyboard, so generate it. Still unsure? Use the junk drawer, and don't stall.
