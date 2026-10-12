@@ -152,6 +152,17 @@ Nothing blocks it, and nothing should — his plan has no protection rules, and 
 
 Machine-specific rules (which container runtime, for instance) live in `~/.claude/CLAUDE.md`, not here.
 
+## Generated files
+
+*(Path: well-worn, 2026-10-11.)* Precedents: [trunk-based development](https://trunkbaseddevelopment.com/), GitHub Linguist's [`linguist-generated`](https://github.com/github-linguist/linguist/blob/main/docs/overrides.md) (generated files are marked, not reviewed), and the lockfile rule "regenerate, don't merge" ([npm `package-lock.json`](https://docs.npmjs.com/cli/v10/configuring-npm/package-lock-json)).
+
+- **Feature PRs never commit generated files**: `DASHBOARD.md`, `STATUS.md`, `README.md`, `dashboard/status-dashboard.html`. Only the workflow or the 5am/5pm handoff regenerates them, on main, in a commit whose subject starts `docs: regenerate`. `scripts/lint.sh` fails a PR whose diff touches one otherwise.
+- **Carve-out:** `constraints/` and `PLATFORM-*.md` stay with the PR that changes their markers; `markers.py` already fails a PR that leaves them stale.
+- **A branch that falls behind main merges main in.** It does not rebase.
+- **Manual edits to shared files** (e.g. `CLAUDE.md` milestones) go in their own small PR and merge fast.
+- **main never waits for feature branches.**
+- **A conflict in a generated file is resolved by regenerating it**, never by merging it.
+
 ## Accepted risk
 
 A lint finding ruled acceptable gets recorded once and stops being re-argued. The ruling is the dated line in `DECISIONS.md`; `accepted-risks/` holds one JSON file per finding so an advisor run can be diffed against it — `bash scripts/advisor-diff.sh <export.json>` prints only what isn't already ruled on, plus anything past review.

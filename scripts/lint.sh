@@ -221,6 +221,15 @@ for f in scripts/score_lib.py scripts/score_ci_health.py scripts/score_doc_drift
   python3 -m py_compile "$f" 2>/dev/null || { echo "lint: $f does not compile"; fail=1; }
 done
 
+# Generated files: a feature PR never commits them; only the regen (workflow or handoff, subject "docs: regenerate…") does.
+# constraints/ and PLATFORM-*.md are not listed: markers.py already makes the PR that changes a marker carry them.
+if [ -f STATUS.md ] && base=$(git merge-base origin/main HEAD 2>/dev/null) && [ "$base" != "$(git rev-parse HEAD)" ]; then
+  gen=$(git diff --name-only "$base" HEAD -- DASHBOARD.md STATUS.md README.md dashboard/status-dashboard.html)
+  if [ -n "$gen" ] && [ -n "$(git log --no-merges --format=%s "$base..HEAD" | grep -v '^docs: regenerate')" ]; then
+    echo "$gen" | sed 's/^/lint: generated file in a feature PR (merge main in, never commit it) — /'; fail=1
+  fi
+fi
+
 if [ "$fail" -ne 0 ]; then
   echo "lint: FAILED"
   exit 1
