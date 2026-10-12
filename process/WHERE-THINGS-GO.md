@@ -1,6 +1,6 @@
 # Where things go
 
-Read this every session, before you write anything down. **Each kind of thing has one home.** Agent docs hold current understanding plus the why, never history: git is the history. Human docs are generated snapshots and are never hand-kept. Every maintained doc has a size budget. When a doc passes 80% of its budget, condense it in the same PR that adds to it. If two homes seem to fit, pick the first row that matches. If none fits, use the junk drawer. Paths mean the project's planning repo unless another repo is named. *Draft: rows marked (proposed) wait on a PM call.*
+Read this every session, before you write anything down. **Each kind of thing has one home.** Agent docs hold current understanding plus the why, never history: git is the history. Human docs are generated snapshots and are never hand-kept. Every maintained doc has a size budget. When a doc passes 80% of its budget, condense it in the same PR that adds to it. If two homes seem to fit, pick the first row that matches. If none fits, use the junk drawer. Paths mean the project's planning repo unless another repo is named. Ruled 2026-10-12 (planning repo `RULINGS.md`).
 
 ## Maintained: agent docs
 
@@ -8,7 +8,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 |---|---|---|---|---|
 | Principle: the why behind mission and rulings | `DECISIONS.md` | PM rules; planning agent words it | Reworded in place as rulings sharpen it; old wording pruned (15k) | Dated rulings, copy, criteria, process, history |
 | Never-break rules | `product/ABSOLUTES.md`; method: `process/ABSOLUTES.md` here | PM | Four-harms test admits (3k) | Preferences, feature rules |
-| Dated feature ruling with `[binds]` | `RULINGS.md` (proposed; today `DECISIONS.md`) | PM rules; planning agent records | Deleted when superseded, or once shipped and stated in the spine or code (40k) | Rationale essays, copy strings, who-said-it |
+| Dated feature ruling with `[binds]` | `RULINGS.md` | PM rules; planning agent records | Deleted when superseded, or once shipped and stated in the spine or code (40k) | Rationale essays, copy strings, who-said-it |
 | What a thing is, and its status | `product/` spine: nouns, verbs, surfaces | planning agent | Fixed the session a mismatch is seen (30k each) | A second description |
 | How a thing works | `product/systems/` | planning agent | `trim-product-docs` (10k each) | Whether it ships |
 | Acceptance criteria | the scenario file | planning agent | Amended in place; deleted on ship (8k) | Restated rulings |
@@ -20,17 +20,17 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
 | Skills | `~/Projects/skills/*/SKILL.md` | `author-skill` | Named verb-object, because three skills were all called review (10k) | Project facts |
-| Shift state | `handoff/state.md` (proposed), one file | Dispatch | Overwritten each handoff | Anything dated |
+| Shift state | `handoff/state.md`, one file | Dispatch | Overwritten each handoff | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |
-| **Junk drawer** | `UNPLACED.md` (proposed): one dated line with `[unplaced raised= owner=]`; loose files go to `~/Projects/agent-temp` | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
+| **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; loose files go to `~/Projects/agent-temp` | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
 
 ## Generated: human docs, never edited
 
 | Snapshot | Built by | When |
 |---|---|---|
 | **Where we are**: the dashboard | `regen-dashboard` | Each handoff; committed |
-| **Where we're going**: the dashboard's Now / Next / Later section, from scenario `status` + `rank` and Issue milestones (replaces `ROADMAP.md`) | `scripts/dashboard.py` | With the dashboard |
+| **Where we're going**: the dashboard's Now / Next / Later section, from scenario `horizon` (now, next, later) + `rank` and Issue milestones (replaces `ROADMAP.md`) | `scripts/dashboard.py` | With the dashboard |
 | **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or nightly CI artifact; never committed |
 | `STATUS.md`, READMEs, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
 | Capabilities, criterion reports, launch report | `regen-*` skills | On request; not committed |
