@@ -2,7 +2,7 @@
 
 **As of 2026-10-10** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
 
-Five kinds of work, because bugs, UX changes and process fixes forced through the scenario pipeline fell outside it (2026-09-10). Each has its own path; only one goes through design. Everything that isn't listed here is one of these five, or it's a decision (`DECISIONS.md`).
+Five kinds of work, because bugs, UX changes and process fixes forced through the scenario pipeline fell outside it (2026-09-10). Each has its own path; only one goes through design. Everything that isn't listed here is one of these five, or a ruling (`process/WHERE-THINGS-GO.md`).
 
 | Kind | What it is | Opened by | Approval | Tracked as |
 |---|---|---|---|---|
@@ -120,7 +120,7 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 - **PRs open with `gh pr create` from a Code session.** The GitHub connector's create/update PR shows an approval card the PM never sees. Merging through the connector is fine once checks are green.
 - **The PM directs; agents edit.** Never ask him to edit a file.
 - **Do the mechanical work.** Merges, env vars, issues and reruns get done with the tools at hand. Only judgement goes to the PM; anything the PM must do at the Mac is a process bug.
-- **No speculative rulings.** Prune decisions that are not a current concern and don't ask him to rule on them. Ruling wording: "currently", platform first and then members; the only approved "never" is "never extractive".
+- **No speculative rulings.** Prune decisions that are not a current concern and don't ask him to rule on them. Ruling wording: platform first, then members; never / won't / always carries `[always]` or `[for now]`.
 - **Repo boundaries.** plan = features, ops = method, web = code, legal = private legal, entity and anonymity work. Legal work never goes in plan or ops, and no personal names appear in a public repo (currently `socialus-web`); plan and ops keep them until they go public, when they are scrubbed.
 - **Migrations.** Each is applied from the apply workflow by branch name, in order, and confirmed in the database before the next. Until the first real (non-builder) member signs up, agents apply them (the time-boxed exception under `[production-asks-don]`, 2026-10-06); after that, the PM does.
 - **Through Dispatch** (modes, copy-paste, scheduled runs, folders, the weekly tidy): `process/DISPATCH.md`.
