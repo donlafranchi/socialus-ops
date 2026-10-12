@@ -38,7 +38,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 ## Refinement
 
-- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note passes its age, or `UNPLACED.md` holds an item past 14 days or more than 20 items.
+- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note passes its age, or `UNPLACED.md` holds an item past 14 days or more than 20 items. Sizes count the body, not frontmatter. A PR with a `docs: move …` commit (text moved verbatim) may grow a doc; the refine pass condenses it.
 - The weekly `tend-docs` pass rewrites any doc over 80%, or touched 10 times since its last refine, into current understanding plus the why. It opens one PR per doc, and only judgement calls go to the PM.
 
 **Leaving the junk drawer:** every item goes to its row above, an open-question marker, `IMAGINE.md`, an Issue, or is deleted. The line is then removed, never copied or annotated.

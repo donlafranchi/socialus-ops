@@ -8,6 +8,8 @@
 
 Config: <root>/scripts/budgets.tsv (or <root>/budgets.tsv), `glob<TAB>KB<TAB>age-days`, first
 match wins, `-` for none. A doc's frontmatter `budget: <KB>` overrides the size.
+Sizes count the body only: YAML frontmatter is metadata. A PR whose commits include one titled
+`docs: move …` (text moved verbatim between docs) may grow an over-budget doc; it warns, and the refine pass condenses it.
 Base for "grew": $BUDGETS_BASE_DIR (a directory of base copies, for fixtures), else
 `git merge-base origin/main HEAD` (HEAD~1 on main itself). No base: over budget only warns.
 """
@@ -41,19 +43,39 @@ def tracked(root):
     return [os.path.relpath(os.path.join(d, f), root) for d, _, fs in os.walk(root) for f in fs if f.endswith('.md')]
 
 
+def body(text):
+    return len(re.sub(r'\A---\n.*?\n---\n', '', text, count=1, flags=re.S).encode())
+
+
+def git(root, *a):
+    return subprocess.run(['git', *a], cwd=root, capture_output=True, text=True)
+
+
+def base_ref(root):
+    head = git(root, 'rev-parse', 'HEAD').stdout.strip()
+    mb = git(root, 'merge-base', 'origin/main', 'HEAD').stdout.strip()
+    if not head or not mb:
+        return None
+    return 'HEAD~1' if mb == head else mb
+
+
+def moving(root):
+    if os.environ.get('BUDGETS_BASE_DIR'):
+        return os.environ.get('BUDGETS_MOVE') == '1'
+    b = base_ref(root)
+    return bool(b) and any(s.startswith('docs: move ') for s in git(root, 'log', '--format=%s', f'{b}..HEAD').stdout.splitlines())
+
+
 def base_size(root, path):
     bd = os.environ.get('BUDGETS_BASE_DIR')
     if bd:
         p = os.path.join(bd, path)
-        return os.path.getsize(p) if os.path.exists(p) else 0
-    git = lambda *a: subprocess.run(['git', *a], cwd=root, capture_output=True, text=True)
-    head = git('rev-parse', 'HEAD').stdout.strip()
-    mb = git('merge-base', 'origin/main', 'HEAD').stdout.strip()
-    if not head or not mb:
+        return body(open(p, errors='replace').read()) if os.path.exists(p) else 0
+    base = base_ref(root)
+    if not base:
         return None
-    base = 'HEAD~1' if mb == head else mb
-    r = git('cat-file', '-s', f'{base}:{path}')
-    return int(r.stdout) if r.returncode == 0 else 0
+    r = git(root, 'show', f'{base}:{path}')
+    return body(r.stdout) if r.returncode == 0 else 0
 
 
 def budget_for(rows, path, text):
@@ -81,7 +103,7 @@ def unplaced(path, today):
 
 
 def run(mode, root):
-    rows, today = config(root), datetime.date.today()
+    rows, today, move = config(root), datetime.date.today(), moving(root)
     fails, warns = [], []
     for path in sorted(tracked(root)):
         if '/fixtures/' in f'/{path}' and root == '.':
@@ -94,7 +116,7 @@ def run(mode, root):
             continue
         text = open(full, errors='replace').read()
         kb, age = budget_for(rows, path, text)
-        size = os.path.getsize(full)
+        size = body(text)
         if age is not None and (d := DATE.search(os.path.basename(path))):
             days = (today - datetime.date.fromisoformat(d.group(1))).days
             if days > age:
@@ -105,7 +127,8 @@ def run(mode, root):
         if pct >= 1:
             b = base_size(root, path)
             msg = f'{path}: {size/1000:.0f}k of a {kb:g}k budget ({pct:.0%})'
-            (fails if b is not None and size > b else warns).append(msg + (' and it grew — condense it in this PR' if b is not None and size > b else ''))
+            grew = b is not None and size > b
+            (fails if grew and not move else warns).append(msg + (' and it grew — condense it in this PR' if grew and not move else ' (a move: the refine pass condenses it)' if grew else ''))
         elif pct >= .8:
             warns.append(f'{path}: {size/1000:.0f}k of a {kb:g}k budget ({pct:.0%})')
     if mode == 'report':
