@@ -19,7 +19,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Accepted risk | `accepted-risks/*.json` | code agent | Lint on `review_by` | A ruling restating it |
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
-| Skills | `~/Projects/skills/*/SKILL.md` | `author-skill` | (10k) | Project facts |
+| Skills | `~/Projects/skills/*/SKILL.md` | `author-skill` | Named verb-object, because three skills were all called review (10k) | Project facts |
 | Shift state | `handoff/state.md` (proposed), one file | Dispatch | Overwritten each handoff | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |

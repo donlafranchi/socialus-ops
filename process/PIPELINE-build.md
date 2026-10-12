@@ -151,7 +151,7 @@
 |---|---|---|---|---|---|---|---|---|
 | 1 Intake | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (no Issue; dated branch) |
 | 2 Concept | ✓ | – | – | – | – | – | – | – |
-| 3 Research | ✓ | ✓ | – | – | ½ if new shape | – | – | name the failure (LESSONS) |
+| 3 Research | ✓ | ✓ | – | – | ½ if new shape | – | – | name the failure (the rule's because) |
 | 4 Decision | ✓ | ½ new territory only | – | – | ½ arch note | – | – | ½ if the PM rules |
 | 5 Scenario | ✓ | – | – | – | – | – | – | – |
 | 6 Tickets | ✓ | – (the Issue is the ticket) | – | – | ✓ arch note | – | – | – |
@@ -222,7 +222,7 @@ Each is a `chore ·` Issue in `area:ops` unless noted; times are estimates.
 2. **Ruleset on `socialus-web` main:** require Lint/types/build, Unit tests, Migrations applied, review, issue-lint, with admin bypass on. Possible now the repo is public (the 403 in `ci.yml`'s note on #187 predates that). Prove it by watching a bad PR get blocked. *30 min.*
 3. **End the CI diet for the public repo:** the browser job runs on every ready PR touching `src/` or `supabase/`, not only labelled ones; drop the "2,000 a month" comments. *30 min.*
 4. **Capture bundle:** `scripts/changed-routes.ts` (diff → routes → affected personas) and a Playwright `capture` project that writes screenshots, state fixtures, axe results (`@axe-core/playwright`, free and open source) and text dumps to a `review-bundle` artifact. *Half a day.*
-5. **Reviewer skill:** `review-pr-bundle` in `~/Projects/skills`, linked by `link.sh` (lessons 15, 27): downloads the artifact with `gh run download`, fans out the five reviewers with fixed prompts, writes the PR sections. *2–3 h.*
+5. **Reviewer skill:** `review-pr-bundle` in `~/Projects/skills`, linked by `link.sh`: downloads the artifact with `gh run download`, fans out the five reviewers with fixed prompts, writes the PR sections. *2–3 h.*
 6. **Visibility matrix:** `evals/visibility/matrix.ts`, `tests/visibility.test.ts` running each row as `anon` and each persona's JWT, a bad-fixture policy it must reject, and a `builder` persona in `evals/personas.ts` and its seed. *Half a day to a day.*
 7. **PR template and review check:** `## Journey check` and `## Visibility review` sections; `check-review.cjs` requires the visibility section on PRs touching `src/app`, `src/actions` or `supabase/`; fixtures. *1–2 h.*
 8. **`smoke-live.yml`:** `workflow_run` after deploy-health, read-only spec with builder accounts, must-fail guard first, comment on the PR or open a `bug · live:` Issue. *Half a day.*

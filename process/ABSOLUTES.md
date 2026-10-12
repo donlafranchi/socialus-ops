@@ -10,7 +10,9 @@ member-facing absolutes in its own `product/ABSOLUTES.md` (SocialUs:
 session can't undo. Four kinds of harm qualify: harm to a member, loss or
 exposure of production data, a public act that can't be unpublished, a decision
 made without Don. Everything not on these two pages is a guideline — break it
-when justified and say why in the PR or the scenario.
+when justified and say why in the PR or the scenario. The test exists because
+absolutes multiply on their own: by 2026-09 live docs held 1,650 must/never
+words, each reasonable alone, and agents obeyed the wording, not the intent.
 
 **Cite an absolute by its slug in brackets — `[production-asks-don]`, never
 "rule 3".** Numbers renumber and citations to them rot silently; slugs do not.
@@ -51,7 +53,9 @@ options with a recommendation; agents recommend, they don't decide.
 
 A ruling exists only when it is one dated line in the project's `DECISIONS.md`. The code
 says how; `DECISIONS.md` says why; a doc that disagrees with either is the thing
-that's wrong.
+that's wrong. Record it at the scope the PM gave: a wider reading is labelled
+as a reading, because "the other side is patron", internal shorthand, was
+recorded as a user-facing rule that retired four others (2026-09-14).
 
 ### newer-decision-wins
 
@@ -59,7 +63,7 @@ that's wrong.
 continues.** Do not stop to ask Don which is true — he answered when he made the
 newer one. Build to the newer ruling.
 
-**Structural, not remembered** — a rule agents must recall is a guard nobody runs:
+**Structural, not remembered:**
 
 - **`DECISIONS.md` holds only live decisions.** A superseded entry, or the clause
   of one that no longer holds, is deleted; git holds it. The same goes for a
@@ -86,15 +90,10 @@ touch; **never block on a chat message.** **An agent never splits the
 difference:** a third position neither ruling took is a decision made without
 Don.
 
-**Beside `[don-decides]`, not against it.** That one governs *making* a ruling;
-this one governs *reading* them — once he has decided twice, the later one is
-the decision.
-
 **Which harm:** a decision made without Don, which is what splitting the
 difference is. **Dated failure:** `socialus-web` #220 (2026-09-26) asked Don to
-confirm a 2026-09-14 ruling over a 2026-09-13 one, and Don named the pattern on
-2026-09-27 as one he hits repeatedly. `DECISIONS.md`'s header already said *a
-reversal is a new line that says what it replaces*, and it did not prevent it.
+confirm a 2026-09-14 ruling over a 2026-09-13 one, a pattern the PM hits
+repeatedly; the guideline in `DECISIONS.md`'s header did not prevent it.
 
 ## Verification
 
@@ -127,23 +126,22 @@ rather than three bugs** *(2026-09-19 to 2026-09-21)*:
 - **`migrations (check)`** was broken by an unpinned Supabase CLI. **Its absence
   is what let a merge land ahead of its migration and take production down on
   2026-09-21.**
-- **`issue-lint`** cannot match across the `**` in `**Kind:**` that its own
-  template emits, so every templated issue is judged non-compliant; and with no
-  `permissions:` block the labelling call returns 403 and kills the run. **The
-  `needs-fix` label that `CLAUDE.md` tells agents to watch for has never once
-  been applied.**
+- **`issue-lint`** could not match the `**Kind:**` its own template emits, and
+  its labelling call returned 403, so **the `needs-fix` label agents were told
+  to watch for was never once applied.**
 
 **Which harm:** harm to a member, and production data. The 2026-09-21 outage is
 the dated failure — members could not use the product, and no later session can
-undo downtime that already happened. **A guideline did not prevent it**: lessons
-28 and 29 each name one instance, both were written, and the third instance
-happened anyway. **That is the argument for an absolute rather than a third
-lesson** — the pattern had already been described twice in prose and described
-again is not a hook (lesson 17).
+undo downtime that already happened. **A guideline did not prevent it**: the
+first two instances were each written up as a lesson, and the third happened
+anyway. Describing a pattern accurately does not stop it; a failing fixture in
+the same job does.
 
 ## Adding an absolute
 
 Eight is a result, not a cap. A new absolute needs a dated failure that a guideline
 demonstrably didn't prevent, and must name which of the four harms it falls
-under. If it can't, it's a guideline. Give it a slug, file it in whichever of the
+under. If it can't, it's a guideline. Prefer a precise permission to a broad
+ban, because "Code never writes to the planning repo" broke the first session
+it was tested and was replaced by "Code may open a PR there" (2026-09-09). Give it a slug, file it in whichever of the
 two pages it belongs to, and cite it by that slug from its first use.
