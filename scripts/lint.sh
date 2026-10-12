@@ -215,6 +215,15 @@ if [ -f DECISIONS.md ] && ! out="$(python3 scripts/markers.py lint)"; then
   fail=1
 fi
 
+# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults, then checks this repo.
+bf=scripts/fixtures/budgets
+got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
+[ "$got" -eq 4 ] || { echo "lint: budget checker is inert — rejected $got of 4 bad fixtures"; fail=1; }
+BUDGETS_BASE_DIR="$bf/good-base" python3 scripts/budgets.py check --root "$bf/good" >/dev/null || { echo "lint: budget checker rejects the good fixture"; fail=1; }
+if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; then
+  echo "$out" | sed 's/^/lint: /'; fail=1
+fi
+
 # TRIAL meta layer: the PM-approval guard proves itself, and the score scripts must compile.
 node scripts/pm-approved-guard.cjs --self-test >/dev/null || { echo "lint: pm-approved guard is inert or wrong"; fail=1; }
 for f in scripts/score_lib.py scripts/score_ci_health.py scripts/score_doc_drift.py scripts/trial_health.py; do
