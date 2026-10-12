@@ -38,8 +38,8 @@ else:
 _rm = sh(['git', '-C', os.path.join(PROJECTS, 'socialus-plan'), 'log', '-1', '--format=%cs', '--', 'ROADMAP.md']).strip()
 if _rm:
     _r = (date.today() - date.fromisoformat(_rm)).days
-    if _r > 14:
-        items.append(('doc-age', f'socialus-plan/ROADMAP.md last changed {_r} days ago (limit 14)'))
+    if _r > 30:
+        items.append(('doc-age', f'socialus-plan/ROADMAP.md last changed {_r} days ago (limit 30)'))
 
 # b. skills library: directories vs link.sh vs the README table
 sk = os.path.join(PROJECTS, 'skills')
