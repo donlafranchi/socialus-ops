@@ -216,4 +216,4 @@ python3 scripts/regen_safety_runbook.py --check
 
 ## 11. Changing the method
 
-Branch `process-YYYY-MM-DD-slug`, commit `docs: what`, add a `LESSONS.md` line naming the dated failure, open a PR, merge when `lint` is green. This repo is public: nothing secret, legal or personal goes in it.
+Branch `process-YYYY-MM-DD-slug`, commit `docs: what`, name the dated failure as the changed rule's "because", open a PR, merge when `lint` is green. This repo is public: nothing secret, legal or personal goes in it.

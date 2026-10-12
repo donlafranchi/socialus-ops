@@ -27,7 +27,6 @@ DECISION RULE (2026-10-04, Don)
 - `process/PERFORMANCE.md` — how a product keeps itself fast: tap-speed budgets, nightly runs, baselines and checkpoints, the load simulation, who acts on red.
 - `process/LIVING-DOCS.md` — facts inline, cross-cutting views generated from markers, authored docs pruned, git as the archive. Every marker kind and the failure it answers.
 - `process/WHERE-THINGS-GO.md` — one table: each kind of thing, its one home, owner, how it stays current, what never goes there. Read every session; each project's `CLAUDE.md` points here.
-- `process/LESSONS.md` — append-only. A process change names the dated failure that earned it.
 - `scripts/` — the marker checker, lints and generated-view tooling. `scripts/lint.sh` runs here too: the project checks find nothing to check, and the fixtures still prove every checker ([guard-proves-itself]).
 - `templates/` — a scenario and a decision line, in the grammar the lint enforces.
 
@@ -51,4 +50,9 @@ Agents own whether a change is correct; the PM owns whether it is right (`proces
 
 ## Changing the method
 
-Process work: name the failure with a dated example, branch `process-YYYY-MM-DD-slug`, commit `docs: what`, add a line to `process/LESSONS.md`, PR, self-merge when `lint` is green. Then copy any changed script into each project that vendors it. Sessions work in their own worktree at `../worktrees/ops-pattern/{branch}`, never the repo root, and use `git --no-optional-locks status` when not committing.
+Process work: branch `process-YYYY-MM-DD-slug`, commit `docs: what`, PR, self-merge when `lint` is green, then copy any changed script into each project that vendors it. Sessions work in their own worktree at `../worktrees/ops-pattern/{branch}`, never the repo root, because a worktree rule scoped to branches left read-only sessions at the root to wedge each other's `index.lock` (2026-09-09). Use `git --no-optional-locks status` when not committing: plain `status` takes the lock, and a sandboxed session leaves it stale.
+
+- **Name the failure, with a dated example, and put it in the rule as its short "because …".** No fixes for imagined failures. There is no lessons file: the rule carries its reason and git carries the history.
+- **Prefer deleting a doc to adding a rule.** Prefer a frontmatter field to a directory, because state held in kanban folders needed the PM at the Mac to move files. Prefer a check against code to a check against a doc, because every early gate compared docs to docs and two Explore tickets were built after Explore was retired (2026-09-03).
+- **A standard exists when lint or CI checks it**, not before (`process/LIVING-DOCS.md` § Hooks).
+- **A procedure improvised once goes into a skill that session**, because the 2026-09-09 session improvised five (classifying work, splitting a scenario, folding reviews) and the next could repeat none.
