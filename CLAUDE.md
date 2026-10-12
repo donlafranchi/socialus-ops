@@ -26,6 +26,7 @@ DECISION RULE (2026-10-04, Don)
 - `process/PIPELINE.md` — the five kinds of work (scenario, change, bug, process, chore), who checks what, open questions, accepted risk.
 - `process/PERFORMANCE.md` — how a product keeps itself fast: tap-speed budgets, nightly runs, baselines and checkpoints, the load simulation, who acts on red.
 - `process/LIVING-DOCS.md` — facts inline, cross-cutting views generated from markers, authored docs pruned, git as the archive. Every marker kind and the failure it answers.
+- `process/WHERE-THINGS-GO.md` — one table: each kind of thing, its one home, owner, how it stays current, what never goes there. Read every session; each project's `CLAUDE.md` points here.
 - `process/LESSONS.md` — append-only. A process change names the dated failure that earned it.
 - `scripts/` — the marker checker, lints and generated-view tooling. `scripts/lint.sh` runs here too: the project checks find nothing to check, and the fixtures still prove every checker ([guard-proves-itself]).
 - `templates/` — a scenario and a decision line, in the grammar the lint enforces.
