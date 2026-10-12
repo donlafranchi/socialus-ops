@@ -101,7 +101,7 @@ vt=scripts/fixtures/value-test
 #    README.md (scripts/view.sh), PLATFORM-*.md (scripts/markers.py platform) and
 #    DASHBOARD.md (scripts/dashboard.py),
 #    never hand-edited, so not link-checked below.
-allowed="CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
+allowed="CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md RULINGS.md UNPLACED.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
 for f in *.md; do
   [ -f "$f" ] || continue
   case " $allowed " in
@@ -133,7 +133,7 @@ check_links() {
   done
 }
 
-for f in CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md IMAGINE.md process/*.md planning/*.md templates/*.md; do
+for f in CLAUDE.md STATUS.md ROADMAP.md DECISIONS.md RULINGS.md UNPLACED.md IMAGINE.md process/*.md planning/*.md templates/*.md; do
   [ -f "$f" ] || continue
   out="$(check_links "$f")"
   if [ -n "$out" ]; then
@@ -145,10 +145,10 @@ done
 # 4. Every bracketed absolute-slug citation resolves to a heading in one of the
 #    two ABSOLUTES files. This is the point of slugs: a renamed or deleted
 #    absolute breaks the build instead of leaving a citation that reads fine and
-#    points at nothing. DECISIONS.md is exempt: its older lines cite absolutes
+#    points at nothing. RULINGS.md is exempt: its older lines cite absolutes
 #    by number, and the 2026-09-16 line there maps those numbers to these slugs.
 slugs="$(grep -hoE '^### [a-z][a-z0-9-]+$' $absolutes | sed 's/^### //')"
-for hit in $(grep -roE '\[[a-z][a-z0-9]*(-[a-z0-9]+)+\]' --include='*.md' --exclude=DECISIONS.md --exclude-dir=fixtures . | sort -u); do
+for hit in $(grep -roE '\[[a-z][a-z0-9]*(-[a-z0-9]+)+\]' --include='*.md' --exclude=RULINGS.md --exclude-dir=fixtures . | sort -u); do
   slug="${hit##*:[}"; slug="${slug%]}"
   if ! printf '%s\n' "$slugs" | grep -qx "$slug"; then
     echo "lint: [$slug] cites an absolute that does not exist — ${hit%%:*}"
