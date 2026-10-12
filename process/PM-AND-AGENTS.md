@@ -47,33 +47,4 @@ The split borrows four patterns, each adapted for agent-led work:
 
 ## Skeletons
 
-**PM docs open each section with the what and why; agent docs open with what to do.**
-
-<details><summary>Details</summary>
-
-PM view, every section:
-
-```
-## <Section>
-
-**<Key phrase: what we do and why, one or two plain lines.>** <One line on why agents need it: what goes wrong without it.>
-
-<details><summary>Details</summary>
-
-<Only what the PM may need to look up. No scripts, paths or commands.>
-
-</details>
-```
-
-Agent doc, every section:
-
-```
-## <Task or rule>
-
-<The rule, one line, imperative.> <Because: the failure it prevents.>
-
-- Inputs: <files it reads>  · Outputs: <files it writes>  · Check: <the test or lint that proves it>
-- <Steps or reference, only as long as needed.>
-```
-
-</details>
+**The `PM doc` and `agent doc` patterns, with their skeletons and precedents, have one home: `~/.claude/templates/patterns.md` § Docs.** Every project uses them, so they live with the global patterns (PM ruling 2026-10-12, #126).
