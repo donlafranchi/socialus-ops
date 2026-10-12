@@ -305,7 +305,7 @@ def replace_errors(path):
             target, text = ref
             if target.startswith("F"):
                 sp = f"{PLANNING}/scenario-{target}.md"
-                if text in "\n".join(read_lines(sp)):
+                if text in "\n".join(re.sub(B + r"replaces [^\]]*\]", "", l) for l in read_lines(sp)):
                     errs.append(f"{where}: replaces text still live in {sp} — prune it")
                 elif real and not in_history(f"planning/scenario-{target}.md", text):
                     errs.append(f"{where}: replaces text {target} never held — nothing to find in git")
