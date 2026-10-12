@@ -7,12 +7,12 @@ inline markers and one file field:
   `[open-question owner=<don|cowork|code> raised=YYYY-MM-DD] question` where raised -> STATUS.md
   `[guards F093.4]` on the check that discharges F093 criterion 4                 -> coverage map
   `[guards F093.4 partial: what it leaves unchecked]` on a check that covers part of one
-  `[binds tiers=<planning,code|none> surfaces=<a,b>]` ending a DECISIONS.md or RULINGS.md line  -> constraints/<tier>.md
+  `[binds tiers=<planning,code|none> surfaces=<a,b>]` ending a ruling (PRINCIPLES.md, or `## Rulings` in a scenario or product doc)  -> constraints/<tier>.md
       one that binds code names its Issue (#N), its scenario (F###), or says `build=none`
-  `[platform <need>[=<topic>][ gap]: what and why]` in product/, a scenario, DECISIONS.md or RULINGS.md
+  `[platform <need>[=<topic>][ gap]: what and why]` in product/, a scenario or PRINCIPLES.md
       `[platform none]` in a scenario that needs nothing native      -> PLATFORM-IOS.md, PLATFORM-ANDROID.md
   `[replaces 2026-09-22: exact old text]`, `[replaces F059: exact old text]`, `[replaces path.md]`
-      on a DECISIONS.md or RULINGS.md line that supersedes something; the old text must be gone and in git
+      on a ruling that supersedes something; the old text must be gone and in git
   `[evidence YYYY-MM-DD from=<source>: what was seen]` on a decision a user's action or words changed
   accepted-risks/*.json "owner" and "review_by"                     -> lint fails once review_by passes
   `gates: launch` in a scenario's frontmatter                       -> its Issues, or none

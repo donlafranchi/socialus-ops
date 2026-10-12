@@ -27,12 +27,15 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 ## Generated: human docs, never edited
 
+**House style for every human view:** each section opens with 1–3 plain lines, the key phrase in bold (what we do and why); below it a folded `<details><summary>Details</summary>` block holds only what the PM might look up. No scripts, paths or commands: the how stays in agent docs. With every block folded, the overviews fit about one phone screen. Template: the `regen-readme` skill.
+
 | Snapshot | Built by | When |
 |---|---|---|
 | **Where we are**: the dashboard | `regen-dashboard` | Each handoff; committed |
 | **Where we're going**: the dashboard's Now / Next / Later section, from scenario `horizon` (now, next, later) + `rank` and Issue milestones (replaces `ROADMAP.md`) | `scripts/dashboard.py` | With the dashboard |
-| **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or nightly CI artifact; never committed |
-| `STATUS.md`, READMEs, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
+| **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or the weekly full screenshot run's CI artifact; never committed |
+| This repo's README: a workflow diagram, then one step per box | `regen-readme` | After a process change; committed |
+| `STATUS.md`, plan README, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
 | Capabilities, criterion reports, launch report | `regen-*` skills | On request; not committed |
 | Build history | git and PR bodies | Never written as files |
 
