@@ -220,6 +220,8 @@ bf=scripts/fixtures/budgets
 got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
 [ "$got" -eq 4 ] || { echo "lint: budget checker is inert — rejected $got of 4 bad fixtures"; fail=1; }
 BUDGETS_BASE_DIR="$bf/good-base" python3 scripts/budgets.py check --root "$bf/good" >/dev/null || { echo "lint: budget checker rejects the good fixture"; fail=1; }
+got=$(BUDGETS_MOVE=1 BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
+[ "$got" -eq 3 ] || { echo "lint: budget checker does not let a docs: move PR grow a doc (got $got of 3)"; fail=1; }
 if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; then
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
