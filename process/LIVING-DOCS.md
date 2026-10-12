@@ -34,7 +34,7 @@ This repo is read and written by agents, not maintained by people. **A fact live
 ### Per-tier constraints
 - **Problem.** Ratified decisions did not reach the agents they bound. F076 criterion 2 forbade a pre-filled home since 2026-09-14, and the code kept `DEFAULT_HOME_PLACE_ID`, setting every member's home unseen (#205). The ruling was right; the tier it bound never read it.
 - **Does.** Each ruling ends with `[binds tiers=<planning,code|none> surfaces=…]`. `constraints/<tier>.md` is generated from the tags, the lint fails when it is stale, and each tier's `CLAUDE.md` points at its own file and no other. The firewall stays in which files an agent reads.
-- **Not when.** Rulings before 2026-09-21 are untagged; absent from a constraints file is not the same as not binding. Planning still reads `DECISIONS.md` whole, since it writes it.
+- **Not when.** Rulings before 2026-09-21 are untagged; absent from a constraints file is not the same as not binding. Planning reads `PRINCIPLES.md` whole and a scenario's rulings with it.
 
 ### Gating claims
 - **Problem.** Five approved scenarios gating launch — F077, F078, F080, F081, F082 — had no Issue until #219–#223 on 2026-09-26, found only because someone went looking. `ROADMAP.md` said they gated launch in prose, and nothing checked it.

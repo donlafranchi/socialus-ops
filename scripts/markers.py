@@ -65,7 +65,32 @@ EVIDENCE_VIEW_BUILT = False  # ops-pattern/process/LIVING-DOCS.md: deferred unti
 # What a screen or capability can need from a native platform. One list; each platform's view maps it.
 NEEDS = ("push", "link", "camera", "photos", "location", "background", "auth", "key", "store")
 STORE = ("account-deletion", "sign-in", "ugc", "age-rating", "privacy", "payments")
-RULES = ("DECISIONS.md", "RULINGS.md")  # principles (the why), dated rulings
+PRINCIPLES = "PRINCIPLES.md"  # the why; dated rulings live inline under `## Rulings` in the scenario or product doc they govern
+OLD_RULE_FILES = ("DECISIONS.md", "RULINGS.md", PRINCIPLES)  # where a replaced text may be found in git
+
+
+def rule_home(path):
+    b = os.path.basename(path)
+    return b == PRINCIPLES or b.startswith("scenario-") or "product/" in path
+
+
+def ruling_lines(path):
+    """(line number, line) for every ruling line: all of PRINCIPLES.md, or the `## Rulings` section of a scenario/product doc."""
+    lines = read_lines(path)
+    if os.path.basename(path) == PRINCIPLES:
+        return list(enumerate(lines, 1))
+    out, inside = [], False
+    for n, l in enumerate(lines, 1):
+        if l.startswith("## "):
+            inside = l.strip() == "## Rulings"
+        elif inside:
+            out.append((n, l))
+    return out
+
+
+def rule_files():
+    fs = [PRINCIPLES] if os.path.exists(PRINCIPLES) else []
+    return fs + sorted(glob.glob("planning/scenario-F*.md")) + sorted(glob.glob("product/**/*.md", recursive=True))
 DECISION = re.compile(r"^- \*\*(\d{4}-\d{2}-\d{2}) — (.+?)\*\*")
 
 
@@ -97,7 +122,7 @@ def parse_line(path, line):
         text = re.sub(r"(\*/|-->)\s*$", "", line[f.end():]).replace("**", "").strip(" *_-—:\t\r\n")
         if not text:
             yield "oq", False, "no question after the marker"; continue
-        if os.path.basename(path) in RULES:
+        if os.path.basename(path) == PRINCIPLES:
             yield "oq", False, f"{os.path.basename(path)} holds answers, not questions — mark it where it was raised"; continue
         yield "oq", True, (owner, d, text)
     for m in ANY["guards"].finditer(bare):
@@ -112,8 +137,8 @@ def parse_line(path, line):
         none, need, topic, gap, _ = f.groups()
         text = line[f.start(5):f.end(5)] if not none else None  # the detail keeps its code spans
         scen = os.path.basename(path).startswith("scenario-")
-        if not (scen or os.path.basename(path) in RULES or "product/" in path):
-            yield "plat", False, "a platform marker lives on a spine entry in product/, a scenario, or a DECISIONS.md or RULINGS.md line"; continue
+        if not (scen or os.path.basename(path) == PRINCIPLES or "product/" in path):
+            yield "plat", False, "a platform marker lives on a spine entry in product/, a scenario, or a PRINCIPLES.md line"; continue
         if none:
             yield ("plat", True, None) if scen else ("plat", False, "`[platform none]` is a scenario's assessment — the spine marks only what is needed"); continue
         if need not in NEEDS:
@@ -129,8 +154,8 @@ def parse_line(path, line):
             yield "binds", False, "not `[binds tiers=<planning,code|none> surfaces=<a,b>]`"; continue
         tiers = f.group(1).split(",")
         surfaces = f.group(2).split(",") if f.group(2) else []
-        if os.path.basename(path) not in RULES:
-            yield "binds", False, "a binds tag lives on a DECISIONS.md or RULINGS.md line and nowhere else"; continue
+        if not rule_home(path):
+            yield "binds", False, "a binds tag lives on a ruling: PRINCIPLES.md, or `## Rulings` in a scenario or product doc"; continue
         if tiers == ["none"]:
             yield "binds", True, ([], surfaces, False); continue
         bad = [t for t in tiers if t not in TIERS]
@@ -139,13 +164,13 @@ def parse_line(path, line):
         if not surfaces:
             yield "binds", False, "a decision that binds a tier names the surfaces it binds"; continue
         yield "binds", True, (tiers, surfaces, bool(f.group(3)))
-    dec = os.path.basename(path) in RULES
+    dec = rule_home(path)
     for m in ANY["rep"].finditer(bare):
         f = FULL_REP.match(bare, m.start())
         if not f:
             yield "rep", False, "not `[replaces YYYY-MM-DD: old text]`, `[replaces F###: old text]`, `[replaces path.md]` or `[replaces none]`"; continue
         if not dec:
-            yield "rep", False, "a replaces tag lives on a DECISIONS.md or RULINGS.md line — a supersession is a ruling"; continue
+            yield "rep", False, "a replaces tag lives on a ruling line — a supersession is a ruling"; continue
         yield "rep", True, ("none",) if f.group(1) else ("path", f.group(4)) if f.group(4) else (f.group(2), f.group(3).strip())
     for m in ANY["ev"].finditer(bare):
         f = FULL_EV.match(bare, m.start())
@@ -158,7 +183,7 @@ def parse_line(path, line):
         if d > TODAY:
             yield "ev", False, f"evidence dated {d} is in the future"; continue
         if not dec:
-            yield "ev", False, "an evidence tag lives on the DECISIONS.md or RULINGS.md line it changed"; continue
+            yield "ev", False, "an evidence tag lives on the ruling line it changed"; continue
         yield "ev", True, f.groups()
 
 
@@ -241,11 +266,11 @@ def guard_referent_error(fid, crit, partial=None):
 
 # ---------------------------------------------------------------- decisions
 def decisions(path=None):
-    """One dict per entry of DECISIONS.md (principles) and RULINGS.md (dated rulings), or of one file."""
+    """One dict per principle and per inline ruling across the repo, or in one file."""
     if path is None:
-        return [e for p in RULES for e in decisions(p)]
+        return [e for p in rule_files() for e in decisions(p)]
     out = []
-    for n, l in enumerate(read_lines(path), 1):
+    for n, l in ruling_lines(path):
         m = DECISION.match(l)
         if not m:
             continue
@@ -264,8 +289,8 @@ def in_history(path, text=None):
 
 def replace_errors(path):
     """A decision that replaces something names it, and the thing named is gone from the live file."""
-    lines, errs, real = read_lines(path), [], path in RULES
-    live = "\n".join(re.sub(B + r"replaces [^\]]*\]", "", l) for l in (sum((read_lines(p) for p in RULES), []) if real else lines))
+    lines, errs, real = [l for _, l in ruling_lines(path)], [], "fixtures/" not in path
+    live = "\n".join(re.sub(B + r"replaces [^\]]*\]", "", l) for l in ([l for p in rule_files() for _, l in ruling_lines(p)] if real else lines))
     for e in decisions(path):
         for ref in e["reps"]:
             if ref[0] == "none":
@@ -287,7 +312,7 @@ def replace_errors(path):
             else:
                 if text in live:
                     errs.append(f"{where}: replaces {target}: {text[:40]}…, which is still in {path} — delete it; git holds it")
-                elif real and not any(in_history(p, text) for p in RULES):
+                elif real and not any(in_history(p, text) for p in OLD_RULE_FILES + (path,)):
                     errs.append(f"{where}: replaces {target}: {text[:40]}…, which {path} never held — nothing to find in git")
     return errs
 
@@ -299,9 +324,9 @@ def render_constraints(tier):
     o = [f"# CONSTRAINTS — {tier} tier", "",
          "> **Generated by `python3 scripts/markers.py constraints` — never edit this file.** A hand edit is",
          "> lost on the next run, and `scripts/lint.sh` fails whenever this file differs from what",
-         "> `DECISIONS.md` and `RULINGS.md` generate. To change it, change the `[binds …]` tag on the decision.",
+         "> the rulings generate (`PRINCIPLES.md`, and `## Rulings` in each scenario and product doc). To change it, change the `[binds …]` tag on the decision.",
          ">",
-         f"> Every ratified decision whose tag binds the **{tier}** tier, newest first. `DECISIONS.md` and `RULINGS.md` hold",
+         f"> Every ratified decision whose tag binds the **{tier}** tier, newest first. The rulings hold",
          "> only live decisions — a superseded one is deleted — so nothing below conflicts with anything",
          "> else here. If two lines ever seem to, the newer wins (`[newer-decision-wins]`).",
          f"> **{untagged} older decisions carry no tag yet and are not listed** — tagging is required from",
@@ -351,7 +376,7 @@ PLATFORMS = {"ios": ("iOS", "App Store", 0), "android": ("Android", "Google Play
 
 
 def platform_sources():
-    files = sorted(set(glob.glob("product/**/*.md", recursive=True) + glob.glob("planning/scenario-F*.md") + [p for p in RULES if os.path.exists(p)]))
+    files = sorted(set(glob.glob("product/**/*.md", recursive=True) + glob.glob("planning/scenario-F*.md") + ([PRINCIPLES] if os.path.exists(PRINCIPLES) else [])))
     return [(p, n, i) for p in files for n, i in platform_marks(p)]
 
 
@@ -368,7 +393,7 @@ def render_platform(key):
          "> **Generated by `python3 scripts/markers.py platform`. Never edit this file.** A hand edit is lost on the",
          "> next run, and `scripts/lint.sh` fails whenever this file differs from what the markers generate. To",
          "> change it, change a `[platform …]` marker where the fact is true: a spine entry in `product/`, a",
-         "> scenario, or a `DECISIONS.md` or `RULINGS.md` line. Pattern: `ops-pattern/process/LIVING-DOCS.md` § Platform readiness.",
+         "> scenario, or a ruling. Pattern: `ops-pattern/process/LIVING-DOCS.md` § Platform readiness.",
          ">",
          f"> **One set of markers, one view per platform.** This file and `PLATFORM-{other.upper()}.md` are built",
          "> from the same markers and differ only in what each need costs on each platform. That mapping is a",
@@ -425,7 +450,7 @@ def risk_errors(directory="accepted-risks"):
         except ValueError:
             errs.append((path, f"review_by={e.get('review_by')!r} is not a date")); continue
         if due < TODAY:
-            errs.append((path, f"review_by {due} has passed — argue it again (a new RULINGS.md line and a "
+            errs.append((path, f"review_by {due} has passed — argue it again (a new dated ruling and a "
                                f"new date) or delete the entry"))
     return errs
 
@@ -466,10 +491,47 @@ def platform_scenario_error(path):
     return None
 
 
+# -------------------------------------------------------------- principles
+NOT_PRINCIPLE = [  # (pattern, what it is, its home) — from process/WHERE-THINGS-GO.md
+    (r"\bF\d{3}\b", "a ruling about a scenario", "inline under `## Rulings` in planning/scenario-F###.md (the spine once it ships)"),
+    (r"(?<![\w`])#\d+\b", "a dated ruling tied to an Issue", "inline under `## Rulings` in the scenario or product doc it governs"),
+    (r"(?i)\b(copy|wording|label|button text|tone)\b", "copy", "product/foundation/voice-and-tone.md, or the scenario's criteria"),
+    (r"(?i)\b(pipeline|pull request|PRs?|merge[sd]?|CI|lint|skill|commit|worktree|handoff)\b", "process", "ops-pattern/process/"),
+    (r"(?i)\b(accepted risk|RLS|migration|column|SECURITY DEFINER)\b", "security or stack", "accepted-risks/*.json or the system doc in product/systems/"),
+    (r"(?i)\b(criterion|criteria)\b", "a scenario criterion", "the scenario's `## Acceptance`"),
+]
+PRINCIPLE_MAX = 500
+
+
+def principle_errors(path):
+    """PRINCIPLES.md holds principles only; anything else is named with its home on the map."""
+    errs = []
+    for n, l in enumerate(read_lines(path), 1):
+        if l.startswith("## ") and l.strip() != "## Principles":
+            errs.append(f"{path}:{n}: PRINCIPLES.md has one section, `## Principles` — `{l.strip()}` belongs elsewhere (process/WHERE-THINGS-GO.md)")
+        if not l.startswith("- "):
+            continue
+        found = [(k, i) for k, ok, i in parse_line(path, l) if ok]
+        binds = next((i for k, i in found if k == "binds"), None)
+        if not binds or "principles" not in binds[1]:
+            errs.append(f"{path}:{n}: not tagged a principle (`surfaces=principles,…`) — a dated ruling lives inline in the scenario or product doc it governs")
+            continue
+        prose = re.sub(B + r"[^\]]*\]", "", l)
+        for pat, what, home in NOT_PRINCIPLE:
+            if re.search(pat, prose):
+                errs.append(f"{path}:{n}: reads as {what}, not a principle — its home is {home}")
+                break
+        else:
+            if len(prose) > PRINCIPLE_MAX:
+                errs.append(f"{path}:{n}: {len(prose)} characters — a principle is a short why (≤{PRINCIPLE_MAX}); detail goes to the doc it governs")
+    return errs
+
+
 # -------------------------------------------------------------------- lint
 def lint(files):
     errs = []
     for p in files:
+        rl = {n for n, _ in ruling_lines(p)} if rule_home(p) else set()
         for n, l in enumerate(read_lines(p), 1):
             found = list(parse_line(p, l))
             for kind, ok, info in found:
@@ -482,7 +544,9 @@ def lint(files):
             if n < 15 and os.path.basename(p).startswith("scenario-") and l.startswith("gates:") \
                     and l.split(":", 1)[1].strip() != "launch":
                 errs.append(f"{p}:{n}: `gates:` names what the scenario gates — the only gate is `launch`")
-            if os.path.basename(p) in RULES:
+            if rule_home(p) and n not in rl and any(k == "binds" and ok for k, ok, _ in found):
+                errs.append(f"{p}:{n}: a binds tag outside `## Rulings` is never read — move the ruling under `## Rulings`")
+            if rule_home(p) and n in rl:
                 m = DECISION.match(l)
                 if m and datetime.date.fromisoformat(m.group(1)) >= BINDS_FROM:
                     if not any(k == "binds" for k, _, _ in found):
@@ -500,9 +564,11 @@ def lint(files):
             err = platform_scenario_error(p)
             if err:
                 errs.append(f"{p}: {err}")
-        if os.path.basename(p) in RULES:
+        if rule_home(p) and rl:
             errs += replace_errors(p)
-            if not EVIDENCE_VIEW_BUILT and any(e["evidence"] for e in decisions(p)) and p in RULES:
+            if p == PRINCIPLES:
+                errs += principle_errors(p)
+            if not EVIDENCE_VIEW_BUILT and any(e["evidence"] for e in decisions(p)) and "fixtures/" not in p:
                 errs.append(f"{p}: the first `[evidence …]` tag has landed — build the evidence view deferred in "
                             "ops-pattern/process/LIVING-DOCS.md, then set EVIDENCE_VIEW_BUILT")
     return errs
@@ -511,6 +577,12 @@ def lint(files):
 def main():
     argv = sys.argv[1:]
     mode = argv.pop(0) if argv else ""
+
+    if mode == "principles":
+        errs = [e for f in (argv or [PRINCIPLES]) for e in principle_errors(f)]
+        for e in errs:
+            print(f"markers: {e}")
+        return 1 if errs else 0
 
     if mode == "lint":
         errs = lint(argv or tracked())

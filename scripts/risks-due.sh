@@ -65,6 +65,6 @@ for left, state, e in rows:
     print(f"      revisit if: {e.get('revisit_if', '—')}")
     print()
 
-print("Re-argue or delete. Renewing is a new dated line in DECISIONS.md, not a quiet edit.")
+print("Re-argue or delete. Renewing is a new dated ruling, not a quiet edit.")
 sys.exit(1)
 PY

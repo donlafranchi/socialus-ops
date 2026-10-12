@@ -16,7 +16,7 @@ DATE = re.compile(r'(?:as[ -]of|generated|updated|snapshot|last (?:reviewed|upda
 GENERATED = re.compile(r'generated (?:by|from|whole)|regenerated|do not edit|disposable|\*\*generated\b', re.I)
 SUPERSEDED = re.compile(r'^\W*(?:status\W+)?(?:superseded|retired|deprecated|obsolete)\b|\bsuperseded by\b|\bthis (?:doc|file|page) is (?:retired|superseded|obsolete)', re.I | re.M)
 RULING = re.compile(r'charter|mission|voice|legal|ruling|settled|securities|ownership|privacy policy|terms', re.I)
-RULING_PATH = re.compile(r'^(product/|DECISIONS|constraints/|handoff/|CLAUDE|AGENTS)|charter|mission|voice', re.I)
+RULING_PATH = re.compile(r'^(product/|PRINCIPLES|constraints/|handoff/|CLAUDE|AGENTS)|charter|mission|voice', re.I)
 EXEMPT = re.compile(r'^scores/|^reports/|(^|/)(fixtures?|node_modules|snapshots)/|^build-log/(20|W\d)|^build-log/reports/.*/F\d{3}-|^\.github/|^evals/|^supabase/|(^|/)SKILL\.md$|(^|/)CHANGELOG|^planning/scenario-F\d+\.md$|(^|/)CLAUDE\.md$|(^|/)AGENTS\.md$|^BUILD-LOG\.md$')
 LINK = re.compile(r'\]\((?!https?:|mailto:|#)([^)\s#]+)(?:#[^)]*)?\)')
 
