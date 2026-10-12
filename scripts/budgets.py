@@ -8,7 +8,7 @@
 
 Config: <root>/scripts/budgets.tsv (or <root>/budgets.tsv), `glob<TAB>KB<TAB>age-days`, first
 match wins, `-` for none. A doc's frontmatter `budget: <KB>` overrides the size.
-Sizes count the body only: YAML frontmatter is metadata. A PR whose commits include one titled
+Sizes count the body only: YAML frontmatter is metadata. A PR whose commits (or squashed commit body) include one titled
 `docs: move …` (text moved verbatim between docs) may grow an over-budget doc; it warns, and the refine pass condenses it.
 Base for "grew": $BUDGETS_BASE_DIR (a directory of base copies, for fixtures), else
 `git merge-base origin/main HEAD` (HEAD~1 on main itself). No base: over budget only warns.
@@ -63,7 +63,8 @@ def moving(root):
     if os.environ.get('BUDGETS_BASE_DIR'):
         return os.environ.get('BUDGETS_MOVE') == '1'
     b = base_ref(root)
-    return bool(b) and any(s.startswith('docs: move ') for s in git(root, 'log', '--format=%s', f'{b}..HEAD').stdout.splitlines())
+    # a squash merge keeps each original subject in its body as "* docs: move …"
+    return bool(b) and any(s.strip().lstrip('* ').startswith('docs: move ') for s in git(root, 'log', '--format=%B', f'{b}..HEAD').stdout.splitlines())
 
 
 def base_size(root, path):
