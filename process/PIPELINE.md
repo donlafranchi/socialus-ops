@@ -169,7 +169,7 @@ Machine-specific rules live in `~/.claude/CLAUDE.md`.
 A lint finding ruled acceptable gets recorded once and stops being re-argued, because the definer views were re-triaged from scratch on 2026-09-09 against comments that already explained them. The ruling is the dated line in `DECISIONS.md`; `accepted-risks/` holds one JSON file per finding so an advisor run can be diffed against it — `bash scripts/advisor-diff.sh <export.json>` prints only what isn't already ruled on, plus anything past review.
 
 - One file per finding, named for the finding (`<cache_key>.json`, else `<lint>__<object>.json`). Two agents ruling the same thing collide on the filename instead of writing two rulings.
-- An entry needs a `decision` (the `DECISIONS.md` date it points at), a `revisit_if` (the observable condition that reopens it), a `review_by` date, and an `owner` — who argues it again. **`scripts/lint.sh` fails the day `review_by` passes**: an accepted risk nobody revisits is an inert guard.
+- An entry needs a `decision` (the date of its ruling), a `revisit_if` (the observable condition that reopens it), a `review_by` date, and an `owner` — who argues it again. **`scripts/lint.sh` fails the day `review_by` passes**: an accepted risk nobody revisits is an inert guard.
 - `revisit_if` is a fact about the world: "the view's WHERE clause changes", not "if we get worried".
 - A past `review_by` is reported on every run. An entry nobody will re-argue is deleted, not renewed silently; renewing it is a new dated line.
 - Never derive a `cache_key` from the naming pattern. A key that looks right but never matches stops suppressing silently; `null` falls back to `(lint, object)` and keeps working.
@@ -193,14 +193,14 @@ A question nobody has answered yet is marked **inline, where it was raised**, an
 - The answer changes what a member experiences → **the scenario**, in `## Why`. No scenario yet → the spine entry in `product/`.
 - The answer changes only how it is built → **the Issue body** in `socialus-web`. Code owns it.
 - The answer changes one line of code or one migration and nothing above it → **a comment on that line**.
-- **Never** in a PR description, a commit message or an Issue comment (unscanned, and uneditable once merged, so it could never close), nor in `DECISIONS.md`, which holds answers. An Issue that restates a scenario's question points at the scenario.
+- **Never** in a PR description, a commit message or an Issue comment (unscanned, and uneditable once merged, so it could never close), nor in `PRINCIPLES.md`, which holds answers. An Issue that restates a scenario's question points at the scenario.
 
 **Who writes one.** Whoever raises a question they will not answer this session. An agent that would otherwise write *"open"*, *"TBD"* or *"needs a ruling"* writes the marker.
 
 **What closes one.**
 
-- **`owner=don`:** the answer is a ruling, so it lands as a dated `DECISIONS.md` line first ([ruling-is-dated-line]). **The same commit** removes the marker and edits the text the answer changes. Whoever records the ruling removes the marker — Cowork, or Code when the ruling reached an Issue.
-- **`owner=cowork` / `owner=code`:** the answer is the change itself. The commit that makes it removes the marker and says so in its message. A `DECISIONS.md` line only if it settles something that would otherwise be re-argued.
+- **`owner=don`:** the answer is a ruling, so it lands as a dated ruling first ([ruling-is-dated-line]). **The same commit** removes the marker and edits the text the answer changes. Whoever records the ruling removes the marker — Cowork, or Code when the ruling reached an Issue.
+- **`owner=cowork` / `owner=code`:** the answer is the change itself. The commit that makes it removes the marker and says so in its message. A dated ruling only if it settles something that would otherwise be re-argued.
 - **A marker is never deleted without an answer.** A question that became moot is closed by a commit message saying why. A scenario or Issue carrying a marker is not deleted or closed until the marker is answered or moved.
 
-**What checks it.** `scripts/lint.sh` fails on a marker missing an owner, a date or a question, or sitting in `DECISIONS.md` — and first proves the checker rejects every line of its bad fixtures in `scripts/fixtures/markers/` ([guard-proves-itself]). The same checker runs the other markers — `process/LIVING-DOCS.md`. It runs in `.github/workflows/lint.yml`. `socialus-web` runs the same grammar in its own CI for code comments. Issue bodies are not gated; a malformed marker there is listed in the index as malformed.
+**What checks it.** `scripts/lint.sh` fails on a marker missing an owner, a date or a question, or sitting in `PRINCIPLES.md` — and first proves the checker rejects every line of its bad fixtures in `scripts/fixtures/markers/` ([guard-proves-itself]). The same checker runs the other markers — `process/LIVING-DOCS.md`. It runs in `.github/workflows/lint.yml`. `socialus-web` runs the same grammar in its own CI for code comments. Issue bodies are not gated; a malformed marker there is listed in the index as malformed.

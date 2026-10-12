@@ -51,8 +51,8 @@ options with a recommendation; agents recommend, they don't decide.
 
 ### ruling-is-dated-line
 
-A ruling exists only when it is one dated line in the project's `DECISIONS.md`. The code
-says how; `DECISIONS.md` says why; a doc that disagrees with either is the thing
+A ruling exists only as one dated line: a principle in `PRINCIPLES.md`, or under
+`## Rulings` in the doc it governs. The code says how; rulings say why; a doc that disagrees with either is the thing
 that's wrong. Record it at the scope the PM gave: a wider reading is labelled
 as a reading, because "the other side is patron", internal shorthand, was
 recorded as a user-facing rule that retired four others (2026-09-14).
@@ -65,7 +65,7 @@ newer one. Build to the newer ruling.
 
 **Structural, not remembered:**
 
-- **`DECISIONS.md` holds only live decisions.** A superseded entry, or the clause
+- **Rulings are live only.** A superseded entry, or the clause
   of one that no longer holds, is deleted; git holds it. The same goes for a
   superseded criterion, story sentence or scenario.
 - **The replacing entry names what it replaced in one tag** —
@@ -93,7 +93,7 @@ Don.
 **Which harm:** a decision made without Don, which is what splitting the
 difference is. **Dated failure:** `socialus-web` #220 (2026-09-26) asked Don to
 confirm a 2026-09-14 ruling over a 2026-09-13 one, a pattern the PM hits
-repeatedly; the guideline in `DECISIONS.md`'s header did not prevent it.
+repeatedly; a guideline in the rulings file's header did not prevent it.
 
 ## Verification
 

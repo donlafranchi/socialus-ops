@@ -63,7 +63,7 @@ if unruled:
     print(f"advisor-diff: {len(unruled)} finding(s) not in the register\n")
     for lvl, lint, obj, ck in sorted(unruled):
         print(f"  [{lvl.upper()}] {lint} — {obj}   cache_key={ck}")
-    print("\nRule on each: a dated line in DECISIONS.md, then an entry here. Or fix it.")
+    print("\nRule on each: a dated ruling in the doc it governs, then an entry here. Or fix it.")
 
 if stale:
     print(f"\nadvisor-diff: {len(stale)} accepted entry/entries past review_by\n")

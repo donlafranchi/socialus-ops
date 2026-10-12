@@ -15,7 +15,7 @@
 | 1 | Intake | Dispatch · light | Issue has `Kind:`, `Scenario:`, `Path:`, one `area:*`, a milestone | issue-lint; dashboard shows `?` for unlabelled | 2 min | everything |
 | 2 | Concept | Cowork plan · top | idea has a noun/verb/surface → spine; else stays in `IMAGINE.md` | plan `scripts/lint.sh` | 10 min | 3 |
 | 3 | Research | research subagents · light/mid | `Path:` line + 2–3 linked precedents in the Issue | `check-path-line.cjs` via issue-lint | 15 min | all items at once |
-| 4 | Decision | well-worn: lane · mid; new territory: the PM | well-worn: Issue body; new territory: dated `DECISIONS.md` line + rationale doc | plan lint (`[binds]`, constraints fresh) | 5 min / PM queue | other items keep moving |
+| 4 | Decision | well-worn: lane · mid; new territory: the PM | well-worn: Issue body; new territory: dated ruling in its scenario + rationale | plan lint (`[binds]`, constraints fresh) | 5 min / PM queue | other items keep moving |
 | 5 | Scenario | Cowork plan · mid (top if RLS/money) | ≤40 lines, value test, `[platform]`, binary acceptance, `status: approved` | plan lint + Cowork review | 20 min | 6 for other items |
 | 6 | Tickets | Code lane · mid | `F### · T### · name`, architecture note for schema/RLS/routes, `Visibility:` line | issue-lint | 15 min | 5 for other items |
 | 7 | Tests first (red) | Code lane · mid | each criterion has a `[guards F###.n]` test, seen failing | red commit before green; reviewer checks | part of 8 | network work only |
@@ -55,10 +55,10 @@
 ### 4 · Decision
 - **Purpose:** record the choice where the people bound by it read it.
 - **Owner:** well-worn: the lane, mid tier. New territory: the PM, reached through the PM queue as A/B/C with a recommendation, one at a time.
-- **In → out:** well-worn: the Issue body is the record (precedents + choice), no `DECISIONS.md` line unless it binds more than this Issue. New territory: a dated `DECISIONS.md` line with `[binds …]`, ruling wording uses "currently", a rationale doc at `socialus-plan planning/research/<topic>.md`, `constraints/` regenerated.
+- **In → out:** well-worn: the Issue body is the record (precedents + choice), no ruling unless it binds more than this Issue. New territory: a dated ruling under `## Rulings` in its scenario with `[binds …]`, ruling wording uses "currently", a rationale doc at `socialus-plan planning/research/<topic>.md`, `constraints/` regenerated.
 - **Gate:** plan lint (constraints fresh, `[replaces]` present where it reverses).
 - **On failure / waiting:** the item is held; the lane builds the rest of the batch. The PM is mostly unavailable Tuesday to Thursday, so new-territory items raised then land Friday to Monday.
-- **Risk of the shortcut** (no `DECISIONS.md` line for well-worn): a later agent re-argues it. Mitigation: precedents in the Issue are searchable, and a re-argued choice gets its line then.
+- **Risk of the shortcut** (no ruling for well-worn): a later agent re-argues it. Mitigation: precedents in the Issue are searchable, and a re-argued choice gets its line then.
 
 ### 5 · Scenario
 - **Purpose:** a story and binary acceptance a test can discharge. **Scenarios only.**

@@ -3,7 +3,7 @@
 generated, not maintained. The steps are this script's template; every ruling it cites is read live and quoted, and a hash of
 the cited rulings is stamped in the file. `--check` fails when a cited ruling has changed since the file was written.
 Usage: python3 scripts/regen_safety_runbook.py [--check] [--no-write]"""
-import hashlib, os, re, sys
+import glob, hashlib, os, re, sys
 from datetime import date
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from score_lib import PROJECTS, ROOT
@@ -36,7 +36,8 @@ def tiers():
 
 
 def decision(prefix):
-    for l in open(os.path.join(PLAN, 'DECISIONS.md')):
+    files = [os.path.join(PLAN, 'PRINCIPLES.md')] + sorted(glob.glob(os.path.join(PLAN, 'planning', 'scenario-F*.md'))) + sorted(glob.glob(os.path.join(PLAN, 'product', '**', '*.md'), recursive=True))
+    for l in (l for f in files if os.path.exists(f) for l in open(f)):
         if l.startswith('- **' + prefix):
             return clean(re.sub(r'\*\*|`|\[binds[^\]]*\]', '', l[2:]).strip())
     raise SystemExit(f'decision {prefix} not found')

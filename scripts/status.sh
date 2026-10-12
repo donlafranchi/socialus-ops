@@ -277,7 +277,7 @@ if risks:
     w("## Deferred on purpose — and therefore easy to forget")
     w()
     w("Ruled acceptable with a condition for looking again. The ruling itself is a")
-    w("dated line in `DECISIONS.md`; the register is `accepted-risks/`.")
+    w("dated ruling; the register is `accepted-risks/`.")
     w()
     if due:
         w(f"**{len(due)} need a look now.**")
@@ -343,7 +343,7 @@ if docs:
     unreviewed = sum(1 for d in docs if d[3] != "reviewed")
     w(f"{len(docs)} authored docs in `product/` and `planning/`; **{len(old)} not reviewed in {STALE_DAYS} days**, "
       f"and **{unreviewed} carry no `reviewed:` date** (their age is their last commit, which any edit resets).")
-    w("Reviewing one means reading it against `DECISIONS.md` and setting `reviewed:` in its frontmatter.")
+    w("Reviewing one means reading it against `PRINCIPLES.md` and its rulings and setting `reviewed:` in its frontmatter.")
     w()
     for age, path, when, how in docs[:10]:
         w(f"- `{path}` — {age} days ({how} {when})")

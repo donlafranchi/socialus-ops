@@ -30,7 +30,7 @@ DECISION RULE (2026-10-04, Don)
 - `scripts/` — the marker checker, lints and generated-view tooling. `scripts/lint.sh` runs here too: the project checks find nothing to check, and the fixtures still prove every checker ([guard-proves-itself]).
 - `templates/` — a scenario and a decision line, in the grammar the lint enforces.
 
-**Paths in `process/` that name `DECISIONS.md`, `STATUS.md`, `ROADMAP.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` or `accepted-risks/` mean the project's planning repo**, not this one.
+**Paths in `process/` that name `PRINCIPLES.md`, `STATUS.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` or `accepted-risks/` mean the project's planning repo**, not this one.
 
 ## Roles
 

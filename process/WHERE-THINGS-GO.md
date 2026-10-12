@@ -6,13 +6,13 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 | Category | Home | Owner | Kept current by (budget) | Never goes there |
 |---|---|---|---|---|
-| Principle: the why behind mission and rulings | `DECISIONS.md` | PM rules; planning agent words it | Reworded in place as rulings sharpen it; old wording pruned (15k) | Dated rulings, copy, criteria, process, history |
+| Principle: the why behind the Charter and rulings | `PRINCIPLES.md` (the lint fails any non-principle and names its home) | PM rules; planning agent words it | Reworded in place as rulings sharpen it; old wording pruned (15k) | Dated rulings, copy, criteria, process, history |
 | Never-break rules | `product/ABSOLUTES.md`; method: `process/ABSOLUTES.md` here | PM | Four-harms test admits (3k) | Preferences, feature rules |
-| Dated feature ruling with `[binds]` | `RULINGS.md` | PM rules; planning agent records | Deleted when superseded, or once shipped and stated in the spine or code (40k) | Rationale essays, copy strings, who-said-it |
+| Dated ruling with `[binds]` | Under `## Rulings` in the scenario it governs; moves verbatim to the spine or system doc when the scenario ships | PM rules; planning agent records | Words never edited; deleted when superseded (its scope's budget) | Rationale essays, copy strings, who-said-it |
 | What a thing is, and its status | `product/` spine: nouns, verbs, surfaces | planning agent | Fixed the session a mismatch is seen (30k each) | A second description |
 | How a thing works | `product/systems/` | planning agent | `trim-product-docs` (10k each) | Whether it ships |
 | Acceptance criteria | the scenario file | planning agent | Amended in place; deleted on ship (8k) | Restated rulings |
-| Copy rules | `product/foundation/voice-and-tone.md`; strings live in the code | PM approves new copy | Ruled strings become a scenario criterion (10k) | `DECISIONS.md` |
+| Copy rules | `product/foundation/voice-and-tone.md`; strings live in the code | PM approves new copy | Ruled strings become a scenario criterion (10k) | `PRINCIPLES.md` |
 | Idea with no noun, verb or surface | `IMAGINE.md` | planning agent | Moves to the spine once it has a shape; idle 60 days → deleted (15k) | Anything with a shape |
 | Not yet decided | `[open-question owner= raised=]` inline, where the answer lands | whoever raised it | Removed when answered | A list of questions |
 | Research, options, briefs | `planning/research/`, `product/exploration/`, `planning/briefs/` | any agent | Deleted once ruled and placed (30 days) | Rulings |
@@ -43,4 +43,4 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 **Leaving the junk drawer:** every item goes to its row above, an open-question marker, `IMAGINE.md`, an Issue, or is deleted. The line is then removed, never copied or annotated.
 
-**Tests in order:** Is it why? Use a principle. Did the PM rule it on a date? Use a ruling. Does it have a noun, verb or surface? Use the spine. Is it a pass/fail line? Use the scenario. Is it words members read? Use copy. Is it how agents work? Use method. Is it for a human to look at? It is the dashboard or the storyboard, so generate it. Still unsure? Use the junk drawer, and don't stall.
+**Tests in order:** Is it why? Use a principle. Did the PM rule it on a date? It goes inline in the doc it governs. Does it have a noun, verb or surface? Use the spine. Is it a pass/fail line? Use the scenario. Is it words members read? Use copy. Is it how agents work? Use method. Is it for a human to look at? It is the dashboard or the storyboard, so generate it. Still unsure? Use the junk drawer, and don't stall.
