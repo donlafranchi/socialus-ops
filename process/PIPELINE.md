@@ -166,7 +166,7 @@ Machine-specific rules live in `~/.claude/CLAUDE.md`.
 
 ## Accepted risk
 
-A lint finding ruled acceptable gets recorded once and stops being re-argued, because the definer views were re-triaged from scratch on 2026-09-09 against comments that already explained them. The ruling is the dated line in `DECISIONS.md`; `accepted-risks/` holds one JSON file per finding so an advisor run can be diffed against it — `bash scripts/advisor-diff.sh <export.json>` prints only what isn't already ruled on, plus anything past review.
+A lint finding ruled acceptable gets recorded once and stops being re-argued, because the definer views were re-triaged from scratch on 2026-09-09 against comments that already explained them. The ruling is the dated `## Rulings` line; `accepted-risks/` holds one JSON file per finding so an advisor run can be diffed against it — `bash scripts/advisor-diff.sh <export.json>` prints only what isn't already ruled on, plus anything past review.
 
 - One file per finding, named for the finding (`<cache_key>.json`, else `<lint>__<object>.json`). Two agents ruling the same thing collide on the filename instead of writing two rulings.
 - An entry needs a `decision` (the date of its ruling), a `revisit_if` (the observable condition that reopens it), a `review_by` date, and an `owner` — who argues it again. **`scripts/lint.sh` fails the day `review_by` passes**: an accepted risk nobody revisits is an inert guard.
@@ -176,7 +176,7 @@ A lint finding ruled acceptable gets recorded once and stops being re-argued, be
 
 ## Open questions
 
-A question nobody has answered yet is marked **inline, where it was raised**, and nowhere else, because on 2026-09-27 one question stood in `DECISIONS.md` § Open, its scenario and an Issue at once. **The index is generated**: `STATUS.md` § Open questions, by `python3 scripts/markers.py index`.
+A question nobody has answered yet is marked **inline, where it was raised**, and nowhere else, because on 2026-09-27 one question stood in an old file, its scenario and an Issue at once. **The index is generated**: `STATUS.md` § Open questions, by `python3 scripts/markers.py index`.
 
 **The marker — copy this, without the backticks:**
 
