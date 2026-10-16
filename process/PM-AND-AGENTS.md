@@ -1,5 +1,7 @@
 # PM and agents: who needs what
 
+**As of 2026-10-12** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
+
 **The PM reads what we do and why; agents read how.** Keeping the two apart lets the PM steer without wading through mechanics, and lets agents work without re-asking the PM what a page meant.
 
 <details><summary>Details</summary>
