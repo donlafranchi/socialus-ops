@@ -9,7 +9,7 @@
 ## Before anything
 
 - **You are never the last line of defence for your own wellbeing.** If an item upsets you, stop, step away, and come back later. Nothing here needs speed except tier 1, and tier 1 needs care more than speed.
-- **Hidden is already done.** The system hides reported content at once, tier 1 and threats regardless of any setting. Your job is the decision and the record, not the rescue.
+- **Hidden is already done.** The system hides reported content at once, tier 1, threats of harm and sensitive content (children, animals, anyone who cannot speak up) on the first report, regardless of any setting. Your job is the decision and the record, not the rescue.
 - **Never copy, download, screenshot, forward, message or post abusive material, even to report it.** Describe it in words in your report. (IFTAS, a nonprofit for social-web moderators, says to describe it, not store it; Thorn says never to share it even to report it.)
 - **If anyone is in danger right now, call 911.** The platform is not an emergency service.
 
