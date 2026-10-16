@@ -1,36 +1,19 @@
 {
- "as_of": "2026-10-11",
- "docs": 488,
- "in_scope": 107,
- "duplicates": 3,
- "unreferenced": 3,
- "superseded": 1,
- "undated": 57,
- "non_conforming": 74,
+ "as_of": "2026-10-16",
+ "docs": 416,
+ "in_scope": 127,
+ "duplicates": 0,
+ "unreferenced": 2,
+ "superseded": 2,
+ "undated": 63,
+ "non_conforming": 91,
  "empty": 0,
  "broken_links": 0,
- "derivable": 2,
- "hand_written_share": 0.86,
+ "derivable": 0,
+ "hand_written_share": 0.83,
  "unreferenced_list": [
-  "socialus-ops/process/experiments/2026-10-06-scheduling.md",
-  "socialus-ops/templates/decision-line.md",
-  "socialus-ops/templates/scenario.md"
+  "socialus-plan/product/exploration/experiments/2026-10-11-committee-model-comparison.md",
+  "skills/write-tickets/templates/ticket.md"
  ],
- "near": [
-  [
-   "socialus-plan/DECISIONS.md",
-   "socialus-plan/constraints/code.md",
-   0.09
-  ],
-  [
-   "socialus-plan/DECISIONS.md",
-   "socialus-plan/constraints/planning.md",
-   0.1
-  ],
-  [
-   "socialus-plan/README.md",
-   "socialus-plan/ROADMAP.md",
-   0.34
-  ]
- ]
+ "near": []
 }
