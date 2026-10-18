@@ -14,6 +14,7 @@ inline markers and one file field:
   `[replaces 2026-09-22: exact old text]`, `[replaces F059: exact old text]`, `[replaces path.md]`
       on a ruling that supersedes something; the old text must be gone and in git
   `[evidence YYYY-MM-DD from=<source>: what was seen]` on a decision a user's action or words changed
+  `[derives pitch@YYYY-MM-DD]` in a doc written from PRINCIPLES.md `#pitch`    -> lint fails once `#pitch`'s `changed:` is newer
   accepted-risks/*.json "owner" and "review_by"                     -> lint fails once review_by passes
   `gates: launch` in a scenario's frontmatter                       -> its Issues, or none
 
@@ -23,6 +24,7 @@ inline markers and one file field:
   python3 scripts/markers.py coverage [--code DIR] [--summary] [F###...]
   python3 scripts/markers.py constraints [--check]    # write, or diff, constraints/*.md
   python3 scripts/markers.py building [--code DIR]    # is `building` backed by code?
+  python3 scripts/markers.py derives                  # JSON: the pitch's changed date and the docs older than it
   python3 scripts/markers.py gating                   # does every gating scenario have an Issue?
   python3 scripts/markers.py platform [--check]       # write, or diff, PLATFORM-*.md
 
@@ -51,6 +53,7 @@ ANY = {
     "rep": re.compile(B + r"(replac\w*|supersed[\w-]*)", re.I),
     "ev": re.compile(B + r"evidence\b", re.I),
     "plat": re.compile(B + r"platforms?\b", re.I),
+    "derives": re.compile(B + r"derives\b", re.I),
 }
 LIST = r"[a-z0-9-]+(?:,[a-z0-9-]+)*"
 FULL_OQ = re.compile(B + OQ + r" owner=(\w+) raised=([0-9-]+)\]")
@@ -59,13 +62,17 @@ FULL_BINDS = re.compile(B + r"binds tiers=(" + LIST + r")(?: surfaces=(" + LIST 
 FULL_PLAT = re.compile(B + r"platform (?:(none)|([a-z]+)(?:=([a-z-]+))?( gap)?: ([^\]]+?))\]")
 FULL_REP = re.compile(B + r"replaces (?:(none)|(\d{4}-\d{2}-\d{2}|F\d{3}): ([^\]]+?)|([\w./-]+\.md))\]")
 FULL_EV = re.compile(B + r"evidence (\d{4}-\d{2}-\d{2}) from=(\S+): ([^\]]+?)\]")
+FULL_DERIVES = re.compile(B + r"derives pitch@(\d{4}-\d{2}-\d{2})\]")
 CLAIM = re.compile(r"\b(revers(e|es|ed|ing)|replac(e|es|ed|ing)|supersed(e|es|ed|ing)|overrul\w*)\b", re.I)
 PLATFORM_FROM = datetime.date(2026, 9, 29)  # a scenario approved on or after this carries a platform marker
 EVIDENCE_VIEW_BUILT = False  # ops-pattern/process/LIVING-DOCS.md: deferred until the first evidence tag lands
 # What a screen or capability can need from a native platform. One list; each platform's view maps it.
 NEEDS = ("push", "link", "camera", "photos", "location", "background", "auth", "key", "store")
 STORE = ("account-deletion", "sign-in", "ugc", "age-rating", "privacy", "payments")
-PRINCIPLES = "PRINCIPLES.md"  # the why; dated rulings live inline under `## Rulings` in the scenario or product doc they govern
+PRINCIPLES = "PRINCIPLES.md"  # (MARKERS_PRINCIPLES: fixtures point the pitch lookup elsewhere)
+PITCH_AT = os.environ.get("MARKERS_PRINCIPLES", "PRINCIPLES.md")
+PITCH = re.compile(r'id="pitch".*?changed: (\d{4}-\d{2}-\d{2})')
+# the why; dated rulings live inline under `## Rulings` in the scenario or product doc they govern
 OLD_RULE_FILES = ("DECISIONS.md", "RULINGS.md", PRINCIPLES)  # where a replaced text may be found in git
 
 
@@ -220,6 +227,17 @@ def parse_line(path, line):
         if not surfaces:
             yield "binds", False, "a decision that binds a tier names the surfaces it binds"; continue
         yield "binds", True, (tiers, surfaces, bool(f.group(3)))
+    for m in ANY["derives"].finditer(bare):
+        f = FULL_DERIVES.match(bare, m.start())
+        if not f:
+            yield "derives", False, "not `[derives pitch@YYYY-MM-DD]` — the only thing a doc derives from is PRINCIPLES.md `#pitch`"; continue
+        try:
+            d = datetime.date.fromisoformat(f.group(1))
+        except ValueError:
+            yield "derives", False, f"{f.group(1)} is not a date"; continue
+        if d > TODAY:
+            yield "derives", False, f"derives pitch@{d} is in the future"; continue
+        yield "derives", True, d
     dec = rule_home(path)
     for m in ANY["rep"].finditer(bare):
         f = FULL_REP.match(bare, m.start())
@@ -574,6 +592,22 @@ NOT_PRINCIPLE = [  # (pattern, what it is, its home) — from process/WHERE-THIN
 PRINCIPLE_MAX = 500
 
 
+def pitch_changed():
+    """The date PRINCIPLES.md `#pitch` last changed, or None when there is no such principle."""
+    for l in read_lines(PITCH_AT):
+        m = PITCH.search(l)
+        if m:
+            return datetime.date.fromisoformat(m.group(1))
+    return None
+
+
+def stale_derives(files):
+    """[(path, line, at)] for each `[derives pitch@…]` older than the pitch's changed date."""
+    changed = pitch_changed()
+    return [(p, n, i) for p in files for n, l in enumerate(read_lines(p), 1)
+            for k, ok, i in parse_line(p, l) if k == "derives" and ok and changed and i < changed]
+
+
 def principle_errors(path):
     """PRINCIPLES.md holds principles only; anything else is named with its home on the map."""
     errs = []
@@ -612,6 +646,13 @@ def lint(files):
                     e = guard_referent_error(*info)
                     if e:
                         errs.append(f"{p}:{n}: {e}")
+            for kind, ok, info in found:
+                if kind == "derives" and ok:
+                    changed = pitch_changed()
+                    if not changed:
+                        errs.append(f"{p}:{n}: derives from `#pitch`, and PRINCIPLES.md has no pitch principle (`<a id=\"pitch\"></a>` and `changed: YYYY-MM-DD`)")
+                    elif info < changed:
+                        errs.append(f"{p}:{n}: written from the pitch of {info}, which changed {changed} — bring this doc in line with PRINCIPLES.md `#pitch`, then set `[derives pitch@{changed}]`")
             if n < 15 and os.path.basename(p).startswith("scenario-") and l.startswith("gates:") \
                     and l.split(":", 1)[1].strip() != "launch":
                 errs.append(f"{p}:{n}: `gates:` names what the scenario gates — the only gate is `launch`")
@@ -659,6 +700,13 @@ def main():
         for e in errs:
             print(f"markers: {e}")
         return 1 if errs else 0
+
+    if mode == "derives":
+        changed = pitch_changed()
+        stale = stale_derives(tracked())
+        print(json.dumps({"changed": str(changed) if changed else None,
+                          "stale": [{"path": p, "line": n, "at": str(a)} for p, n, a in stale]}))
+        return 0
 
     if mode == "principles":
         errs = [e for f in (argv or [PRINCIPLES]) for e in principle_errors(f)]
