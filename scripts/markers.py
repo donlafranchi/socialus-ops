@@ -602,7 +602,7 @@ def pitch_changed():
 
 
 def stale_derives(files):
-    """[(path, line, at)] for each [derives pitch@…] older than the pitch's changed date."""
+    """[(path, line, at)] for each `[derives pitch@…]` older than the pitch's changed date."""
     changed = pitch_changed()
     return [(p, n, i) for p in files for n, l in enumerate(read_lines(p), 1)
             for k, ok, i in parse_line(p, l) if k == "derives" and ok and changed and i < changed]
