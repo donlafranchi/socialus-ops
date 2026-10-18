@@ -42,6 +42,11 @@ This repo is read and written by agents, not maintained by people. **A fact live
 - **A ruling that binds code gates the code too.** The 2026-09-21 identity-leak ruling bound code and sat eight days with no Issue, because the gating check read scenarios only. Now a ruling whose `[binds …]` names `code` must name its Issue (`#N`) or its scenario (`F###`), or carry `build=none` when it governs how code agents work and there is nothing to build. Anything else fails the lint. `STATUS.md` lists the `build=none` ones, so the escape hatch stays visible.
 - **Not when.** A draft. It is expected to have no Issue yet.
 
+### Docs derived from the pitch
+- **Problem.** The 2026-10-15 pitch audit found the pitch's capabilities restated in five places (the seeder rules, the grade card, the pipeline, the scenarios), each a copy that nothing would tell when the pitch moved.
+- **Does.** The pitch lives once, in `PRINCIPLES.md` as `#pitch`, with `changed: YYYY-MM-DD`. A doc written from it carries `[derives pitch@YYYY-MM-DD]`. The lint fails each such doc whose date is older than `changed:`, naming the file; `markers.py derives` lists them as JSON for the dashboard row "pitch changed → N files updating". The planning agent (or the weekly tend-docs pass) updates them in one PR and sets the new date; only a changed pass bar goes to the PM.
+- **Not when.** A doc that only links to the pitch. A link cannot go stale.
+
 ### Open questions inline
 - **Problem.** Open questions lived wherever they were raised. F080's detection question stood in `DECISIONS.md` § Open, in F080 and in #221 at once; F071 routed its questions to `DECISIONS.md` because the scenario format had no room; others lived only in chat. Nothing reviewed them.
 - **Does.** `[open-question owner=… raised=…]` in the file the answer will change, indexed in `STATUS.md`, oldest first. Placement and closing rules: `process/PIPELINE.md` § Open questions.

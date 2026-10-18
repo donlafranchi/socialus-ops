@@ -65,6 +65,7 @@
 - **Owner:** Cowork plan, mid tier; top when it touches RLS, money or moderation (`planning-filter` skill).
 - **In → out:** spine entry + decision → `planning/scenario-F###.md`: Story, Acceptance, Not this (≤40 lines), `## Why` with the six value-test answers, `[platform …]`, `gates: launch` where it does. 5 Deadly Sins pass: the reviewer names any signal found (scope creep, gold plating, missing requirement, unrealistic size, unclear wording) in one line under Why, or "none".
 - **Gate:** plan lint (length, value test, platform marker); Cowork review flips `status: approved`. A criterion with a judgement word (*clear*, *easy*) is marked for the PM.
+- **Pitch test:** where the project's `PRINCIPLES.md` has a `#pitch` principle, the scenario names which of its capabilities (`cap-1`…) it moves, or says none, and passes the pitch's member-first test before approval; one that moves a capability against the member goes to the PM. A doc written from the pitch carries `[derives pitch@date]` (`process/LIVING-DOCS.md` § Docs derived from the pitch).
 - **On failure:** over 40 lines → two scenarios. A sin found → cut it before approval and name what left.
 
 ### 6 · Tickets
