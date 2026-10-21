@@ -62,9 +62,9 @@
 ### 5 · Scenario
 - **Purpose:** a story and binary acceptance a test can discharge. **Scenarios only.**
 - **Owner:** Cowork plan, mid tier; top when it touches RLS, money or moderation (`planning-filter` skill).
-- **In → out:** spine entry + decision → `planning/scenario-F###.md`: Story, Acceptance, Not this (≤40 lines), `## Why` with the six value-test answers, `[platform …]`, `gates: launch` where it does. 5 Deadly Sins pass: the reviewer names any signal found (scope creep, gold plating, missing requirement, unrealistic size, unclear wording) in one line under Why, or "none".
+- **In → out:** spine entry + decision → `planning/scenario-F###.md`: Story, Acceptance, Not this (≤40 lines), `## Why` with the six value-test answers, `[platform …]`, `gates: launch` where it does. 5 Deadly Sins pass: one line under Why naming any sin found, or "none".
 - **Gate:** plan lint (length, value test, platform marker); Cowork review flips `status: approved`. A criterion with a judgement word (*clear*, *easy*) is marked for the PM.
-- **Pitch test:** if `PRINCIPLES.md` has `#pitch`, the scenario names the `cap-n` it moves (or none); one moving a capability against the member goes to the PM.
+- **Pitch test:** if `PRINCIPLES.md` has `#pitch`, the scenario names the `cap-n` it moves (or none); one moving a capability against the member goes to the PM. And: **does this need us in the loop to work? If yes, why, and when do we step out?** [always]
 - **On failure:** over 40 lines → two scenarios. A sin found → cut it before approval and name what left.
 
 ### 6 · Tickets
