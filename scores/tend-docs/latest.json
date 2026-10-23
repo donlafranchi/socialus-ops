@@ -1,19 +1,16 @@
 {
- "as_of": "2026-10-16",
- "docs": 416,
- "in_scope": 127,
+ "as_of": "2026-10-23",
+ "docs": 431,
+ "in_scope": 132,
  "duplicates": 0,
- "unreferenced": 2,
+ "unreferenced": 0,
  "superseded": 2,
- "undated": 63,
- "non_conforming": 91,
+ "undated": 64,
+ "non_conforming": 92,
  "empty": 0,
  "broken_links": 0,
  "derivable": 0,
  "hand_written_share": 0.83,
- "unreferenced_list": [
-  "socialus-plan/product/exploration/experiments/2026-10-11-committee-model-comparison.md",
-  "skills/write-tickets/templates/ticket.md"
- ],
+ "unreferenced_list": [],
  "near": []
 }
