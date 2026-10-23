@@ -21,13 +21,18 @@ gap_re = re.compile(r'^F\d{3} · (criterion|check|guard)', re.I)
 # 1. closed parent Issue, feature still has unmet criteria (the F081 / F082 pattern)
 closed_unmet = []
 retired_unmet = []
+tracked_closed = []  # tuning 2026-10-23: parent closed, but every unmet active criterion has an open gap Issue (F059 with #587, #589, #828 ...): tracked, not leaking
 for f in feats:
     for i in issues:
         if re.match(rf'^{f["id"]} · ', i['title']) and not gap_re.match(i['title']) and i['state'] == 'CLOSED' and f['met'] < f['total']:
+            sts = side.get(f['id'], (False, {}))[1]
+            loose = [r for r in f['criteria'] if r['built'] != 'yes' and sts.get(r['n'], 'active') == 'active' and not any(state.get(n) == 'OPEN' for n in r['issues'])]
             if side.get(f['id'], (False, {}))[0]:
                 retired_unmet.append(f['id'])
+            elif not loose:
+                tracked_closed.append(f['id'])
             else:
-                closed_unmet.append(f"{f['id']} (#{i['number']}: {f['met']} of {f['total']} met)")
+                closed_unmet.append(f"{f['id']} (#{i['number']}: {f['met']} of {f['total']} met; loose: {', '.join(r['n'] for r in loose)})")
             break
 
 # 2. unmet criterion with no OPEN Issue linked in its row: a gap nobody is tracking
@@ -52,7 +57,7 @@ unchecked = [f"{fid}.{r['n']}" for fid, r in built if r['checked'] != 'yes']
 pct = round(100 * len(unchecked) / len(built), 1) if built else 0.0
 
 rows = [
-    ('closed_parent_unmet', len(closed_unmet), 'features', band(len(closed_unmet), 0, 2), ('; '.join(closed_unmet[:6]) or 'none') + (f'; {len(retired_unmet)} retired-scenario features not counted' if retired_unmet else '')),
+    ('closed_parent_unmet', len(closed_unmet), 'features', band(len(closed_unmet), 0, 2), ('; '.join(closed_unmet[:6]) or 'none') + (f'; {len(retired_unmet)} retired-scenario features not counted' if retired_unmet else '') + (f'; {len(tracked_closed)} closed parents whose gaps all have open Issues not counted ({", ".join(tracked_closed)})' if tracked_closed else '')),
     ('closed_issue_unmet', len(closed_only), 'criteria', band(len(closed_only), 0, 3), ', '.join(closed_only[:10]) or 'none'),
     ('untracked_unmet', len(untracked), 'criteria', band(len(untracked), 2, 10), ', '.join(untracked[:10]) + (' ...' if len(untracked) > 10 else '') or 'none'),
     ('spec_conflict_open', len(spec_conflict), 'criteria', 'none', 'routed to scope-scenario; reported, not banded'),
