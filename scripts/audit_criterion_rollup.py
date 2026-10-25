@@ -29,7 +29,7 @@ for p in glob.glob(os.path.join(PLAN, 'planning', 'scenario-F*.md')):
     scen[fid] = {'status': st.group(1) if st else '?', 'gates': gt.group(1) if gt else '', 'n': len(re.findall(r'^\d+\. ', a, re.M))}
 live_scen = {k: v for k, v in scen.items() if v['status'] in ('approved', 'building')}
 crit_mismatch = [(k, scen[k]['n'], by[k]['total']) for k in by if k in scen and scen[k]['n'] and scen[k]['n'] != by[k]['total']]
-ms = gh_json(['issue', 'list', '-R', WEB, '-m', 'Beta 11-06', '-s', 'all', '-L', '600', '--json', 'number,title,state,labels,createdAt']) or []
+ms = gh_json(['issue', 'list', '-R', WEB, '-m', 'Beta', '-s', 'all', '-L', '600', '--json', 'number,title,state,labels,createdAt']) or []
 ms_total = len(ms); ms_closed = sum(1 for i in ms if i['state'] == 'CLOSED')
 lab = lambda i: {l['name'] for l in i['labels']}
 ms_scen = [i for i in ms if 'scenario' in lab(i)]

@@ -107,7 +107,7 @@ New this week in the code repo's 34 workflows: a report self-test and a main-bui
 
 ## Where we are
 
-**The dashboard is the one place to look.** Today: 188 of 285 criteria met (66%) across 34 features, 1 feature red, PM looked 0. Beta 11-06 freezes in 7 days with 25 open Issues; After beta has 58. *Why agents need it:* the roll-up and "lost since last look" catch a feature that quietly disappears or loses its test.
+**The dashboard is the one place to look.** It shows the criteria met across all features, which features are red, how long the PM's look is overdue, and the open Issues in Beta (which runs to April 2027, no freeze) and After beta. *Why agents need it:* the roll-up and "lost since last look" catch a feature that quietly disappears or loses its test.
 
 <details><summary>Details</summary>
 
