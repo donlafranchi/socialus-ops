@@ -590,6 +590,7 @@ NOT_PRINCIPLE = [  # (pattern, what it is, its home) — from process/WHERE-THIN
     (r"(?i)\b(criterion|criteria)\b", "a scenario criterion", "the scenario's `## Acceptance`"),
 ]
 PRINCIPLE_MAX = 500
+PRINCIPLE_SECTIONS = {"## Soul", "## Principles", "## Defaults"}  # the ethos, the principles under it, the tie-breakers
 
 
 def pitch_changed():
@@ -612,8 +613,8 @@ def principle_errors(path):
     """PRINCIPLES.md holds principles only; anything else is named with its home on the map."""
     errs = []
     for n, l in enumerate(read_lines(path), 1):
-        if l.startswith("## ") and l.strip() != "## Principles":
-            errs.append(f"{path}:{n}: PRINCIPLES.md has one section, `## Principles` — `{l.strip()}` belongs elsewhere (process/WHERE-THINGS-GO.md)")
+        if l.startswith("## ") and l.strip() not in PRINCIPLE_SECTIONS:
+            errs.append(f"{path}:{n}: PRINCIPLES.md has three sections, `## Soul`, `## Principles` and `## Defaults` — `{l.strip()}` belongs elsewhere (process/WHERE-THINGS-GO.md)")
         if not l.startswith("- "):
             continue
         found = [(k, i) for k, ok, i in parse_line(path, l) if ok]

@@ -19,6 +19,10 @@ DECISION RULE (2026-10-04, Don)
 5. When unsure which it is, say which in one line and lean toward deciding: the PM's time is the scarcest resource.
 ```
 
+## Decision rights
+
+The PM decides only ideas, what is in each version (the MVP of a feature), and words and look-and-feel. Agents decide everything else by the project's soul and defaults (`PRINCIPLES.md` § Soul, § Defaults), record it, and report what they chose; only new territory that conflicts with the soul goes to the PM. Detail: `process/PIPELINE.md` § Decision rights.
+
 ## What is here
 
 - `process/ABSOLUTES.md` — the process absolutes and the four-harms test that admits any absolute, process or product. A project keeps its member-facing absolutes in its own `product/ABSOLUTES.md`.

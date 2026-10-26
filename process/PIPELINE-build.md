@@ -57,14 +57,14 @@
 - **Owner:** well-worn: the lane, mid tier. New territory: the PM, reached through the PM queue as A/B/C with a recommendation, one at a time.
 - **In → out:** well-worn: the Issue body is the record (precedents + choice), no ruling unless it binds more than this Issue. New territory: a dated ruling under `## Rulings` in its scenario with `[binds …]`, ruling wording uses "currently", a rationale doc at `socialus-plan planning/research/<topic>.md`, `constraints/` regenerated.
 - **Gate:** plan lint (constraints fresh, `[replaces]` present where it reverses).
-- **On failure / waiting:** the item is held; the lane builds the rest of the batch. The PM is mostly unavailable Tuesday to Thursday, so new-territory items raised then land Friday to Monday.
+- **On failure / waiting:** the item is held; the lane builds the rest of the batch. New-territory items land with the PM Friday to Monday.
 
 ### 5 · Scenario
 - **Purpose:** a story and binary acceptance a test can discharge. **Scenarios only.**
 - **Owner:** Cowork plan, mid tier; top when it touches RLS, money or moderation (`planning-filter` skill).
 - **In → out:** spine entry + decision → `planning/scenario-F###.md`: Story, Acceptance, Not this (≤40 lines), `## Why` with the six value-test answers, `[platform …]`, `gates: launch` where it does. 5 Deadly Sins pass: one line under Why naming any sin found, or "none".
 - **Gate:** plan lint (length, value test, platform marker); Cowork review flips `status: approved`. A criterion with a judgement word (*clear*, *easy*) is marked for the PM.
-- **Pitch test:** if `PRINCIPLES.md` has `#pitch`, the scenario names the `cap-n` it moves (or none); one moving a capability against the member goes to the PM. And: **does this need us in the loop to work? If yes, why, and when do we step out?** [always]
+- **Ethos and pitch test:** the scenario names the soul line it serves and, if `PRINCIPLES.md` has `#pitch`, the `cap-n` it moves (or none). Extracting, or deciding where a choice would do, fails it; a soul conflict or a capability moved against the member goes to the PM. And: **does it need us in the loop? If so, why, and when do we step out?** [always]
 - **On failure:** over 40 lines → two scenarios. A sin found → cut it before approval and name what left.
 
 ### 6 · Tickets
@@ -141,7 +141,7 @@
 - **Purpose:** the PM judges whether it is right, once per area.
 - **Owner:** the PM; Dispatch queues it.
 - **In → out:** an area whose batch passed 14 shows "ready for your look" in `DASHBOARD.md`. Dispatch sends one area at a time: the page on socialus.org, three phone steps, the judgement calls and new copy, Friday to Monday. His feedback is filed as new Issues (back to 1), never fixed from chat.
-- **Gate:** none blocks the merge until the 10-23 freeze. From 10-23, when `PREVIEWS_MODE` is `labelled`, a `human-review` PR (judgement calls or new copy) gets his look on its preview **before** 13; everything else is unchanged.
+- **Gate:** when `PREVIEWS_MODE` is `labelled`, a `human-review` PR (judgement calls or new copy) gets his look on its preview **before** 13; everything else is unchanged.
 
 ## (c) By change type
 
