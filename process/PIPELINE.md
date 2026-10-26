@@ -77,7 +77,7 @@ The PM reads no code and nothing asks them to; they look at the running page aft
 Every PR opens with one of exactly two things, before anything else in the body:
 
 1. **"Don doesn't need to look."** — and one line saying why not.
-2. **The page on socialus.org (after merge; from the freeze, the labelled preview), three numbered steps, and what he should expect to see.** Label the PR `human-review`. Only after the reviewer's first pass below, which the body lists.
+2. **The page on socialus.org (after merge; from the freeze, the labelled preview), three numbered steps, and what he should expect to see.** Label the PR `human-review`. Only after the reviewer's first pass below.
 
 The steps are written for someone holding a phone who has not read the ticket: *"Open the link, tap Create, choose Business."* Not *"navigate to the composer route."* No file paths, no function names, no ticket numbers, no jargon.
 
@@ -92,19 +92,9 @@ The steps are written for someone holding a phone who has not read the ticket: *
 - **Precedents.** The build is checked against the precedents listed beside the Issue's `Path:` line; an unexplained departure is fixed like a rule violation.
 - **Rulings.** Copy and behaviour are checked against the live rulings that bind the change: the scenario's acceptance, `constraints/code.md`, the wording rules, the design language. A mismatch is a rule violation, not a question for the PM.
 - **Fixes.** The reviewer fixes what it finds on the same branch, or sends it back to the build agent, and checks again. What it cannot settle by a rule is a judgement call, and only those go to the PM.
-- **UX checklist** *(the PM, 2026-10-05)*. The reviewer ticks each line in the PR body, or writes why it doesn't apply:
-  - [ ] **WCAG 2.1 AA:** contrast through the colour tokens; visible focus in a logical order; every control labelled and every image has alt text; tap targets at least 44px.
-  - [ ] **Every state is present:** empty, loading, error, offline or slow, signed out.
-  - [ ] **One primary action** per screen.
-  - [ ] **Thumb reach on a phone:** the main action sits in the lower half or a fixed bar.
-  - [ ] **No horizontal scroll at 390**, including a control that renders one element per term of a vocabulary (pills, tabs, filters) once the list grows, because the browse pill row fit seven kinds and broke at twelve categories (2026-09-12).
-  - [ ] **Copy follows the project's voice rules** (in SocialUs, `socialus-plan product/foundation/voice-and-tone.md`).
-  - [ ] **A quick Nielsen pass:** the system's status is visible; there's a way back or an undo; it's consistent with the rest of the app; errors are prevented before they're explained.
-  - [ ] **Images are optimised** (no raw `<img>` lint warnings added, sizes set).
-  - [ ] **Tidy and contained** *(the PM, 2026-10-06)*: each group of related information sits in its own card or section with a clear header; one edit or action affordance per card, in the card header, never scattered inline; consistent spacing and alignment; long or rarely used content collapsed (accordion); nothing floats loose between sections. Precedents: Apple HIG grouped lists, Material cards, Google Business Profile editor.
-  - [ ] **Tidiness verdict** *(the PM, 2026-10-06)*: the reviewer answers in one line, at 390 and 1280, "Is the information on this screen neat, tidy and organized? What's the one thing that looks most cluttered?" and fixes rule-level clutter before the PM sees it.
-- **In the PR body**, under the first block: `Reviewed by: <agent>`, the personas and widths it looked at, the UX checklist ticked, what it fixed, and the judgement calls left for the PM, one line each. A UI PR without that section has skipped the pass.
-- **Never skipped silently.** If the pass can't run (no local stack, no browser), the PR is labelled `review-skipped` with the reason in the body, and the pass runs when it can, because #380 merged on 2026-10-05 with the pass skipped and nothing recorded it. In SocialUs a check fails a UI PR that has neither a `Reviewed by:` section with the checklist nor that label, so an unattended merge can't take it.
+- **The checklist, severities and what to skip live in the project's `REVIEW.md`** (SocialUs: `socialus-web/REVIEW.md`, carrying the PM's UX checklist of 2026-10-05 and tidy lines of 2026-10-06 verbatim), the one file a reviewer reads. This section holds the roles.
+- **As a GitHub review on the PR, by the reviewing session** (2026-10-26): findings with `file:line`, fixes, and the judgement calls left for the PM. The PR body names the reviewer in one `Reviewed by:` line.
+- **Never skipped silently.** If the pass can't run, the PR is labelled `review-skipped` with the reason, and the pass runs when it can (#380 merged 2026-10-05 with the pass skipped and nothing recorded it). **The body-text `review` check is retired (2026-10-26):** it read the PR body for a `Reviewed by:` section and checklist words, and `socialus-web` #990 passed it with the builder as its own reviewer; a check that cannot tell a review from the builder's description of one is inert ([guard-proves-itself]). A gate returns when the reviewer posts under its own identity.
 
 **Why:** on 2026-10-04 CI captured every route as every persona and no role owned looking at the pictures, so rule violations reached the PM as judgement calls.
 

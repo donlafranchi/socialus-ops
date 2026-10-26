@@ -20,10 +20,10 @@
 | 6 | Tickets | Code lane · mid | `F### · T### · name`, architecture note for schema/RLS/routes, `Visibility:` line | issue-lint | 15 min | 5 for other items |
 | 7 | Tests first (red) | Code lane · mid | each criterion has a `[guards F###.n]` test, seen failing | red commit before green; reviewer checks | part of 8 | network work only |
 | 8 | Build | Code lane · mid (top if tricky) | Lint/types/build, Unit tests, Migrations applied: green | CI + ruleset | half a shift per batch | max 2 builds on the machine |
-| 9 | Journey check | CI + light reader | area journeys finish, no new friction vs main | CI `journeys` step + `## Journey check` | 10 min (CI) | 10, 11 (same bundle) |
-| 10 | Visibility review | CI + subagent · mid (top if RLS) | matrix test green + UI dump matches matrix and rulings | CI `visibility` test + `## Visibility review` via review check | 15 min | 9, 11 |
-| 11 | UX/UI review | 3 subagents · mid/light | checklist ticked incl. tidy + verdict at 390/1280 | review check | 15 min | 9, 10 |
-| 12 | Fix loop | Code lane · mid | only judgement calls remain, ≤2 loops | review check re-runs on edit | 30–45 min | other lanes' builds |
+| 9 | Journey check | CI + light reader | area journeys finish, no new friction vs main | CI `journeys` step | 10 min (CI) | 10, 11 (same bundle) |
+| 10 | Visibility review | CI + subagent · mid (top if RLS) | matrix test green + UI dump matches matrix and rulings | CI `visibility` test; a mismatch is a finding in the reviewer's GitHub review | 15 min | 9, 11 |
+| 11 | UX/UI review | 3 subagents · mid/light | findings posted as a GitHub review by `REVIEW.md`; none open | the reviewer's GitHub review (the body-text `review` check retired 2026-10-26) | 15 min | 9, 10 |
+| 12 | Fix loop | Code lane · mid | only judgement calls remain, ≤2 loops | the reviewer re-checks its failed lines | 30–45 min | other lanes' builds |
 | 13 | Merge/migrate/deploy | Code lane · light | apply → `applied` green → auto-merge → deploy-health green | ruleset + deploy-health.yml | 15 min | other lanes |
 | 14 | Live smoke | CI + light reader | changed screens load, as each persona, no error, no leak | `smoke-live.yml` | 10 min | next batch's build |
 | 15 | PM review | the PM, via Dispatch | the PM's look, one area at a time | DASHBOARD.md + PM queue | his time, Fri–Mon | everything |
@@ -93,7 +93,7 @@
 - **Purpose:** a builder persona does the real thing end to end, the way a person would.
 - **Owner:** CI runs it; a light-tier reader turns the friction log into findings.
 - **In → out:** on a ready PR, the CI browser job runs the area's builder journeys (`evals/builders/journey.spec.ts`, plus any area spec) against the throwaway local stack → `friction.md`, storyboard, diffed against main's last friction log.
-- **Gate:** no journey halts, and no friction line that main doesn't have. The PR's `## Journey check` lists the journeys run and new friction, or "n/a: no flow changed".
+- **Gate:** no journey halts, and no friction line that main doesn't have (the CI `journeys` step).
 - **On failure:** a halt is a bug fixed in 12; new friction is a finding.
 - **Gap:** journeys exist today for create, edit, publish, post, follow, RSVP. A lane whose flow has no journey adds the steps in 7.
 
@@ -103,7 +103,7 @@
 - **In → out:**
   - **Database half:** `tests/visibility.test.ts` runs every row of `evals/visibility/matrix.ts` (resource × persona → `none | own | parties | all`, plus withheld fields) against the local stack, signed in as each persona's JWT and as `anon`. It proves itself on a bad fixture: a deliberately open policy it must reject.
   - **UI half:** the subagent reads the capture bundle's per-persona text dumps and screenshots of each changed route, checks them against the matrix and against `constraints/code.md` rulings on surfaces `rls`, `visibility`, `signed-out`, `members` (currently: signed out sees the minimum and no map pins; You is visible to no one else; a transaction is visible only to its parties).
-- **Gate:** CI `visibility` test green, and a `## Visibility review` section with `Reviewed by:`, personas checked, matrix rows touched, and a one-line verdict; the review check fails a PR touching `src/app`, `src/actions` or `supabase/` without it.
+- **Gate:** CI `visibility` test green; the reviewer's GitHub review names the personas and matrix rows it checked and a one-line verdict for any PR touching `src/app`, `src/actions` or `supabase/`.
 - **On failure:** a mismatch with a ruling is a rule violation, fixed in 12. A case no ruling covers is privacy, so it's `Path: new territory` and goes to the PM as A/B/C; the rest of the batch keeps moving.
 
 ### 11 · UX/UI review
@@ -113,14 +113,14 @@
   - **Accessibility** (light; mid if axe finds anything): the bundle's axe-core results, focus-order screenshots, tap targets ≥44px, labels and alt text, WCAG 2.1 AA.
   - **Copy and voice** (mid): `voice-and-tone.md`; every new or changed member-facing string is listed for the PM's tone look ([public-is-draft]).
 - **In → out:** findings only, one line each, into the PR's `## Reviewer's first pass`. **Reviewers don't edit the branch**, so three of them never collide.
-- **Gate:** the review check: every checklist line ticked or `n/a` with a reason, including the two tidy lines.
+- **Gate:** the reviewer's GitHub review, by the project's `REVIEW.md`, with no blocking finding open.
 - **On failure:** findings go to 12.
 
 ### 12 · Fix loop
 - **Purpose:** clear every rule-level finding in one pass.
 - **Owner:** the Code lane, mid tier.
 - **In → out:** the findings from 9–11 → one fix commit set, one push; CI re-captures only the changed routes; each reviewer re-checks only its failed lines.
-- **Gate:** the PR's `Judgement calls for the PM:` holds only items no rule settles; the review check is green.
+- **Gate:** the review's judgement calls for the PM hold only items no rule settles; no blocking finding open.
 - **On failure:** after 2 loops, a finding still open is either a judgement call (to the PM) or a non-blocking follow-up `bug ·` Issue in the same area. Never a third loop.
 
 ### 13 · Merge, migrate, deploy
@@ -224,7 +224,7 @@ Each is a `chore ·` Issue in `area:ops` unless noted; times are estimates.
 4. **Capture bundle:** `scripts/changed-routes.ts` (diff → routes → affected personas) and a Playwright `capture` project that writes screenshots, state fixtures, axe results (`@axe-core/playwright`, free and open source) and text dumps to a `review-bundle` artifact. *Half a day.*
 5. **Reviewer skill:** `review-pr-bundle` in `~/Projects/skills`, linked by `link.sh`: downloads the artifact with `gh run download`, fans out the five reviewers with fixed prompts, writes the PR sections. *2–3 h.*
 6. **Visibility matrix:** `evals/visibility/matrix.ts`, `tests/visibility.test.ts` running each row as `anon` and each persona's JWT, a bad-fixture policy it must reject, and a `builder` persona in `evals/personas.ts` and its seed. *Half a day to a day.*
-7. **PR template and review check:** `## Journey check` and `## Visibility review` sections; `check-review.cjs` requires the visibility section on PRs touching `src/app`, `src/actions` or `supabase/`; fixtures. *1–2 h.*
+7. ~~PR template and review check~~ Built 2026-10-07, retired 2026-10-26 (`socialus-web` #1075): it checked prose for words. Replaced by `REVIEW.md` and a GitHub review from a second session.
 8. **`smoke-live.yml`:** `workflow_run` after deploy-health, read-only spec with builder accounts, must-fail guard first, comment on the PR or open a `bug · live:` Issue. *Half a day.*
 9. **Journeys in PR CI:** run the area's builder journeys against the local stack in the browser job; diff `friction.md` against main's last artifact. *2–3 h.*
 10. **Dashboard stages:** `dashboard.py` columns for Scenario approved, Built, Reviewed, Shipped, Smoke, PM looked (steps 5, 8, 11, 13, 14, 15); `?` where no data. *1–2 h.*
