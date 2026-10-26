@@ -57,7 +57,7 @@
 - **Owner:** well-worn: the lane, mid tier. New territory: the PM, reached through the PM queue as A/B/C with a recommendation, one at a time.
 - **In → out:** well-worn: the Issue body is the record (precedents + choice), no ruling unless it binds more than this Issue. New territory: a dated ruling under `## Rulings` in its scenario with `[binds …]`, ruling wording uses "currently", a rationale doc at `socialus-plan planning/research/<topic>.md`, `constraints/` regenerated.
 - **Gate:** plan lint (constraints fresh, `[replaces]` present where it reverses).
-- **On failure / waiting:** the item is held; the lane builds the rest of the batch. The PM is mostly unavailable Tuesday to Thursday, so new-territory items raised then land Friday to Monday.
+- **On failure / waiting:** the item is held; the lane builds the rest of the batch. New-territory items land with the PM Friday to Monday.
 
 ### 5 · Scenario
 - **Purpose:** a story and binary acceptance a test can discharge. **Scenarios only.**
