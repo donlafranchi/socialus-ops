@@ -55,13 +55,21 @@ DECISION RULE (2026-10-04, Don)
 - **Beside the absolutes, not over them.** "Don't wait for the PM" does not reach new user-facing copy, which stays a draft until he approves it ([public-is-draft]), or anything else an absolute reserves for him ([production-asks-don], [don-decides]).
 - "SocialUs" and "our rulings" in the rule mean the project the method is running.
 
+## Decision rights
+
+**The PM decides only three things: ideas, what is in each version (the MVP of a feature), and words and look-and-feel.** Everything else an agent decides by the project's soul and defaults (`PRINCIPLES.md` § Soul and § Defaults) and the decision rule's well-worn path, records it as a dated ruling where it governs, and reports what it chose. **Only new territory that conflicts with the soul goes to the PM**, as A/B/C with a recommendation. Ruled 2026-10-25, because the PM's time is the scarcest resource and most open questions were ones the soul already answers.
+
+- An open question owned by the PM that the soul and defaults answer is decided by the agent that finds it, recorded, and its marker removed in the same commit.
+- Money, legal and entity questions go to the legal repo's counsel track, not to the PM and not to an agent.
+- The absolutes still stand: new member-facing copy stays a draft until the PM approves it ([public-is-draft]), and production asks first ([production-asks-don]).
+
 ## Who checks what
 
 **Agents own whether a change is correct. Don owns whether it is right.** Correct is testable — it compiles, the tests pass, the migration applies, the rule is enforced. Right is a judgment about the product, and no test has an opinion about it.
 
 Don does not read code, and nothing should ever ask him to. What he looks at is the running page on socialus.org after merge (from the freeze, the labelled preview).
 
-**He looks only at new territory and tone** *(Don, 2026-10-04, the decision rule above)*:
+**He looks only at new territory that conflicts with the soul, scope, and tone** *(2026-10-04, narrowed 2026-10-25 by § Decision rights)*:
 
 - **`Path: new territory`** — no well-worn path, conflicting precedents, or it touches a ruling, legal or privacy exposure, money or member trust. It reaches him as A/B/C with a recommendation *before* building, so the PR that follows rarely needs his eyes again
 - **tone** — new or changed user-facing copy, which stays a draft until he says otherwise ([public-is-draft])

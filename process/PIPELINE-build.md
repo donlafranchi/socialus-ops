@@ -64,6 +64,7 @@
 - **Owner:** Cowork plan, mid tier; top when it touches RLS, money or moderation (`planning-filter` skill).
 - **In → out:** spine entry + decision → `planning/scenario-F###.md`: Story, Acceptance, Not this (≤40 lines), `## Why` with the six value-test answers, `[platform …]`, `gates: launch` where it does. 5 Deadly Sins pass: one line under Why naming any sin found, or "none".
 - **Gate:** plan lint (length, value test, platform marker); Cowork review flips `status: approved`. A criterion with a judgement word (*clear*, *easy*) is marked for the PM.
+- **Ethos test:** the scenario names the soul line it serves (`PRINCIPLES.md` § Soul) and fails approval if it extracts from members, decides for them where a choice would do, or needs us in the loop with no exit; a conflict with the soul goes to the PM, anything else the reviewer decides by the defaults. [always]
 - **Pitch test:** if `PRINCIPLES.md` has `#pitch`, the scenario names the `cap-n` it moves (or none); one moving a capability against the member goes to the PM. And: **does this need us in the loop to work? If yes, why, and when do we step out?** [always]
 - **On failure:** over 40 lines → two scenarios. A sin found → cut it before approval and name what left.
 

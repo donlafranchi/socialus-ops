@@ -46,8 +46,11 @@ does — is a draft until Don says otherwise.
 
 ### don-decides
 
-Don makes the calls. Scope changes and reversals of a prior ruling go to him as
-options with a recommendation; agents recommend, they don't decide.
+The PM decides ideas, what is in each version, and words and look-and-feel; a
+reversal of a prior ruling in any of those goes to the PM as options with a
+recommendation. Everything else agents decide by the soul and defaults, record,
+and report (`process/PIPELINE.md` § Decision rights, 2026-10-25); new territory
+that conflicts with the soul goes to the PM.
 
 ### ruling-is-dated-line
 
