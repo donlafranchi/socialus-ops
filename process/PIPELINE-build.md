@@ -177,8 +177,7 @@
 
 **What makes it fast:**
 1. **Browser work leaves the PM's machine.** Capture, journeys, visibility and smoke run on GitHub runners (free on the public `socialus-web`, assumed up to 20 jobs at once on the Free plan). The machine's 2 build slots do builds and local unit runs only, so the 2-build limit stops being the bottleneck for review.
-2. **Capture once, review many.** One CI run per push produces `review-bundle`: changed routes × affected personas × 390/1280, every state the route has a fixture for, axe results, per-persona text dumps. Steps 9, 10 and 11 read it; nobody starts a browser to review.
-3. **Reviewers find; one lane fixes.** Five reviewers in parallel (journey reader, visibility, layout, accessibility, copy), no branch edits, so no conflicts and one fix pass.
+2. **One reviewer reads the diff** and posts a GitHub review; the per-PR capture bundle and the five parallel reviewers were retired on 2026-10-27 (pictures taken on every PR for two weeks were looked at once). The full screenshot matrix runs on demand for a redesign.
 4. **Batch by area.** One PR (or a stack of 2), one migration, one capture, one fan-out, one apply, one smoke, one PM look per area batch.
 5. **New territory never stalls a lane.** It's held in the PM queue; the batch ships without it, and it rides the next batch.
 6. **Skip by change type** per (c).
@@ -221,8 +220,7 @@ Each is a `chore ·` Issue in `area:ops` unless noted; times are estimates.
 1. **Fix the tidy drift (verified today):** the PM's 2026-10-06 tidy items are in `PIPELINE.md` but not in `socialus-web/.github/pull_request_template.md` or `scripts/check-review.cjs`'s `CHECKLIST`, so the tidy rule is unenforced. Add both, plus a bad fixture. *30 min.* Same PR in ops: `PIPELINE.md` says `needs-don` and "preview link" where `socialus-web` now uses `human-review` and socialus.org after merge.
 2. **Ruleset on `socialus-web` main:** require Lint/types/build, Unit tests, Migrations applied, review, issue-lint, with admin bypass on. Possible now the repo is public (the 403 in `ci.yml`'s note on #187 predates that). Prove it by watching a bad PR get blocked. *30 min.*
 3. **End the CI diet for the public repo:** the browser job runs on every ready PR touching `src/` or `supabase/`, not only labelled ones; drop the "2,000 a month" comments. *30 min.*
-4. **Capture bundle:** `scripts/changed-routes.ts` (diff → routes → affected personas) and a Playwright `capture` project that writes screenshots, state fixtures, axe results (`@axe-core/playwright`, free and open source) and text dumps to a `review-bundle` artifact. *Half a day.*
-5. **Reviewer skill:** `review-pr-bundle` in `~/Projects/skills`, linked by `link.sh`: downloads the artifact with `gh run download`, fans out the five reviewers with fixed prompts, writes the PR sections. *2–3 h.*
+4. ~~Capture bundle and reviewer skill~~: built, then retired 2026-10-27 (see (d) 2).
 6. **Visibility matrix:** `evals/visibility/matrix.ts`, `tests/visibility.test.ts` running each row as `anon` and each persona's JWT, a bad-fixture policy it must reject, and a `builder` persona in `evals/personas.ts` and its seed. *Half a day to a day.*
 7. ~~PR template and review check~~ Built 2026-10-07, retired 2026-10-26 (`socialus-web` #1075): it checked prose for words. Replaced by `REVIEW.md` and a GitHub review from a second session.
 8. **`smoke-live.yml`:** `workflow_run` after deploy-health, read-only spec with builder accounts, must-fail guard first, comment on the PR or open a `bug · live:` Issue. *Half a day.*
