@@ -32,4 +32,4 @@
 2026-10-30	score-gap-leakage	closed_parent_unmet	15	red
 2026-10-30	score-gap-leakage	untracked_unmet	29	red
 2026-10-30	score-gap-leakage	unchecked_built_pct	37.4	amber
-2026-10-30	score-doc-drift	drift_items	97	red
+2026-10-30	score-doc-drift	drift_items	37	red
