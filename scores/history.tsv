@@ -24,3 +24,12 @@
 2026-10-23	score-gap-leakage	untracked_unmet	26	red
 2026-10-23	score-gap-leakage	unchecked_built_pct	42.1	amber
 2026-10-23	score-doc-drift	drift_items	96	red
+2026-10-30	score-ci-health	ci_main_fail_pct	25.9	red
+2026-10-30	score-ci-health	ci_pr_first_run_fail_pct	37.7	none
+2026-10-30	score-ci-health	scheduled_red	1	amber
+2026-10-30	score-ci-health	smoke_red_pct	0.0	none
+2026-10-30	score-ci-health	actions_blocked	1	red
+2026-10-30	score-gap-leakage	closed_parent_unmet	15	red
+2026-10-30	score-gap-leakage	untracked_unmet	29	red
+2026-10-30	score-gap-leakage	unchecked_built_pct	37.4	amber
+2026-10-30	score-doc-drift	drift_items	97	red
