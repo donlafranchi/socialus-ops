@@ -6,6 +6,10 @@ How agents build a product with a PM who rules and does not read code. **This re
 
 SocialUs is the first project run on it. Its planning repo is `socialus-plan`, its code `socialus-web`, its design `socialus-design`. The examples and dated failures below are SocialUs's because that is where the method was learned; the rules are not.
 
+## Where files go (Don, 2026-11-01) [always]
+
+Never create documents, briefs, notes or files anywhere outside the project repos (socialus-plan, socialus-ops, socialus-web, socialus-legal, socialus-design). No agent-temp, no ~/Downloads, no tmp folders, no Claude app folders. Cold-start briefs go in the repo they're about (e.g. socialus-web development/briefs/ or socialus-plan planning/briefs/).
+
 ## Decision rule
 
 Every agent, every decision. Word for word from Don; how it lands in this method is `process/PIPELINE.md` § Decision rule.
