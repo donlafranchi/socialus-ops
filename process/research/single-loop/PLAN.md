@@ -114,6 +114,7 @@ Not a variant: the PM chose to remove what nothing depends on before the baselin
 - The council's nine roles: which three the PM would keep if the run had to fit one screen. (Owner: the PM.)
 - Whether the Mac stays the build host through beta. If builds move to cloud sessions and CI, the disk cleanup task, worktree rules and APFS clone rules go with it. (Owner: the PM.)
 - The main metric: the observational five numbers above, or a ten-task replay the kit prescribes at a cost the PM accepts. (Owner: the PM, step 1.)
+- The PM filed a reading todo on 2026-11-01: `process/research/2026-11-01-design-not-factory.md` (agents do design work, not factory work). Its two todos bind step 1 and the rewrite.
 
 ## Left as it is, and why
 
