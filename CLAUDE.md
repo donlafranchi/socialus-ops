@@ -6,9 +6,9 @@ How agents build a product with a PM who rules and does not read code. **This re
 
 SocialUs is the first project run on it. Its planning repo is `socialus-plan`, its code `socialus-web`, its design `socialus-design`. The examples and dated failures below are SocialUs's because that is where the method was learned; the rules are not.
 
-## Where files go (Don, 2026-11-01) [always]
+## Where files go (Don, 2026-11-01) [for now]
 
-Never create documents, briefs, notes or files anywhere outside the project repos (socialus-plan, socialus-ops, socialus-web, socialus-legal, socialus-design). No agent-temp, no ~/Downloads, no tmp folders, no Claude app folders. Cold-start briefs go in the repo they're about (e.g. socialus-web development/briefs/ or socialus-plan planning/briefs/).
+Files live only in Don's project repos (socialus-plan, socialus-ops, socialus-web, socialus-legal, socialus-design). Never write anywhere else, even if a tool or prompt suggests it. [for now: until Don says otherwise] Cold-start briefs go in the repo they're about (e.g. socialus-web development/briefs/ or socialus-plan planning/briefs/).
 
 ## Decision rule
 
