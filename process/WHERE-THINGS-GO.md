@@ -23,7 +23,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Shift state | `handoff/state.md`, one file | Dispatch | Overwritten each handoff | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |
-| **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; loose files go to `~/Projects/agent-temp` | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
+| **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; a loose file goes in the repo it's about, never outside the repos (Don, 2026-11-01) | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
 
 ## Generated: human docs, never edited
 
