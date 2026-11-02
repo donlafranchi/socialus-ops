@@ -44,7 +44,7 @@ A red reading is measured twice more and the middle one is used, so one bad run 
 
 ## Who acts
 
-Agents. A red night is a bug: the next shift's fix loop picks up the issue, diagnoses from the table (requests, waterfall depth, long tasks, whether the route was prefetched, the slowest request and its cache and region), fixes or files the cause, and re-baselines. **Don is told about red only** (the dashboard, or a message from dispatch); amber and green are never a message. A change that makes a screen slower on purpose (a richer Page) is Don's call, as any trade-off is.
+Agents. A red night is a bug: the next loop picks up the issue, diagnoses from the table (requests, waterfall depth, long tasks, whether the route was prefetched, the slowest request and its cache and region), fixes or files the cause, and re-baselines. **Don is told about red only** (the dashboard, or a message from dispatch); amber and green are never a message. A change that makes a screen slower on purpose (a richer Page) is Don's call, as any trade-off is.
 
 ## Load simulation (phase 2)
 

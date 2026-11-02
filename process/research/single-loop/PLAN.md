@@ -97,16 +97,21 @@ Read each as cost, not success (research note 2026-11-01). The variant after thi
 
 Merges first, then folds, then as-tool changes. Highest traffic first inside each group. One line per change, each compared with the last one kept. Variants are numbered in the order changes are made.
 
-- [ ] 1. `merge:regen`: one `regen` skill that lists the scripts; delete the 12 regen-* wrappers, tend-docs stays as the weekly runner, freeze the three score-* skills · variant: · compared with: · result:
+- [x] 1. `merge:regen`: one `regen` skill that lists the scripts; delete the 12 regen-* wrappers, tend-docs stays as the weekly runner, freeze the three score-* skills · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: one `regen` skill, ten wrappers deleted, regen-criterion-report kept as a procedure, score-* frozen
 - [x] 2. `fold` the 9pm overnight merge task into merge-on-green · done in change 0 (disabled 2026-10-27)
 - [x] 3. `fold` the 5am/5pm handoff task into on-demand handoffs · done in change 0 (task deleted 2026-10-27; `handoff/state.md` stays for the on-demand run)
 - [x] 4. `fold` the persona review queue; screenshots on demand only · done in change 0 (skills and socialus-web PRs, 2026-10-27)
-- [ ] 5. `fold` the area lanes into one Code loop per Issue, woken by Issue and PR events or started as a cloud session; delete DISPATCH.md § Area lanes and PIPELINE.md § Build rules' one-machine rules · variant: · compared with: · result:
-- [ ] 6. `fold` the role skills: drop the "Act as" lines, join write-tickets to build-ticket, move each hard limit into a check or deny rule · variant: · compared with: · result:
-- [ ] 7. `as-tool` the council: trim nine roles to the Skeptic, Legal and risk, and Member benefit; one structured result (A/B/C, recommendation, constraints applied) · variant: · compared with: · result:
+- [x] 5. `fold` the area lanes into one Code loop per Issue, woken by Issue and PR events or started as a cloud session; delete DISPATCH.md § Area lanes and PIPELINE.md § Build rules' one-machine rules · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: DISPATCH.md § Intake and the Code loop; PIPELINE.md § Build rules kept for the Mac with an open question; PIPELINE-build.md reworded loop for lane
+- [x] 6. `fold` the role skills: drop the "Act as" lines, join write-tickets to build-ticket, move each hard limit into a check or deny rule · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: write-tickets folded into build-ticket (ticketing.md); four Act-as lines removed; rules a check enforces listed by their check; the Issue is a hypothesis
+- [x] 7. `as-tool` the council: trim nine roles to the Skeptic, Legal and risk, and Member benefit; one structured result (A/B/C, recommendation, constraints applied) · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: council-roles.md: Skeptic, Legal and risk, Member benefit; the chair's result has one fixed shape
 - [x] 8. Record the reviewer `as-tool` (done 2026-10-26, socialus-web #1077): no change, add its row to the baseline · variant: baseline · compared with: n/a · result: recorded 2026-11-02 (11 of 127 merged PRs carry its review)
 
 ## Changes
+
+### rewrite-1 (2026-11-02, worklist 1, 5, 6, 7 as one change)
+
+socialus-ops: this PR. skills: #45. Compared with `baseline` over 2026-11-02 to 2026-11-09 with the same queries (§ Evals). Keep, fix or revert on 2026-11-09. Glue left for Cowork in socialus-plan: `planning/council/feature-intake.md` Stage 1 still lists its own roles (the shared lens now names three), and `CLAUDE.md` § Who does what still names `write-tickets`. Not changed: `verify-before-done`, `diagnose-bug`, `respond-to-review`, `write-copy`, the reviewer, CI.
+
 
 One section per change, filled in as it is made.
 
