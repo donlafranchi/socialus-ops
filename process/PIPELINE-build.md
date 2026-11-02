@@ -4,7 +4,7 @@
 
 *(The PM approved the 15-step shape, 2026-10-06. This section replaces § Paths in `process/PIPELINE.md`; everything else in that file stands. Facts below were read on 2026-10-06 from `socialus-web` main; anything assumed is marked as an assumption.)*
 
-**The speed idea, in one line:** builds are the only thing the PM's machine has to do. Browser work moves to CI (`socialus-web` is public, so standard-runner Actions minutes are free), one capture run per area batch feeds every reviewer, reviewers run as parallel subagents that only find problems, the lane fixes everything in one pass, and the PM sees one area at a time.
+**The speed idea, in one line:** builds are the only thing the PM's machine has to do. Browser work moves to CI (`socialus-web` is public, so standard-runner Actions minutes are free), one reviewer reads the diff, the loop fixes everything in one pass, and the PM sees one area at a time.
 
 **Model tiers.** *Top* (currently Opus): concept, new territory, scenarios with RLS or money, tricky builds, RLS review. *Mid* (currently Sonnet): routine builds, tickets, UX, copy and visibility reviews. *Light* (currently Haiku): intake, labels, a11y triage of machine output, smoke comparison, dashboard.
 
@@ -15,16 +15,16 @@
 | 1 | Intake | Dispatch · light | Issue has `Kind:`, `Scenario:`, `Path:`, one `area:*`, a milestone | issue-lint; dashboard shows `?` for unlabelled | 2 min | everything |
 | 2 | Concept | Cowork plan · top | idea has a noun/verb/surface → spine; else stays in `IMAGINE.md` | plan `scripts/lint.sh` | 10 min | 3 |
 | 3 | Research | research subagents · light/mid | `Path:` line + 2–3 linked precedents in the Issue | `check-path-line.cjs` via issue-lint | 15 min | all items at once |
-| 4 | Decision | well-worn: lane · mid; new territory: the PM | well-worn: Issue body; new territory: dated ruling in its scenario + rationale | plan lint (`[binds]`, constraints fresh) | 5 min / PM queue | other items keep moving |
+| 4 | Decision | well-worn: the loop · mid; new territory: the PM | well-worn: Issue body; new territory: dated ruling in its scenario + rationale | plan lint (`[binds]`, constraints fresh) | 5 min / PM queue | other items keep moving |
 | 5 | Scenario | Cowork plan · mid (top if RLS/money) | ≤40 lines, value test, `[platform]`, binary acceptance, `status: approved` | plan lint + Cowork review | 20 min | 6 for other items |
-| 6 | Tickets | Code lane · mid | `F### · T### · name`, architecture note for schema/RLS/routes, `Visibility:` line | issue-lint | 15 min | 5 for other items |
-| 7 | Tests first (red) | Code lane · mid | each criterion has a `[guards F###.n]` test, seen failing | red commit before green; reviewer checks | part of 8 | network work only |
-| 8 | Build | Code lane · mid (top if tricky) | Lint/types/build, Unit tests, Migrations applied: green | CI + ruleset | half a shift per batch | max 2 builds on the machine |
+| 6 | Tickets | Code loop · mid | `F### · T### · name`, architecture note for schema/RLS/routes, `Visibility:` line | issue-lint | 15 min | 5 for other items |
+| 7 | Tests first (red) | Code loop · mid | each criterion has a `[guards F###.n]` test, seen failing | red commit before green; reviewer checks | part of 8 | network work only |
+| 8 | Build | Code loop · mid (top if tricky) | Lint/types/build, Unit tests, Migrations applied: green | CI + ruleset | one Issue per loop | max 2 builds on the Mac |
 | 9 | Journey check | CI + light reader | area journeys finish, no new friction vs main | CI `journeys` step | 10 min (CI) | 10, 11 (same bundle) |
 | 10 | Visibility review | CI + subagent · mid (top if RLS) | matrix test green + UI dump matches matrix and rulings | CI `visibility` test; a mismatch is a finding in the reviewer's GitHub review | 15 min | 9, 11 |
 | 11 | UX/UI review | 3 subagents · mid/light | findings posted as a GitHub review by `REVIEW.md`; none open | the reviewer's GitHub review (the body-text `review` check retired 2026-10-26) | 15 min | 9, 10 |
-| 12 | Fix loop | Code lane · mid | only judgement calls remain, ≤2 loops | the reviewer re-checks its failed lines | 30–45 min | other lanes' builds |
-| 13 | Merge/migrate/deploy | Code lane · light | apply → `applied` green → auto-merge → deploy-health green | ruleset + deploy-health.yml | 15 min | other lanes |
+| 12 | Fix loop | Code loop · mid | only judgement calls remain, ≤2 loops | the reviewer re-checks its failed lines | 30–45 min | other loops |
+| 13 | Merge/migrate/deploy | Code loop · light | apply → `applied` green → auto-merge → deploy-health green | ruleset + deploy-health.yml | 15 min | other loops |
 | 14 | Live smoke | CI + light reader | changed screens load, as each persona, no error, no leak | `smoke-live.yml` | 10 min | next batch's build |
 | 15 | PM review | the PM, via Dispatch | the PM's look, one area at a time | DASHBOARD.md + PM queue | his time, Fri–Mon | everything |
 
@@ -54,10 +54,10 @@
 
 ### 4 · Decision
 - **Purpose:** record the choice where the people bound by it read it.
-- **Owner:** well-worn: the lane, mid tier. New territory: the PM, reached through the PM queue as A/B/C with a recommendation, one at a time.
+- **Owner:** well-worn: the loop, mid tier. New territory: the PM, reached through the PM queue as A/B/C with a recommendation, one at a time.
 - **In → out:** well-worn: the Issue body is the record (precedents + choice), no ruling unless it binds more than this Issue. New territory: a dated ruling under `## Rulings` in its scenario with `[binds …]`, ruling wording uses "currently", a rationale doc at `socialus-plan planning/research/<topic>.md`, `constraints/` regenerated.
 - **Gate:** plan lint (constraints fresh, `[replaces]` present where it reverses).
-- **On failure / waiting:** the item is held; the lane builds the rest of the batch. New-territory items land with the PM Friday to Monday.
+- **On failure / waiting:** the item is held; the loop builds the rest of the Issue. New-territory items land with the PM Friday to Monday.
 
 ### 5 · Scenario
 - **Purpose:** a story and binary acceptance a test can discharge. **Scenarios only.**
@@ -69,25 +69,25 @@
 
 ### 6 · Tickets
 - **Purpose:** buildable slices, each one PR or less.
-- **Owner:** Code lane, mid tier (`pipeline-ticket` skill).
+- **Owner:** the Code loop, mid tier (`build-ticket`, which writes the Issue first).
 - **In → out:** approved scenario → Issues `F### · T### · name`, inheriting area and milestone; ≤20-line architecture note when schema, RLS or routes move; **a new `Visibility:` line**: the matrix rows touched (`pages.select`, `posts.select as signedOut`) or `none`.
 - **Gate:** issue-lint.
-- **On failure:** `needs-fix`; the lane fixes it.
+- **On failure:** `needs-fix`; the loop fixes it.
 
 ### 7 · Tests first (red)
 - **Purpose:** the test proves it can fail before the code makes it pass ([guard-proves-itself]).
-- **Owner:** Code lane, same session as 8.
+- **Owner:** the Code loop, same session as 8.
 - **In → out:** failing Vitest/Playwright tests marked `// [guards F###.n]`; new matrix rows in `evals/visibility/matrix.ts`; first commit on the branch is `test:` and red locally.
 - **Gate:** the reviewer checks the branch history has a red commit before the green one; after task 11 in (e), CI checks every criterion of the cited scenario is claimed.
 - **On failure:** a criterion with no test is a finding in 12. Bugs: a failing regression test is required, always.
 
 ### 8 · Build
 - **Purpose:** the smallest code that turns red to green.
-- **Owner:** one Code lane per area (worktree `~/Projects/worktrees/area-<name>`), mid tier; top for RLS, migrations with data, or a failed second attempt.
-- **In → out:** tickets → one PR per area batch (or a stack of at most 2), draft until verified, pushed once when ready. PR body per the template; `How it was verified`.
+- **Owner:** one Code loop per Issue, mid tier; top for RLS, migrations with data, or a failed second attempt.
+- **In → out:** the Issue → one PR (a stack of at most 2), draft until verified, pushed once when ready. PR body per the template; `How it was verified`.
 - **Gate:** `Lint, types, build`, `Unit tests`, `Migrations applied` green; required by the ruleset (task 2).
 - **On failure:** fix forward on the branch. Never improvise around a scenario: a divergence stops and asks `socialus-plan` for a scenario change.
-- **Parallel:** at most 2 builds or local test runs on the machine; up to 3 lanes, so the third lane is always in model or network work (tickets, reviews, fixes planned).
+- **Parallel:** on the Mac, at most 2 builds or local test runs at once (`PIPELINE.md` § Build rules); cloud loops are unlimited.
 
 ### 9 · Journey check
 - **Purpose:** a builder persona does the real thing end to end, the way a person would.
@@ -95,7 +95,7 @@
 - **In → out:** on a ready PR, the CI browser job runs the area's builder journeys (`evals/builders/journey.spec.ts`, plus any area spec) against the throwaway local stack → `friction.md`, storyboard, diffed against main's last friction log.
 - **Gate:** no journey halts, and no friction line that main doesn't have (the CI `journeys` step).
 - **On failure:** a halt is a bug fixed in 12; new friction is a finding.
-- **Gap:** journeys exist today for create, edit, publish, post, follow, RSVP. A lane whose flow has no journey adds the steps in 7.
+- **Gap:** journeys exist today for create, edit, publish, post, follow, RSVP. A loop whose flow has no journey adds the steps in 7.
 
 ### 10 · Visibility review (new gate)
 - **Purpose:** who sees what is right for signed out, member, owner, operator and builder, in the UI and in the database.
@@ -118,14 +118,14 @@
 
 ### 12 · Fix loop
 - **Purpose:** clear every rule-level finding in one pass.
-- **Owner:** the Code lane, mid tier.
+- **Owner:** the Code loop, mid tier.
 - **In → out:** the findings from 9–11 → one fix commit set, one push; CI re-captures only the changed routes; each reviewer re-checks only its failed lines.
 - **Gate:** the review's judgement calls for the PM hold only items no rule settles; no blocking finding open.
 - **On failure:** after 2 loops, a finding still open is either a judgement call (to the PM) or a non-blocking follow-up `bug ·` Issue in the same area. Never a third loop.
 
 ### 13 · Merge, migrate, deploy
 - **Purpose:** the database goes first, then the code, and the deploy proves itself.
-- **Owner:** the Code lane, light tier; migrations serialized through Dispatch.
+- **Owner:** the Code loop, light tier; migrations strictly in order (`DISPATCH.md` item 3).
 - **Order:** apply the batch's one migration with `gh workflow run apply.yml -R donlafranchi/socialus-web --ref <branch> -f confirm=apply` and confirm it in the database (agents do this until the first real member signs up; then the PM does) → `Migrations applied` turns green → `gh pr merge --auto --squash` → Vercel deploys main → deploy-health green → `git worktree remove` for any per-branch worktree, `.next` deleted.
 - **Gate:** required checks (ruleset), deploy-health (`/api/health/db`, `/api/health/schema`).
 - **On failure:** `applied` red → apply first. deploy-health red → a fix-forward PR labelled `launch-blocking`, which displaces everything. A production rollback asks the PM ([production-asks-don]).
@@ -171,31 +171,31 @@
 - **Bug skips 2–6:** a fix that changes what a scenario promises ships unapproved. The rule stands: that's a change to the scenario first.
 - **Migration only skips 11 and 15:** a policy change has visible effects. The DB half of 10 is mandatory for exactly that reason.
 - **Chore skips reviews:** a dependency bump that changes rendering (Next, Tailwind) is invisible until live. Chores touching `package.json` runtime dependencies run 14.
-- **Docs only skips CI on PRs:** main runs it all after merge; a doc that a lint reads (markers, `[binds]`) can still break main, and the lane fixes forward.
+- **Docs only skips CI on PRs:** main runs it all after merge; a doc that a lint reads (markers, `[binds]`) can still break main, and the loop fixes forward.
 
 ## (d) Speed plan
 
 **What makes it fast:**
 1. **Browser work leaves the PM's machine.** Capture, journeys, visibility and smoke run on GitHub runners (free on the public `socialus-web`, assumed up to 20 jobs at once on the Free plan). The machine's 2 build slots do builds and local unit runs only, so the 2-build limit stops being the bottleneck for review.
 2. **One reviewer reads the diff** and posts a GitHub review; the per-PR capture bundle and the five parallel reviewers were retired on 2026-10-27 (pictures taken on every PR for two weeks were looked at once). The full screenshot matrix runs on demand for a redesign.
-4. **Batch by area.** One PR (or a stack of 2), one migration, one capture, one fan-out, one apply, one smoke, one PM look per area batch.
-5. **New territory never stalls a lane.** It's held in the PM queue; the batch ships without it, and it rides the next batch.
+4. **One Issue, one loop, one PR.** One migration, one review, one apply, one smoke per PR; the PM looks at an area when he asks.
+5. **New territory never stalls a loop.** It's held in the PM queue; the PR ships without it, and it rides the next Issue.
 6. **Skip by change type** per (c).
 
-**A typical area batch, estimated** (assumed: 1 well-worn scenario with ~6 criteria, 4 changes, 2 bugs, 1 migration):
+**A typical loop, estimated** (assumed: one well-worn Issue of about 3 criteria, possibly a migration):
 
 | Phase | Steps | Wall clock |
 |---|---|---|
 | Plan | 2–6, items in parallel | 45–75 min |
-| Build | 7–8, one lane, one build slot | 3–4 h |
+| Build | 7–8, one loop | 1–3 h |
 | CI + capture | 8–10 automated | ~20 min |
 | Review fan-out | 9–11 | ~15 min |
 | Fix loop | 12, one loop + re-capture | 45–60 min |
 | Ship | 13 | ~15 min |
 | Live smoke | 14 | ~10 min |
-| **Agent total** | | **about 5½–7 h: one batch per lane per shift, with room** |
+| **Agent total** | | **about 3–5 h per Issue** |
 
-Across a 12-hour shift with 3 lanes sharing 2 build slots, expect about 3–4 area batches a shift, limited by build slots. The PM's look (15) is outside this clock and batched Friday to Monday.
+Loops run as many at once as there are Issues and sessions; on the Mac, build slots limit them. The PM's look (15) is outside this clock.
 
 ## Day and night
 
@@ -203,7 +203,7 @@ Across a 12-hour shift with 3 lanes sharing 2 build slots, expect about 3–4 ar
 
 **Day, per push:** only build, tests, lint, the capture bundle for the changed screens (step 9–11's input), and the quick reviewer pass. Nothing slow.
 
-**Night:** scheduled GitHub Actions on `socialus-web`'s free minutes, plus Code lanes, run the heavy and slow work, with results ready for the 5am handoff:
+**Night:** scheduled GitHub Actions on `socialus-web`'s free minutes run the heavy and slow work, with results ready in the morning:
 - full builder journeys (step 9, every area);
 - the full visibility matrix across all personas (step 10);
 - a full-app screenshot sweep, with the five-reviewer pass over it (step 11);
@@ -211,7 +211,7 @@ Across a 12-hour shift with 3 lanes sharing 2 build slots, expect about 3–4 ar
 - dependency and advisor checks;
 - the dashboard refresh (`DASHBOARD.md` and `dashboard/index.html`).
 
-A failure found overnight is a finding in the next shift's fix loop (step 12), filed as a `bug ·` Issue in its area. The nightly cron for each job is set by whoever builds it: items 4, 6, 8, 9 and 10 in (e).
+A failure found overnight is filed as a `bug ·` Issue in its area, and a loop picks it up (step 12). The nightly cron for each job is set by whoever builds it: items 4, 6, 8, 9 and 10 in (e).
 
 ## (e) What to build, in order
 

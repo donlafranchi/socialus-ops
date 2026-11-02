@@ -20,7 +20,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
 | Skills | `~/Projects/skills/*/SKILL.md` | `author-skill` | Named verb-object, because three skills were all called review (10k) | Project facts |
-| Shift state | `handoff/state.md`, one file | Dispatch | Overwritten each handoff | Anything dated |
+| Handoff state | `handoff/state.md`, one file | Dispatch | Overwritten at each handoff the PM asks for | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |
 | **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; a loose file goes in the repo it's about, never outside the repos (Don, 2026-11-01) | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |

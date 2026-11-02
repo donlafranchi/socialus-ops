@@ -116,9 +116,9 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 - **Migrations.** Each is applied from the apply workflow by branch name, in order, and confirmed in the database before the next. Until the first real (non-builder) member signs up, agents apply them (the time-boxed exception under `[production-asks-don]`, 2026-10-06); after that, the PM does.
 - **Through Dispatch** (modes, copy-paste, scheduled runs, folders, the weekly tidy): `process/DISPATCH.md`.
 
-## Build rules — one machine's load
+## Build rules — the Mac's load
 
-*(Don, 2026-10-04.)* Builds, tests and browsers share one machine. These keep it usable. Guidelines, with one condition on breaking them (the last line).
+*(Don, 2026-10-04.)* On the Mac, builds, tests and browsers share one machine; cloud sessions don't. [open-question owner=don raised=2026-11-02] Does the Mac stay a build host through beta?
 
 - **At most 2 changes building or testing at once.**
 - **Playwright runs with `--workers=2`.**
@@ -138,7 +138,7 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 - **Push once, when a change is ready,** not after every commit: every push runs CI. **Keep stacks at most two PRs deep.**
 - **Batch migrations.** Where several pending branches each add a migration, bundle them into fewer applies, one migration PR per milestone where practical, and keep them strictly ordered.
 - **Match the model to the work.** A cheaper model for routine work: status, merges, doc sweeps, conflict catch-ups. The top model for design and tricky builds.
-- **Restart long agent sessions daily,** with a handoff note, rather than carrying a day's context forward.
+- **A loop ends with its PR;** nothing carries over between sessions.
 - **No new paid tools before beta** unless one replaces PM time.
 
 Machine-specific rules live in `~/.claude/CLAUDE.md`.

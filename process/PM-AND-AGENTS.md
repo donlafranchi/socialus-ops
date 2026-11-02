@@ -42,7 +42,7 @@ The split borrows four patterns, each adapted for agent-led work:
 | Is it working | dashboard: where we are, lost since last look | — | criterion reports | — | — | tests (`[guards]`) | review, storyboard | scores | roll-up scripts |
 | How it looks and reads | app storyboard | voice-and-tone | scenario criteria | brief | — | code strings | storyboard | — | PM approves copy |
 | Safety | safety runbook | moderation doc | moderation scenarios | — | — | code + tests | review | runbook generator | rulings drive the generator |
-| How we work | ops README | — | `CLAUDE.md` | `council-roles.md` | `write-tickets` | `CLAUDE.md`, `PIPELINE-build.md` | `review-pr-bundle` | `process/` | ops agent; weekly refine pass |
+| How we work | ops README | — | `CLAUDE.md` | `council-roles.md` | `build-ticket` | `CLAUDE.md`, `PIPELINE-build.md` | `REVIEW.md` | `process/` | ops agent; weekly refine pass |
 | Where things go | ops README | `WHERE-THINGS-GO.md` | same | same | same | same | same | same | ops agent |
 
 </details>
