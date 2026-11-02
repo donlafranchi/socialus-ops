@@ -1,6 +1,6 @@
 # Single loop plan
 
-**As of 2026-10-27** · Source: the single-agent-loop kit's audit step (anthropics/single-agent-loop-kit, step 0) run over socialus-ops, socialus-plan, socialus-web and skills at main on 2026-10-27, the session list, the scheduled tasks and GitHub since 2026-10-13 · Maintained by: hand (research note; the kit's `single-loop/PLAN.md`, kept under `process/research/` because that is where research lives here)
+**As of 2026-11-02** · Source: the single-agent-loop kit's audit step (anthropics/single-agent-loop-kit, step 0) run over socialus-ops, socialus-plan, socialus-web and skills at main on 2026-10-27, the session list, the scheduled tasks and GitHub since 2026-10-13 · Maintained by: hand (research note; the kit's `single-loop/PLAN.md`, kept under `process/research/` because that is where research lives here)
 
 Audit date: 2026-10-27
 Repo and commit: socialus-ops `process-2026-10-27-single-loop-audit`; the agents live across four repos, so the inventory names each one's home.
@@ -10,7 +10,7 @@ Repo and commit: socialus-ops `process-2026-10-27-single-loop-audit`; the agents
 ## Status
 
 - [x] Verdicts agreed with the PM (2026-10-27, option C: delete the dead weight unmeasured, baseline a week, then one scratch rewrite as a single measured change). Two corrections from the PM: a handoff is wanted on demand, never on a schedule; screenshots are not wanted on every PR, only for a UX redesign.
-- [ ] Main metric agreed and baseline measured (end of step 1)
+- [x] Main metric agreed and baseline measured (2026-11-02: the observational five, read from GitHub for 2026-10-19 to 2026-11-01, plus two learning measures; the kit's ten-task replay stays rejected on cost)
 
 A new session picks up at the first unticked box here, then at the first unticked item in the worklist. Steps are in the kit (`skill/steps/`), not copied here.
 
@@ -76,9 +76,22 @@ Gaps noticed: `found-by-pm` has 0 data points (no PM look has been recorded); PM
 
 Chains with no task (inferred from the docs, no trace export): ask → Issue → lane → reviewer → merge → smoke-live → dashboard; scenario → review-draft-scenario → write-tickets → build-ticket. Neither chain has a task that grades its end today beyond CI being green.
 
-Break map: filled in step 1.
+Break map: (b) and (f) break when Issues stop being cited or filed (41 of 127 PRs already cite none); (c) breaks if CI is skipped on drafts, which it is, so only the first non-draft push counts; (e) is a static count and says nothing about what the session actually read.
 
-Baseline (variant `baseline`): step 1.
+Baseline (variant `baseline`, read 2026-11-02, window 2026-10-19 to 2026-11-01, socialus-web unless said; the script is the session transcript, not a repo file yet):
+
+| Number | Baseline | How it was read |
+| --- | --- | --- |
+| Merged PRs in the window | 127 web, 19 ops, 2 skills | REST pulls, merged_at in window; by title 88 code, 17 generated reports, 16 seeds, 6 docs |
+| (a) PM touches beyond the ask | not measurable; proxy 25 of 127 PRs labelled `human-review` (20%), 11 carry a reviewer's GitHub review | every agent posts as the PM's identity |
+| (b) Issue to merge, hours | median 39, p25 1.6, p75 226, max 611 (n=75 PRs citing a non-PR Issue); PR open to merge median 0.2 | Issue created_at to PR merged_at; 41 PRs cite no Issue |
+| (c) Pushes after the first CI run | median 0, mean 0.74; 82 PRs 0, 21 one, 12 two, 12 three or more | distinct head SHAs with a CI run per branch, minus one |
+| (d) `found-by-pm` Issues per 10 merged PRs | 0 (the two labelled Issues are from 2026-10-11) | label query |
+| (e) Tokens read before the Issue | about 20,000 for a lane: web CLAUDE.md 3.1k, constraints/code.md 10.3k, WHERE-THINGS-GO 1.6k, PR template 0.3k, build-ticket 1.2k, verify-before-done 0.9k, respond-to-review 0.8k, REVIEW.md 0.7k; PIPELINE.md is another 10.7k when read | words times 1.33 at main |
+| Learning (f) bugs filed per 10 merged PRs | 0.6 (8 `bug` Issues opened in the window) | how fast we learn a merge was wrong (research note 2026-11-01) |
+| Learning (g) Issues closed as wrong | 0 closed not_planned in the window | how often the loop rejected its hypothesis instead of building it; zero is the article's warning, not a success |
+
+Read each as cost, not success (research note 2026-11-01). The variant after this one is read over the week after it lands, same window length, same queries.
 
 ## Worklist
 
@@ -91,7 +104,7 @@ Merges first, then folds, then as-tool changes. Highest traffic first inside eac
 - [ ] 5. `fold` the area lanes into one Code loop per Issue, woken by Issue and PR events or started as a cloud session; delete DISPATCH.md § Area lanes and PIPELINE.md § Build rules' one-machine rules · variant: · compared with: · result:
 - [ ] 6. `fold` the role skills: drop the "Act as" lines, join write-tickets to build-ticket, move each hard limit into a check or deny rule · variant: · compared with: · result:
 - [ ] 7. `as-tool` the council: trim nine roles to the Skeptic, Legal and risk, and Member benefit; one structured result (A/B/C, recommendation, constraints applied) · variant: · compared with: · result:
-- [ ] 8. Record the reviewer `as-tool` (done 2026-10-26, socialus-web #1077): no change, add its row to the baseline · variant: baseline · compared with: n/a · result: recorded
+- [x] 8. Record the reviewer `as-tool` (done 2026-10-26, socialus-web #1077): no change, add its row to the baseline · variant: baseline · compared with: n/a · result: recorded 2026-11-02 (11 of 127 merged PRs carry its review)
 
 ## Changes
 
@@ -113,7 +126,6 @@ Not a variant: the PM chose to remove what nothing depends on before the baselin
 
 - The council's nine roles: which three the PM would keep if the run had to fit one screen. (Owner: the PM.)
 - Whether the Mac stays the build host through beta. If builds move to cloud sessions and CI, the disk cleanup task, worktree rules and APFS clone rules go with it. (Owner: the PM.)
-- The main metric: the observational five numbers above, or a ten-task replay the kit prescribes at a cost the PM accepts. (Owner: the PM, step 1.)
 - The PM filed a reading todo on 2026-11-01: `process/research/2026-11-01-design-not-factory.md` (agents do design work, not factory work). Its two todos bind step 1 and the rewrite.
 
 ## Left as it is, and why
