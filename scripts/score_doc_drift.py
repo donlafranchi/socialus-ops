@@ -114,6 +114,8 @@ else:
         for line in (sec.group(1).splitlines() if sec else []):
             if line.startswith('- '):
                 path = line[2:].split(' (')[0].split(':')[0].strip('`')
+                if path == 'docs/DOC-INVENTORY.md' and title == 'Needs review':
+                    continue  # the regen lists its own file as changed since its last judgment, every week
                 items.append(('doc-inventory', f'socialus-web {path} {label}' if label.startswith('has') else f'socialus-web {path} is {label}'))
 
 # g. the cross-repo doc gardening (tend-docs): the counts it wrote to scores/tend-docs/latest.json. Thresholds [A], tuned in the Friday notes.
