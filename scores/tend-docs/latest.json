@@ -1,19 +1,16 @@
 {
- "as_of": "2026-10-30",
- "docs": 424,
- "in_scope": 145,
+ "as_of": "2026-11-06",
+ "docs": 440,
+ "in_scope": 166,
  "duplicates": 0,
- "unreferenced": 2,
- "superseded": 2,
- "undated": 65,
- "non_conforming": 94,
+ "unreferenced": 0,
+ "superseded": 3,
+ "undated": 75,
+ "non_conforming": 105,
  "empty": 1,
  "broken_links": 1,
- "derivable": 0,
- "hand_written_share": 0.84,
- "unreferenced_list": [
-  "socialus-plan/planning/research/place-connection-starter-metrics-2026-10-09.md",
-  "socialus-ops/process/experiments/2026-10-06-review-setups.md"
- ],
+ "derivable": 1,
+ "hand_written_share": 0.85,
+ "unreferenced_list": [],
  "near": []
 }
