@@ -38,7 +38,7 @@
 2026-11-06	score-ci-health	scheduled_red	1	amber
 2026-11-06	score-ci-health	smoke_red_pct	75.0	none
 2026-11-06	score-ci-health	actions_blocked	0	green
-2026-11-06	score-doc-drift	drift_items	29	red
-2026-11-06	score-gap-leakage	closed_parent_unmet	16	red
-2026-11-06	score-gap-leakage	untracked_unmet	45	red
-2026-11-06	score-gap-leakage	unchecked_built_pct	40.9	amber
+2026-11-06	score-doc-drift	drift_items	41	red
+2026-11-06	score-gap-leakage	closed_parent_unmet	18	red
+2026-11-06	score-gap-leakage	untracked_unmet	39	red
+2026-11-06	score-gap-leakage	unchecked_built_pct	40.4	amber
