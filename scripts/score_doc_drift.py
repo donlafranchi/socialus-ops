@@ -20,7 +20,7 @@ def age(text, pattern):
 for label, text, pat, limit in [
     ('socialus-plan/STATUS.md', read('socialus-plan', 'STATUS.md'), r'Generated (\d{4}-\d{2}-\d{2})', 2),
     ('socialus-plan/DASHBOARD.md', read('socialus-plan', 'DASHBOARD.md'), r'updated (\d{4}-\d{2}-\d{2})', 2),
-    ('socialus-ops/README.md', read('socialus-ops', 'README.md'), r'Snapshot, (\d{4}-\d{2}-\d{2})', 8)]:
+    ('socialus-ops/README.md', read('socialus-ops', 'README.md'), r'(?:Snapshot, |\*\*As of )(\d{4}-\d{2}-\d{2})', 8)]:
     a = age(text, pat)
     if a is None:
         items.append(('doc-age', f'{label}: no generated date found'))
@@ -28,13 +28,15 @@ for label, text, pat, limit in [
         items.append(('doc-age', f'{label} is {a} days old (limit {limit})'))
 
 # a2. the handoff snapshot and the roadmap (limits [A], tuned in the Friday notes)
-_st = sorted(f for f in os.listdir(os.path.join(PROJECTS, 'socialus-plan', 'handoff', 'state')) if re.match(r'\d{4}-\d{2}-\d{2}\.md$', f)) if os.path.isdir(os.path.join(PROJECTS, 'socialus-plan', 'handoff', 'state')) else []
-if not _st:
-    items.append(('doc-age', 'socialus-plan/handoff/state: no snapshot'))
+_hd = os.path.join(PROJECTS, 'socialus-plan', 'handoff')
+_hs = read('socialus-plan', 'handoff/state.md') or ''
+_hm = re.search(r'\*\*As of (\d{4}-\d{2}-\d{2})', _hs)
+if not _hm:
+    items.append(('doc-age', 'socialus-plan/handoff/state.md: no snapshot date'))
 else:
-    _h = (date.today() - date.fromisoformat(_st[-1][:10])).days
+    _h = (date.today() - date.fromisoformat(_hm.group(1))).days
     if _h > 2:
-        items.append(('doc-age', f'newest handoff snapshot ({_st[-1][:10]}) is {_h} days old (limit 2)'))
+        items.append(('doc-age', f'handoff snapshot ({_hm.group(1)}) is {_h} days old (limit 2)'))
 _rm = sh(['git', '-C', os.path.join(PROJECTS, 'socialus-plan'), 'log', '-1', '--format=%cs', '--', 'ROADMAP.md']).strip()
 if _rm:
     _r = (date.today() - date.fromisoformat(_rm)).days
@@ -55,11 +57,13 @@ for d in sorted(linked - dirs):
 for d in sorted(dirs - table):
     items.append(('skill-table', f'{d} has no row in skills/README.md'))
 
-# c. the ops README mentions every skill
+# c. the ops README states the skill count (it no longer lists every skill)
 readme = read('socialus-ops', 'README.md') or ''
-for d in sorted(dirs):
-    if f'`{d}`' not in readme:
-        items.append(('readme-skill', f'{d} is not mentioned in socialus-ops/README.md'))
+_sc = re.search(r'skills \((\d+)\)', readme)
+if not _sc:
+    items.append(('readme-skill', 'socialus-ops/README.md does not state a skill count'))
+elif int(_sc.group(1)) != len(dirs):
+    items.append(('readme-skill', f'README says {_sc.group(1)} skills; skills/ has {len(dirs)}'))
 
 # d. the workflow count the README states against the live count
 m = re.search(r'(\d+) (?:CI )?workflows', readme)
