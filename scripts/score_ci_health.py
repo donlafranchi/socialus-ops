@@ -31,10 +31,15 @@ pfails = sum(1 for r in first.values() if r['conclusion'] == 'failure')
 prate = round(100 * pfails / len(first), 1) if first else 0.0
 rows.append(('ci_pr_first_run_fail_pct', prate, '%', 'none', f'{pfails} of {len(first)} PR branches failed CI on their first run (reported, no band yet)'))
 
-allruns = [r for r in (gh_json(['run', 'list', '-R', WEB, '-L', '500', '--json', 'workflowName,conclusion,createdAt,event']) or []) if r['createdAt'] >= since and r['event'] == 'schedule' and r['conclusion'] in ('success', 'failure')]
+# Per workflow (tuning 2026-10-30): one 500-run list across every workflow held about five days of socialus-web
+# runs (CI plus the daily seed), so a daily smoke counted 5 runs in a 14-day window and never reached MIN_SMOKE.
 by = {}
-for r in allruns:
-    by.setdefault(r['workflowName'], []).append(r)
+for wf in (gh_json(['workflow', 'list', '-R', WEB, '--json', 'name,state']) or []):
+    if wf.get('state') != 'active':
+        continue
+    rs = [r for r in (gh_json(['run', 'list', '-R', WEB, '-w', wf['name'], '-L', '100', '--json', 'workflowName,conclusion,createdAt,event']) or []) if r['createdAt'] >= since and r['event'] == 'schedule' and r['conclusion'] in ('success', 'failure')]
+    if rs:
+        by[wf['name']] = rs
 red = []
 for name, rs in by.items():
     rs.sort(key=lambda r: r['createdAt'])
