@@ -1,6 +1,6 @@
 # Single loop plan
 
-**As of 2026-11-02** · Source: the single-agent-loop kit's audit step (anthropics/single-agent-loop-kit, step 0) run over socialus-ops, socialus-plan, socialus-web and skills at main on 2026-10-27, the session list, the scheduled tasks and GitHub since 2026-10-13 · Maintained by: hand (research note; the kit's `single-loop/PLAN.md`, kept under `process/research/` because that is where research lives here)
+**As of 2026-11-09** · Source: the single-agent-loop kit's audit step (anthropics/single-agent-loop-kit, step 0) run over socialus-ops, socialus-plan, socialus-web and skills at main on 2026-10-27, the session list, the scheduled tasks and GitHub since 2026-10-13 · Maintained by: hand (research note; the kit's `single-loop/PLAN.md`, kept under `process/research/` because that is where research lives here)
 
 Audit date: 2026-10-27
 Repo and commit: socialus-ops `process-2026-10-27-single-loop-audit`; the agents live across four repos, so the inventory names each one's home.
@@ -93,17 +93,34 @@ Baseline (variant `baseline`, read 2026-11-02, window 2026-10-19 to 2026-11-01, 
 
 Read each as cost, not success (research note 2026-11-01). The variant after this one is read over the week after it lands, same window length, same queries.
 
+Variant `rewrite-1`, read 2026-11-09, window 2026-11-02 to 2026-11-09 (one week, so counts are halved against the two-week baseline):
+
+| Number | rewrite-1 | Against baseline |
+| --- | --- | --- |
+| Merged PRs | 24 web (10 code, 8 seeds, 4 reports, 2 docs), 7 ops, 1 skills | a quiet week: 3 Code sessions started after 11-02 against about 15 the week before; 7 of the 10 code PRs merged on 11-02 itself. The drop is the week, not attributable to the variant |
+| (a) PM touches | 6 of 24 `human-review` (25%) | 20%; same order |
+| (b) Issue to merge, hours | median 92, p25 1.6, p75 233 (n=17); PR open to merge median 0.5 | 39 at the median: a quiet week drains older Issues; the fast quartile is unchanged |
+| (c) Pushes after first CI | median 1, mean 1.08; 9 PRs 0, 5 one, 9 two, 1 three or more | worse than 0 / 0.74; six of the ten code PRs were `human-review` UI changes with a second push after review |
+| (d) `found-by-pm` per 10 PRs | 0 | unchanged; still no PM look recorded |
+| (e) Tokens before the Issue | about 20,100: build-ticket 0.8k + workflow 0.5k + ticketing 0.8k replaced build-ticket 1.2k + write-tickets 1.0k; constraints/code.md grew to 10.5k | unchanged. 14k of the 20k is `constraints/code.md` and web `CLAUDE.md`, which the rewrite did not touch |
+| (f) bugs per 10 merged PRs | 0.8 (2 `bug` Issues) | 0.6; small numbers |
+| (g) Issues closed as wrong | 0 of 31 Issues opened | unchanged; no loop has used the "the Issue is wrong" outcome yet |
+
+What else the week showed: no session titled or run as an area lane started after 11-02 (sessions were per topic: post cards, dashboard to-dos); no council ran, so worklist 7 is unread; the `regen` skill ran through the Friday routine without a missing-skill report; the score-* freeze did not hold (ops #163 ran all three on 11-06, under the trial Issue #89's standing instruction), which is the kit's own lesson that a rule in prose is not a rule; ops #168 (11-08) proposes deleting this plan as "applied".
+
+Verdicts, 2026-11-09: worklist 1 keep, 5 keep, 6 keep (outcome (g) unused, watch), 7 keep unread until a council runs. The freeze goes to the PM as A/B/C (see § Open questions). Next change candidate for the 2026-12-01 upkeep: (e) is held by `constraints/code.md` (10.5k) and web `CLAUDE.md` (3.1k); a loop that reads only the rulings tagged to the area it touches would cut more than the whole rewrite did.
+
 ## Worklist
 
 Merges first, then folds, then as-tool changes. Highest traffic first inside each group. One line per change, each compared with the last one kept. Variants are numbered in the order changes are made.
 
-- [x] 1. `merge:regen`: one `regen` skill that lists the scripts; delete the 12 regen-* wrappers, tend-docs stays as the weekly runner, freeze the three score-* skills · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: one `regen` skill, ten wrappers deleted, regen-criterion-report kept as a procedure, score-* frozen
+- [x] 1. `merge:regen`: one `regen` skill that lists the scripts; delete the 12 regen-* wrappers, tend-docs stays as the weekly runner, freeze the three score-* skills · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: one `regen` skill, ten wrappers deleted, regen-criterion-report kept as a procedure, score-* frozen · 2026-11-09: keep
 - [x] 2. `fold` the 9pm overnight merge task into merge-on-green · done in change 0 (disabled 2026-10-27)
 - [x] 3. `fold` the 5am/5pm handoff task into on-demand handoffs · done in change 0 (task deleted 2026-10-27; `handoff/state.md` stays for the on-demand run)
 - [x] 4. `fold` the persona review queue; screenshots on demand only · done in change 0 (skills and socialus-web PRs, 2026-10-27)
-- [x] 5. `fold` the area lanes into one Code loop per Issue, woken by Issue and PR events or started as a cloud session; delete DISPATCH.md § Area lanes and PIPELINE.md § Build rules' one-machine rules · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: DISPATCH.md § Intake and the Code loop; PIPELINE.md § Build rules kept for the Mac with an open question; PIPELINE-build.md reworded loop for lane
-- [x] 6. `fold` the role skills: drop the "Act as" lines, join write-tickets to build-ticket, move each hard limit into a check or deny rule · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: write-tickets folded into build-ticket (ticketing.md); four Act-as lines removed; rules a check enforces listed by their check; the Issue is a hypothesis
-- [x] 7. `as-tool` the council: trim nine roles to the Skeptic, Legal and risk, and Member benefit; one structured result (A/B/C, recommendation, constraints applied) · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: council-roles.md: Skeptic, Legal and risk, Member benefit; the chair's result has one fixed shape
+- [x] 5. `fold` the area lanes into one Code loop per Issue, woken by Issue and PR events or started as a cloud session; delete DISPATCH.md § Area lanes and PIPELINE.md § Build rules' one-machine rules · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: DISPATCH.md § Intake and the Code loop; PIPELINE.md § Build rules kept for the Mac with an open question; PIPELINE-build.md reworded loop for lane · 2026-11-09: keep
+- [x] 6. `fold` the role skills: drop the "Act as" lines, join write-tickets to build-ticket, move each hard limit into a check or deny rule · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: skills #45: write-tickets folded into build-ticket (ticketing.md); four Act-as lines removed; rules a check enforces listed by their check; the Issue is a hypothesis · 2026-11-09: keep
+- [x] 7. `as-tool` the council: trim nine roles to the Skeptic, Legal and risk, and Member benefit; one structured result (A/B/C, recommendation, constraints applied) · variant: rewrite-1 · compared with: baseline · result: landed 2026-11-02, read 2026-11-09: council-roles.md: Skeptic, Legal and risk, Member benefit; the chair's result has one fixed shape · 2026-11-09: keep, unread (no council ran)
 - [x] 8. Record the reviewer `as-tool` (done 2026-10-26, socialus-web #1077): no change, add its row to the baseline · variant: baseline · compared with: n/a · result: recorded 2026-11-02 (11 of 127 merged PRs carry its review)
 
 ## Changes
@@ -128,6 +145,9 @@ Not a variant: the PM chose to remove what nothing depends on before the baselin
 - Worklist items 2, 3 and 4 are therefore done as change 0 and struck below.
 
 ## Open questions for owners
+
+- The score-* freeze (2026-11-02) did not hold: the Friday run (#163) read all three under the trial Issue #89's instruction of 2026-10-10 ("stick with this"). The PM picks: A unfreeze and let the trial run as instructed (the scores are read-only and cheap; five `meta-change` PRs wait on his `pm-approved` since 2026-10-16); B keep the freeze and make it hold by deleting the three skills until the upkeep step; C end the trial (its tuning notes call most reds false). (Owner: the PM.)
+- This plan sits under the 30-day research rule (due 2026-11-26) and #168 proposes deleting it now. It is read on the 1st of each month by the upkeep task; retire it once the 2026-12-01 read has recorded the verdicts in the method or moved it to a permanent home. (Owner: the session doing the 2026-12-01 upkeep.)
 
 - The council's nine roles: which three the PM would keep if the run had to fit one screen. (Owner: the PM.)
 - Whether the Mac stays the build host through beta. If builds move to cloud sessions and CI, the disk cleanup task, worktree rules and APFS clone rules go with it. (Owner: the PM.)
