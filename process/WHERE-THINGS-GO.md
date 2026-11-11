@@ -35,6 +35,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | **Where we're going**: the dashboard's Now / Next / Later section, from scenario `horizon` (now, next, later) + `rank` and Issue milestones (replaces `ROADMAP.md`) | `scripts/dashboard.py` | With the dashboard |
 | **App storyboard**: every screen at 390px, by area and persona; a copy storyboard is the same view narrowed to changed routes | `evals/screens` capture + `scripts/builders/storyboard.ts` (code repo) | On request or the weekly full screenshot run's CI artifact; never committed |
 | This repo's README: a workflow diagram, then one step per box | `regen-readme` | After a process change; committed |
+| **The three answers** (`ANSWERS.md` in the planning repo): what we built, where we are, what's next | socialus-web's Knowledge answers workflow, from the knowledge store and GitHub (F131) | Nightly and on every socialus-web merge; committed by an auto-merging PR |
 | `STATUS.md`, plan README, `constraints/`, `PLATFORM-*.md`, `product/charter.md` | scripts, `regen-*` | Workflow or lint; committed |
 | **`[for now]` review list**: every ruling to revisit at the next release | `markers.py constraints` → `constraints/for-now.md` | With constraints; the release-planning pass reads it |
 | **Lost since last look**: approved criteria that left, stopped being built, or lost their test | `scripts/dashboard.py` | With the dashboard |
