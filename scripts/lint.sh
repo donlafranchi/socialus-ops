@@ -97,6 +97,35 @@ vt=scripts/fixtures/value-test
 [ -z "$(value_test_missing "$vt/grandfathered/scenario-F050.md")" ] ||
   { echo "lint: value-test check does not grandfather a scenario before F$VALUE_TEST_FROM"; fail=1; }
 
+# 1d. Concepts (F130, 2026-11-11): a scenario changed after 2026-11-11 names its
+#     concept in frontmatter, `concept: CO-0000`, so the knowledge import links it
+#     to the idea it grew from. Scenarios untouched since keep working without one.
+#     The rule proves itself on two planted files before it checks this repo.
+CONCEPT_FROM=2026-11-12
+concept_missing() {  # file, date it last changed
+  [[ "$2" < "$CONCEPT_FROM" ]] && return 1
+  awk 'NR==1 && /^---$/{fm=1; next} fm && /^---$/{exit} fm' "$1" | grep -qE '^concept: CO-[0-9]{4}$' && return 1
+  return 0
+}
+ct=$(mktemp -d)
+printf -- '---\nid: F999\nconcept: CO-0001\n---\n' > "$ct/good.md"
+printf -- '---\nid: F998\nconcept: posts\n---\n' > "$ct/bad.md"
+concept_missing "$ct/bad.md" 2026-11-12 || { echo "lint: concept rule is inert (let a bad concept through)"; fail=1; }
+concept_missing "$ct/good.md" 2026-11-12 && { echo "lint: concept rule rejects a good concept line"; fail=1; }
+concept_missing "$ct/bad.md" 2026-11-10 && { echo "lint: concept rule reaches scenarios untouched since 2026-11-11"; fail=1; }
+rm -rf "$ct"
+if git rev-parse --git-dir >/dev/null 2>&1; then
+  for f in planning/scenario-*.md; do
+    [ -f "$f" ] || continue
+    if [ -n "$(git status --porcelain -- "$f")" ]; then d=$(date +%F); else d=$(git log -1 --format=%cs -- "$f"); fi
+    [ -n "$d" ] || d=$(date +%F)
+    if concept_missing "$f" "$d"; then
+      echo "lint: scenario changed after 2026-11-11 without \`concept: CO-0000\` in its frontmatter — $f"
+      fail=1
+    fi
+  done
+fi
+
 # 2. Root .md files are only the five listed here, plus the generated ones —
 #    README.md (scripts/view.sh), PLATFORM-*.md (scripts/markers.py platform) and
 #    DASHBOARD.md (scripts/dashboard.py),
