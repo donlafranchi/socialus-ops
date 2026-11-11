@@ -1,14 +1,15 @@
 #!/usr/bin/env node
-// TRIAL (started 2026-10-10; trimmed 2026-10-11, PM-approved). A PR that touches how the pipeline judges itself is one of two kinds:
-//   meta-change       what a score measures or its target changes. Needs the repo owner's `pm-approved` label after the last commit,
-//                     and the PR body says in plain words what the score measured before and after.
+// Started 2026-10-10 with the meta-layer trial; the trial's scores were removed 2026-11-11 (the PM, option C) and the guard
+// stays for the reviewer. A PR that touches how the pipeline judges itself is one of two kinds:
+//   meta-change       what the reviewer checks or its target changes. Needs the repo owner's `pm-approved` label after the last commit,
+//                     and the PR body says in plain words what the reviewer checked before and after.
 //   meta-bookkeeping  renames, lists, counts, wording. Merges on green; the PM never sees it.
 // A protected-file PR with neither label fails until the agent picks one. Usage: node scripts/pm-approved-guard.cjs --self-test
 // LIMIT, stated plainly: agents act with the owner's token, so a label applied by an agent also reads as the owner, and an agent
-// could call a real change bookkeeping. This is a tripwire and an audit trail (which label, who, when); trial_health.py counts
-// bookkeeping merges so the Friday review can read them. A separate agent identity is the real fix.
-const PROTECTED = [/^score-[^/]+\//, /^review-pipeline\//, /^scripts\/pm-approved-guard\.cjs$/, /^scripts\/pm-approved-check\.cjs$/, /^scripts\/score_[^/]+\.py$/, /^scripts\/trial_health\.py$/, /^\.github\/workflows\/pm-approved-guard\.yml$/]
-const UNLABELLED = 'protected files, no label. Add `meta-change` (what a score measures or its target changes; the PM approves) or `meta-bookkeeping` (renames, lists, counts; merges on green)'
+// could call a real change bookkeeping. This is a tripwire and an audit trail (which label, who, when). A separate agent identity
+// is the real fix.
+const PROTECTED = [/^review-pipeline\//, /^scripts\/pm-approved-guard\.cjs$/, /^scripts\/pm-approved-check\.cjs$/, /^\.github\/workflows\/pm-approved-guard\.yml$/]
+const UNLABELLED = 'protected files, no label. Add `meta-change` (what the reviewer checks or its target changes; the PM approves) or `meta-bookkeeping` (renames, lists, counts; merges on green)'
 
 // 'change' needs the PM; 'bookkeeping' merges on green; 'unlabelled' fails until labelled; 'plain' is not a meta PR.
 function metaKind(files, labels, baseHas = () => true) {
@@ -34,18 +35,16 @@ function approvalProblem(events, owner, lastCommitAt) {
 function selfTest() {
   const ev = (event, login, at) => ({ event, label: { name: 'pm-approved' }, actor: { login }, created_at: at })
   const cases = [
-    ['score file, unlabelled', metaKind(['score-ci-health/SKILL.md'], []), 'unlabelled'],
     ['reviewer, unlabelled', metaKind(['review-pipeline/SKILL.md'], []), 'unlabelled'],
-    ['score formulas, unlabelled', metaKind(['scripts/score_ci_health.py'], []), 'unlabelled'],
-    ['trial health, unlabelled', metaKind(['scripts/trial_health.py'], []), 'unlabelled'],
     ['guard itself, unlabelled', metaKind(['scripts/pm-approved-guard.cjs'], []), 'unlabelled'],
     ['by-hand check, unlabelled', metaKind(['scripts/pm-approved-check.cjs'], []), 'unlabelled'],
-    ['score file, bookkeeping', metaKind(['score-ci-health/SKILL.md'], ['meta-bookkeeping']), 'bookkeeping'],
-    ['score file, change', metaKind(['scripts/score_ci_health.py'], ['meta-change']), 'change'],
-    ['both labels', metaKind(['scripts/score_ci_health.py'], ['meta-bookkeeping', 'meta-change']), 'change'],
+    ['reviewer, bookkeeping', metaKind(['review-pipeline/SKILL.md'], ['meta-bookkeeping']), 'bookkeeping'],
+    ['reviewer, change', metaKind(['review-pipeline/SKILL.md'], ['meta-change']), 'change'],
+    ['both labels', metaKind(['review-pipeline/SKILL.md'], ['meta-bookkeeping', 'meta-change']), 'change'],
     ['meta label on plain file', metaKind(['README.md'], ['meta-change']), 'change'],
     ['bookkeeping label on plain file', metaKind(['README.md'], ['meta-bookkeeping']), 'plain'],
     ['plain docs', metaKind(['README.md', 'plan-feature/SKILL.md'], []), 'plain'],
+    ['retired score file is plain', metaKind(['score-ci-health/SKILL.md', 'scripts/score_ci_health.py'], []), 'plain'],
     ['guard file new in this PR', metaKind(['scripts/pm-approved-guard.cjs'], [], () => false), 'plain'],
     ['no label', approvalProblem([], 'o', '2026-01-01T00:00:00Z') !== null, true],
     ['by agent', approvalProblem([ev('labeled', 'bot', '2026-01-02T00:00:00Z')], 'o', '2026-01-01T00:00:00Z') !== null, true],

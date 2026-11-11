@@ -108,7 +108,7 @@ Variant `rewrite-1`, read 2026-11-09, window 2026-11-02 to 2026-11-09 (one week,
 
 What else the week showed: no session titled or run as an area lane started after 11-02 (sessions were per topic: post cards, dashboard to-dos); no council ran, so worklist 7 is unread; the `regen` skill ran through the Friday routine without a missing-skill report; the score-* freeze did not hold (ops #163 ran all three on 11-06, under the trial Issue #89's standing instruction), which is the kit's own lesson that a rule in prose is not a rule; ops #168 (11-08) proposes deleting this plan as "applied".
 
-Verdicts, 2026-11-09: worklist 1 keep, 5 keep, 6 keep (outcome (g) unused, watch), 7 keep unread until a council runs. The freeze goes to the PM as A/B/C (see § Open questions). Next change candidate for the 2026-12-01 upkeep: (e) is held by `constraints/code.md` (10.5k) and web `CLAUDE.md` (3.1k); a loop that reads only the rulings tagged to the area it touches would cut more than the whole rewrite did.
+Verdicts, 2026-11-09: worklist 1 keep, 5 keep, 6 keep (outcome (g) unused, watch), 7 keep unread until a council runs. The freeze went to the PM as A/B/C; on 2026-11-11 the PM picked C and the trial ended. Next change candidate for the 2026-12-01 upkeep: (e) is held by `constraints/code.md` (10.5k) and web `CLAUDE.md` (3.1k); a loop that reads only the rulings tagged to the area it touches would cut more than the whole rewrite did.
 
 ## Worklist
 
@@ -146,7 +146,7 @@ Not a variant: the PM chose to remove what nothing depends on before the baselin
 
 ## Open questions for owners
 
-- The score-* freeze (2026-11-02) did not hold: the Friday run (#163) read all three under the trial Issue #89's instruction of 2026-10-10 ("stick with this"). The PM picks: A unfreeze and let the trial run as instructed (the scores are read-only and cheap; five `meta-change` PRs wait on his `pm-approved` since 2026-10-16); B keep the freeze and make it hold by deleting the three skills until the upkeep step; C end the trial (its tuning notes call most reds false). (Owner: the PM.)
+- 2026-11-11: the PM picked C; the trial ended; skills, scripts and the Friday steps removed; scores/history.tsv kept.
 - This plan sits under the 30-day research rule (due 2026-11-26) and #168 proposes deleting it now. It is read on the 1st of each month by the upkeep task; retire it once the 2026-12-01 read has recorded the verdicts in the method or moved it to a permanent home. (Owner: the session doing the 2026-12-01 upkeep.)
 
 - The council's nine roles: which three the PM would keep if the run had to fit one screen. (Owner: the PM.)
