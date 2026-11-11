@@ -44,7 +44,7 @@ flowchart TD
 8. **Review**: a second session that did not write the code reads the diff and posts a GitHub review; screens get a look at phone width.
 9. **Merge and deploy**: green checks merge. **The code repo's main deploys to production.**
 10. **Handoff and dashboard**: the dashboard rebuilds daily and on every merge; the handoff saves state for the next session. **The PM looks and ticks.**
-11. **Weekly refine pass**: on Fridays the scores run, docs near their size limit are rewritten shorter, and the launch report goes out.
+11. **Weekly refine pass**: on Fridays docs near their size limit are rewritten shorter, and the launch report goes out.
 
 <details><summary>Details</summary>
 
@@ -59,7 +59,7 @@ flowchart TD
 | 8 | reviewer session | the PR → GitHub review | when a review needs a call |
 | 9 | code agent | → main | new copy, anything reaching production |
 | 10 | Dispatch | GitHub → dashboard, handoff state | ticks the checklist |
-| 11 | `tend-docs`, `score-*` (Fridays) | docs, CI → shorter docs, scores | at most 3 calls a week |
+| 11 | `tend-docs` (Fridays) | docs → shorter docs | at most 3 calls a week |
 
 Retired this week (your option A, 2026-10-26): the build log, body-text check and screenshot bundle. Workflows: code 34, plan 4, ops 2.
 
@@ -136,18 +136,6 @@ Retired this week (your option A, 2026-10-26): the build log, body-text check an
 
 - One section per severity tier. Child abuse material is preserved, viewed only as needed, and reported to NCMEC during beta.
 - Launch checklist (due at entity setup or launch): register with NCMEC, turn on Cloudflare scanning.
-
-</details>
-
-## The trial: scoring the pipeline
-
-**A trial scores how well the pipeline itself works, so the method keeps improving.** All three scores read red today; the tuning review says most of that is the scores miscounting. *Why agents need it:* a score that goes red shows where the method wastes time or money.
-
-<details><summary>Details</summary>
-
-- Built: CI health, doc drift, gaps hidden by closed Issues. Next: review coverage. Tracker #89.
-- Four fixes wait on your `pm-approved` label: #133 (doc drift), #134 (gap leakage), #142 (CI health), #151 (smoke count); they remove most false reds.
-- Real reds: tap-speed red 11 days running (#978, #1080); the skills repo's checks blocked by billing.
 
 </details>
 

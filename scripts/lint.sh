@@ -239,9 +239,9 @@ if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; th
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
 
-# TRIAL meta layer: the PM-approval guard proves itself, and the score scripts must compile.
+# The PM-approval guard proves itself, and the shared script library must compile.
 node scripts/pm-approved-guard.cjs --self-test >/dev/null || { echo "lint: pm-approved guard is inert or wrong"; fail=1; }
-for f in scripts/score_lib.py scripts/score_ci_health.py scripts/score_doc_drift.py scripts/trial_health.py; do
+for f in scripts/score_lib.py; do
   python3 -m py_compile "$f" 2>/dev/null || { echo "lint: $f does not compile"; fail=1; }
 done
 
