@@ -100,11 +100,13 @@ vt=scripts/fixtures/value-test
 # 1d. Concepts (F130, 2026-11-11): a scenario changed after 2026-11-11 names its
 #     concept in frontmatter, `concept: CO-0000`, so the knowledge import links it
 #     to the idea it grew from. Scenarios untouched since keep working without one.
+#     `concept: new` is allowed until the next knowledge import mints the concept
+#     and its report names the id; replace it then.
 #     The rule proves itself on two planted files before it checks this repo.
 CONCEPT_FROM=2026-11-12
 concept_missing() {  # file, date it last changed
   [[ "$2" < "$CONCEPT_FROM" ]] && return 1
-  awk 'NR==1 && /^---$/{fm=1; next} fm && /^---$/{exit} fm' "$1" | grep -qE '^concept: CO-[0-9]{4}$' && return 1
+  awk 'NR==1 && /^---$/{fm=1; next} fm && /^---$/{exit} fm' "$1" | grep -qE '^concept: (CO-[0-9]{4}|new)$' && return 1
   return 0
 }
 ct=$(mktemp -d)
@@ -120,7 +122,7 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
     if [ -n "$(git status --porcelain -- "$f")" ]; then d=$(date +%F); else d=$(git log -1 --format=%cs -- "$f"); fi
     [ -n "$d" ] || d=$(date +%F)
     if concept_missing "$f" "$d"; then
-      echo "lint: scenario changed after 2026-11-11 without \`concept: CO-0000\` in its frontmatter — $f"
+      echo "lint: scenario changed after 2026-11-11 without \`concept: CO-0000\` (or \`concept: new\`) in its frontmatter — $f"
       fail=1
     fi
   done
