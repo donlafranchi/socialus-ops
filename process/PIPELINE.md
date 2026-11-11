@@ -118,9 +118,9 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 
 ## Build rules — the Mac's load
 
-*(Don, 2026-10-04; new Mac 2026-11-11.)* On the Mac, builds, tests and browsers share one machine; cloud sessions don't, so none of the counts below cap them. The Mac stays a build host: the PM replaced it on 2026-11-11 with a much more powerful one, and the old caps were sized for the old one.
+*(Don, 2026-10-04; new Mac 2026-11-11.)* Mac only: cloud sessions don't share a machine, so nothing below caps them. The Mac stays a build host.
 
-- **At most 4 changes building or testing at once,** a starting point to raise or lower after the first busy week.
+- **At most 4 changes building or testing at once.**
 - **Playwright runs with `--workers=4`.**
 - **One dev server port per change**, shut down when the change finishes.
 - **Close headless browsers after every run.**
