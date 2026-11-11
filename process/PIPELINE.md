@@ -118,10 +118,10 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 
 ## Build rules — the Mac's load
 
-*(Don, 2026-10-04.)* On the Mac, builds, tests and browsers share one machine; cloud sessions don't. [open-question owner=don raised=2026-11-02] Does the Mac stay a build host through beta?
+*(Don, 2026-10-04; new Mac 2026-11-11.)* On the Mac, builds, tests and browsers share one machine; cloud sessions don't, so none of the counts below cap them. The Mac stays a build host: the PM replaced it on 2026-11-11 with a much more powerful one, and the old caps were sized for the old one.
 
-- **At most 2 changes building or testing at once.**
-- **Playwright runs with `--workers=2`.**
+- **At most 4 changes building or testing at once,** a starting point to raise or lower after the first busy week.
+- **Playwright runs with `--workers=4`.**
 - **One dev server port per change**, shut down when the change finishes.
 - **Close headless browsers after every run.**
 - **Parallelize network- and model-bound work; serialize browser and build work.** Searches, API reads and subagent thinking can fan out; anything that starts a browser, a dev server or a build waits its turn.
