@@ -50,6 +50,8 @@ Agents. A red night is a bug: the next loop picks up the issue, diagnoses from t
 
 Question Don asked: what happens when many people use the same Page at once, and what breaks first?
 
+**Built 2026-11-12** (socialus-web #1264): Actions, *Load simulation*, or `npm run load` on the Mac. It runs on the CI runner's own local stack rather than Docker Desktop, so a cloud session or a phone can start it. First run: rendering broke first, at 200 viewers of one Page; the database never did.
+
 - **Tool**: k6 (free, open source, one binary, thresholds that fail a run). No paid tools. Playwright stays for browser-level timing under load (a handful of real browsers while k6 holds the crowd).
 - **Target**: the local stack on Docker Desktop (Supabase and a production build of the app, seeded), never production. Production Supabase is on the free plan with rate limits and holds real members.
 - **Scenarios**: 50, 200 and 1,000 concurrent viewers of one Page (signed out, then signed in); a burst of taps on the blue dot; a burst of reports. Ramp up, hold, ramp down.

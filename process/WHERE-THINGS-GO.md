@@ -20,6 +20,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
 | Skills | `~/Projects/skills/*/SKILL.md` | `author-skill` | Named verb-object, because three skills were all called review (10k) | Project facts |
+| What only the PM does: set-up, accounts, calls, reviews, launch tasks | the planning repo's `TODO.md`, a focus section first when there is one (the PM, 2026-11-11) | agents keep it; the PM says done | A line is deleted when done; git keeps the history | App features, how-to steps (those live behind its links) |
 | Handoff state | `handoff/state.md`, one file | Dispatch | Overwritten at each handoff the PM asks for | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |
