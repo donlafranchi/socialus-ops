@@ -259,7 +259,7 @@ if [ -f PRINCIPLES.md ] && ! out="$(python3 scripts/markers.py lint)"; then
   fail=1
 fi
 
-# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults, then checks this repo.
+# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults (an aged note that is not decided only warns), then checks this repo.
 bf=scripts/fixtures/budgets
 got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
 [ "$got" -eq 4 ] || { echo "lint: budget checker is inert — rejected $got of 4 bad fixtures"; fail=1; }
