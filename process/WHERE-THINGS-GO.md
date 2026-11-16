@@ -15,7 +15,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Copy rules | `product/foundation/voice-and-tone.md`; strings live in the code | PM approves new copy | Ruled strings become a scenario criterion (10k) | `PRINCIPLES.md` |
 | Idea with no noun, verb or surface | `IMAGINE.md` | planning agent | Moves to the spine once it has a shape; idle 60 days → deleted (15k) | Anything with a shape |
 | Not yet decided | `[open-question owner= raised=]` inline, where the answer lands | whoever raised it | Removed when answered | A list of questions |
-| Research, options, briefs | `planning/research/`, `product/exploration/`, `planning/briefs/` | any agent | Deleted once ruled and placed (30 days) | Rulings |
+| Research, options, briefs | `planning/research/`, `product/exploration/`, `planning/briefs/` | any agent | Deleted once ruled and placed; a note past 30 days with no decision only shows in `report` | Rulings |
 | Accepted risk | `accepted-risks/*.json` | code agent | Lint on `review_by` | A ruling restating it |
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
@@ -45,7 +45,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 
 ## Refinement
 
-- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note passes its age, or `UNPLACED.md` holds an item past 14 days or more than 20 items. Sizes count the body, not frontmatter. A PR with a `docs: move …` commit (text moved verbatim) may grow a doc; the refine pass condenses it.
+- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note says `decided:` in its first lines (delete it), or `UNPLACED.md` holds an item past 14 days or more than 20 items. Sizes count the body, not frontmatter. A PR with a `docs: move …` commit (text moved verbatim) may grow a doc; the refine pass condenses it.
 - The weekly `tend-docs` pass rewrites any doc over 80%, or touched 10 times since its last refine, into current understanding plus the why. It opens one PR per doc, and only judgement calls go to the PM.
 
 **Leaving the junk drawer:** every item goes to its row above, an open-question marker, `IMAGINE.md`, an Issue, or is deleted. The line is then removed, never copied or annotated.
