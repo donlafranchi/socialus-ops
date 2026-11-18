@@ -14,6 +14,7 @@ Each rule has one home; this file points, it does not repeat.
 | What may never be broken, and the test for adding one | `process/ABSOLUTES.md` |
 | Where each kind of thing goes, and its size budget | `process/WHERE-THINGS-GO.md` |
 | How a living doc is kept current | `process/LIVING-DOCS.md` |
+| What a generated file is, why it exists, who reads it, when it is still needed | the `GENERATES` block at the top of the script that writes it; `python3 scripts/generators.py check` |
 | Speed, the PM's phone-side agent, councils | `process/PERFORMANCE.md`, `process/DISPATCH.md`, `process/council-roles.md` |
 
 In those files, `PRINCIPLES.md`, `STATUS.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` and `accepted-risks/` mean the project's planning repo.

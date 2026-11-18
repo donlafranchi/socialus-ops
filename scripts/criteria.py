@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# GENERATES: socialus-web: build-log/reports/README.md, socialus-web: build-log/reports/rollup.json
+# WHY: computes each feature's criterion tables and the roll-up from its JSON sidecar, so the numbers are never hand-written
+# READ BY: unverified: believed to be the dashboard's criterion roll-up in socialus-plan scripts/dashboard.py
+# NEEDED WHEN: while the dashboard shows a criterion roll-up
+# REVIEW BY: 2026-12-18
 """Criterion reports. Each feature report's JSON sidecar is the truth; its Markdown tables and every roll-up are computed from it.
 Usage:
   criteria.py check  <reports-dir>          validate every sidecar, and that each report's generated block matches it

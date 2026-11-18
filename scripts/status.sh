@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# GENERATES: STATUS.md
+# WHY: the one-page 'what is true now' for agents, written in the planning repo
+# READ BY: agents' read-first list in socialus-plan CLAUDE.md, until the when-to-ask table replaces it
+# NEEDED WHEN: as long as agents read it; re-test with the orientation check before keeping it
+# REVIEW BY: 2026-12-18
 # Writes STATUS.md. Never hand-edit STATUS.md — a hand-edit is lost on the next
 # run. Re-run this, or trigger the `status` workflow.
 #

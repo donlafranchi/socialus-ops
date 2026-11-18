@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# GENERATES: constraints/planning.md, constraints/code.md, constraints/for-now.md, PLATFORM-IOS.md, PLATFORM-ANDROID.md
+# WHY: lists every live ruling that binds a tier, the rulings to revisit at the next release, and what each screen needs from a native platform, all built from inline tags
+# READ BY: agents of each tier before building; the release-planning pass reads for-now; lint compares them
+# NEEDED WHEN: while rulings live in files; goes away as rulings move to the knowledge store
+# REVIEW BY: 2027-01-31
 """Markers: facts written inline where they are true, and everything built from them.
 
 The pattern is `ops-pattern/process/LIVING-DOCS.md`. Three
