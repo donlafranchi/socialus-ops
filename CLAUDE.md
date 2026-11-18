@@ -6,6 +6,52 @@ How agents build a product with a PM who rules and does not read code. **This re
 
 SocialUs is the first project run on it. Its planning repo is `socialus-plan`, its code `socialus-web`, its design `socialus-design`. The examples and dated failures below are SocialUs's because that is where the method was learned; the rules are not.
 
+## Always on (every session)
+
+**Talking to Don**
+- Bullets, one line each. Status first, the next ask last. No preamble, recap or narrating.
+- One topic, one answer. Explain only when asked, and then in one sentence.
+- Plain words; ticket numbers only in brackets after.
+- Options as A/B/C with one-line trade-offs and a recommendation. End with the next action.
+
+**Deciding**
+- Don decides ideas, what is in each version, and words and look-and-feel. You decide the rest, record it and report it.
+- Look first: name 2–3 precedents with links. Well-worn path: decide and build. New territory (touches a ruling, legal or privacy exposure, money or member trust): A/B/C before building.
+- When two live records conflict, build to the newer, then retire the older in the store so one remains (table below). Never ask Don which is true.
+- Never re-raise: members are the investors and the only people paid out; wealth circulates, it is never extracted.
+
+**Never break**
+- Deploys to main, destructive migrations, deleting data and rewriting history ask Don first. Until the first real member signs up, you may apply migrations yourself, in order, confirming each.
+- Anything public is a draft until Don says otherwise.
+- A check isn't trusted until it has been seen rejecting bad input.
+- Nothing a member contributes goes live without a report-and-takedown path.
+- Member data is never shown beyond what the member chose.
+- A ruling is recorded once, with its date and why.
+
+**Where things go:** files live only in Don's repos. Code answers "how"; the store answers "what is live and why". Anything else: the table below.
+
+## When to ask the store
+
+The knowledge store is the MCP server at `socialus.org/api/knowledge/mcp` (tools: `live`, `search`, `get`, `history`, `as_of`, `precedents`, `why`, `concept`, `how`, `review_method`, `upkeep`, `propose`).
+
+| When | Ask the store |
+|---|---|
+| Starting work in an area | `live` for each concern touched (pages, posts, explore-and-map, search-and-ranking, onboarding, notifications and the like) |
+| Deciding something not covered | `precedents`, then `search`. No well-worn path means A/B/C. |
+| Touching schema, RLS, auth or migrations | `live` for security and privacy, plus `how` building |
+| Opening or merging a PR | `how` reviewing and `how` shipping |
+| Planning, or writing a scenario or ticket | `how` planning |
+| Writing words members will read | `live` words-and-voice, and landing-and-announcements for those pages |
+| Reports, moderation, user content, AI reading content | `live` moderation-and-reports and child-safety |
+| Money, fees, payments | `live` fees-and-income and payments. Legal goes to counsel. |
+| CI, deploys, speed, errors | `live` ci-and-deploys, performance, errors, uptime-and-alerts |
+| Two live records conflict, or "why is it this way" | `get`, `history`, `why`. Build to the newer, then `propose` retiring the older with the reason so one remains. A refusal is kept as a flag for Don. |
+| "What did we decide back then", or how an idea changed | `as_of`, `concept` |
+| Judging a new tool or method | `review_method` |
+| Writing or trimming docs | `how` docs |
+
+If the store can't be reached, say so and work from the repo docs.
+
 ## Where files go (Don, 2026-11-01) [for now]
 
 Files live only in Don's project repos (socialus-plan, socialus-ops, socialus-web, socialus-legal, socialus-design). Never write anywhere else, even if a tool or prompt suggests it. [for now: until Don says otherwise] Cold-start briefs go in the repo they're about (e.g. socialus-web development/briefs/ or socialus-plan planning/briefs/).
@@ -23,31 +69,9 @@ DECISION RULE (2026-10-04, Don)
 5. When unsure which it is, say which in one line and lean toward deciding: the PM's time is the scarcest resource.
 ```
 
-## How decisions flow (2026-11-01)
-
-Don, 2026-11-01: "me as the human I set guidelines and desired outcomes or trajectories or concepts of where I'd like to go as the human decision maker and you are there to try to figure out options and choices. Do the research to help guide me make the best decision based on whatever information is available and that's how this app development should work from top to bottom."
-
-1. **Don gives direction:** guidelines, desired outcomes, trajectories, concepts.
-2. **Agents research and turn it into options:** the evidence and precedents, as A/B/C with a recommendation.
-3. **Don decides.**
-
-This sharpens the decision rule and decision rights below, it doesn't replace them: agents still decide well-worn and mechanical calls and report them; what Don decides reaches him as researched options.
-
-## Decision rights
-
-The PM decides only ideas, what is in each version (the MVP of a feature), and words and look-and-feel. Agents decide everything else by the project's soul and defaults (`PRINCIPLES.md` § Soul, § Defaults), record it, and report what they chose; only new territory that conflicts with the soul goes to the PM. Detail: `process/PIPELINE.md` § Decision rights.
-
 ## What is here
 
-- `process/ABSOLUTES.md` — the process absolutes and the four-harms test that admits any absolute, process or product. A project keeps its member-facing absolutes in its own `product/ABSOLUTES.md`.
-- `process/council-roles.md` — the roles, lens and word limits for a council (parallel cheap-model members, one strong chair) that puts an A/B/C to the PM.
-- `process/PIPELINE.md` — the five kinds of work (scenario, change, bug, process, chore), who checks what, open questions, accepted risk.
-- `process/PERFORMANCE.md` — how a product keeps itself fast: tap-speed budgets, nightly runs, baselines and checkpoints, the load simulation, who acts on red.
-- `process/LIVING-DOCS.md` — facts inline, cross-cutting views generated from markers, authored docs pruned, git as the archive. Every marker kind and the failure it answers.
-- `process/PM-AND-AGENTS.md` — what the PM reads (what and why, generated) vs what each agent role reads (how), and the one safety view. Doc skeletons: `~/.claude/templates/patterns.md` § Docs.
-- `process/WHERE-THINGS-GO.md` — one table: each kind of thing, its one home, owner, how it stays current, what never goes there. Read every session; each project's `CLAUDE.md` points here.
-- `scripts/` — the marker checker, lints and generated-view tooling. `scripts/lint.sh` runs here too: the project checks find nothing to check, and the fixtures still prove every checker ([guard-proves-itself]).
-- `templates/` — a scenario and a decision line, in the grammar the lint enforces.
+`process/` is the method: `ABSOLUTES.md` (process absolutes, the four-harms test), `PIPELINE.md` (the five kinds of work, who checks what), `WHERE-THINGS-GO.md` (one home per kind; read every session), `LIVING-DOCS.md`, `PERFORMANCE.md`, `PM-AND-AGENTS.md`, `council-roles.md`. Also `packs/` (generated from the knowledge store), `scripts/` (marker checker and lints; `lint.sh` runs here too), `templates/`.
 
 **Paths in `process/` that name `PRINCIPLES.md`, `STATUS.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` or `accepted-risks/` mean the project's planning repo**, not this one.
 
@@ -63,15 +87,10 @@ Agents own whether a change is correct; the PM owns whether it is right (`proces
 
 ## Starting a project on it
 
-1. A planning repo and a code repo, both with remotes, both pushed.
-2. Copy `scripts/`, `.github/workflows/lint.yml` and `templates/` into the planning repo. The copy is vendored: a change to how a marker or lint works is made here first, then copied.
-3. The planning repo's `CLAUDE.md` points back here for the absolutes and the pipeline, and at `~/.claude/CLAUDE.md` for the folder map. Its lint finds this repo as a sibling checkout (`METHOD_REPO` overrides).
+A planning repo and a code repo, both pushed. Copy `scripts/`, `.github/workflows/lint.yml` and `templates/` into the planning repo (vendored: change them here first, then copy). Its `CLAUDE.md` points back here; its lint finds this repo as a sibling checkout (`METHOD_REPO` overrides).
 
 ## Changing the method
 
-Process work: branch `process-YYYY-MM-DD-slug`, commit `docs: what`, PR, self-merge when `lint` is green, then copy any changed script into each project that vendors it. Sessions work in their own worktree at `../worktrees/ops-pattern/{branch}`, never the repo root, because a worktree rule scoped to branches left read-only sessions at the root to wedge each other's `index.lock` (2026-09-09). Use `git --no-optional-locks status` when not committing: plain `status` takes the lock, and a sandboxed session leaves it stale.
+Process work: branch `process-YYYY-MM-DD-slug`, commit `docs: what`, PR, self-merge when `lint` is green, then copy any changed script into each project that vendors it. Sessions work in their own worktree at `../worktrees/ops-pattern/{branch}`, never the repo root (read-only sessions at the root wedged each other's `index.lock`, 2026-09-09); use `git --no-optional-locks status` when not committing.
 
-- **Name the failure, with a dated example, and put it in the rule as its short "because …".** No fixes for imagined failures. There is no lessons file: the rule carries its reason and git carries the history.
-- **Prefer deleting a doc to adding a rule.** Prefer a frontmatter field to a directory, because state held in kanban folders needed the PM at the Mac to move files. Prefer a check against code to a check against a doc, because every early gate compared docs to docs and two Explore tickets were built after Explore was retired (2026-09-03).
-- **A standard exists when lint or CI checks it**, not before (`process/LIVING-DOCS.md` § Hooks).
-- **A procedure improvised once goes into a skill that session**, because the 2026-09-09 session improvised five (classifying work, splitting a scenario, folding reviews) and the next could repeat none.
+The method's own rules (name the dated failure, prefer deleting a doc to adding a rule, a standard exists when lint or CI checks it, an improvised procedure becomes a skill) live in the knowledge store: `how` agents, `how` docs.
