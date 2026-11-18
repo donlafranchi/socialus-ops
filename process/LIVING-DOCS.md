@@ -14,11 +14,6 @@ This repo is read and written by agents, not maintained by people. **A fact live
 - **Problem.** Documents grew and never shrank. `DECISIONS.md` kept the 2026-09-22 no-count ruling beside the 2026-09-23 ruling reversing it, "kept rather than struck"; F093 carried a section restating the F059 clause it overrode; superseded scenarios sat beside the one that absorbed them. A reader had to work out which half was current.
 - **Does.** The superseded entry, clause, scenario or note is deleted. Its replacement names it in one `[replaces …]` tag, enough for `git log -S`. Reasoning that still matters moves forward; reasoning that only explained the old position goes with it.
 
-### Newer decision wins
-- **Problem.** Conflicting rulings stalled work. `socialus-web` #220 asked Don to confirm a 2026-09-14 ruling over a 2026-09-13 one; he named it on 2026-09-27 as something he hits repeatedly.
-- **Does.** `[newer-decision-wins]`: the newer ruling wins and work continues. Because superseded text is pruned and `constraints/` is generated from live rulings only, an agent never sees the conflict.
-- **Not when.** Two *live* rulings conflict and neither replaces the other. That is the one case for Don, as an open-question marker, never a blocking message.
-
 ### Guard coverage
 - **Problem.** Checks passed while inert: the migration preflight parser, `migrations (check)`, `issue-lint`, and on 2026-09-27 this repo's own open-question lint (`pipefail` swallowed its failure). Separately, F093 required every criterion be discharged by a check seen failing, and nothing could say which check discharged which.
 - **Does.** `[guards F093.4]` on the check; `markers.py coverage` maps criteria to checks, and `STATUS.md` names the unclaimed ones. F093 criteria 8, 10, 11 and 12 are visible as unclaimed, not assumed.

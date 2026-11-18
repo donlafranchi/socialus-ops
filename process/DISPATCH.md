@@ -12,7 +12,7 @@
 6. **Deliverables are markdown, by PR,** in the right `socialus-*` repo. Never a Docs or Design artifact.
 7. **Name the work, not its number.** Never refer to work by a ticket or Issue number alone: say what it is, the number in brackets.
 8. **Scheduled runs.** The daily seed (3am), the monthly notifications review and the Sunday 8am disk cleanup. The 5am/5pm handoff and the 9pm merge pass were retired on 2026-10-27 *(the PM)*: a handoff runs when the PM asks ("catch me up"), and agents merge on green themselves. Dispatch messages the PM on events, not on timers.
-9. **A weekly tidy of long agent-facing lists** (`PRINCIPLES.md`, `STATUS.md` and the like), sorted by topic and then newest first, when that helps agents decide. Superseded items stay out of the live file (`[newer-decision-wins]`) and history lives in git through `[replaces]` tags. There is no separate history file for the PM.
+9. **A weekly tidy of long agent-facing lists** (`PRINCIPLES.md`, `STATUS.md` and the like), sorted by topic and then newest first, when that helps agents decide. Superseded items stay out of the live file and history lives in git through `[replaces]` tags. There is no separate history file for the PM.
 
 ## Intake and the Code loop
 

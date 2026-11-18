@@ -402,7 +402,7 @@ def render_constraints(tier):
          ">",
          f"> Every ratified decision whose tag binds the **{tier}** tier, newest first. The rulings hold",
          "> only live decisions — a superseded one is deleted — so nothing below conflicts with anything",
-         "> else here. If two lines ever seem to, the newer wins (`[newer-decision-wins]`).",
+         "> else here. If two lines ever seem to conflict, one is retired in the knowledge store.",
          f"> **{untagged} older decisions carry no tag yet and are not listed** — tagging is required from",
          f"> {BINDS_FROM.isoformat()} onward. Absent here is not the same as not binding.", ""]
     o += [f"- **{e['date']}**{' · [' + e['lasts'] + ']' if e['lasts'] else ''} · {', '.join(e['binds'][1])} — {e['headline']} ({e['file']})" for e in rows] or ["None tagged."]
