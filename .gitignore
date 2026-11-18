@@ -18,3 +18,7 @@ node_modules/
 *.mp3
 *.wav
 __pycache__/
+# Dated outputs of the weekly runs are written locally for the agents that read them; they are not history we keep (git is the history).
+reports/doc-garden/
+scores/score-*/
+scores/tuning/

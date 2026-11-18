@@ -163,6 +163,8 @@ def check(root, today=None):
         for dp, dn, fn in os.walk(os.path.join(root, top)):
             for f in fn:
                 r = os.path.relpath(os.path.join(dp, f), root)
+                if top == 'packs' and not f.endswith('.md'):
+                    continue  # packs/practices-seed.json is a hand-extracted source, not generated output
                 if r not in covered:
                     warns.append(f'{r} is covered by no GENERATES declaration (an orphan output)')
     return fails, warns
