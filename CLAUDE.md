@@ -2,7 +2,7 @@
 
 # socialus-ops — the method
 
-How agents build a product with a PM who rules and does not read code. This repo holds the method only. The product's planning lives in `socialus-plan`, its code in `socialus-web`, its design in `socialus-design`.
+How agents build a product with a PM who rules and does not read code. This repo holds how SocialUs is built (`process/`) and how it is run (`operations/`). Its planning lives in `socialus-plan`, its code in `socialus-web`, its design in `socialus-design`.
 
 ## Where the rules are
 
@@ -12,6 +12,7 @@ Each rule has one home; this file points, it does not repeat.
 |---|---|
 | How to talk to the PM, and how to decide (decision rule, decision rights, who checks what, the five kinds of work) | `process/PIPELINE.md` |
 | What may never be broken, and the test for adding one | `process/ABSOLUTES.md` |
+| Handling a report or incident, going live | `operations/` (the safety runbook, the go-live prompt) |
 | Where each kind of thing goes, and its size budget | `process/WHERE-THINGS-GO.md` |
 | How a living doc is kept current | `process/LIVING-DOCS.md` |
 | What a generated file is, why it exists, who reads it, when it is still needed | the `GENERATES` block at the top of the script that writes it; `python3 scripts/generators.py check` |

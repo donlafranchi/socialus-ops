@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# GENERATES: runbooks/staff-safety.md
+# GENERATES: operations/staff-safety.md
 # WHY: step-by-step, phone-readable steps for whoever handles a report (apparent child sexual abuse material, threats of harm, other severities), built from the moderation rulings so it cannot drift from them
 # READ BY: the person handling a report; to be linked from the admin reports page (decision D-0154)
 # NEEDED WHEN: before launch, and from the first report a person must act on; the PM rules whether it waits for moderation staff (D-0154 puts it in scope for beta)
 # REVIEW BY: 2027-02-01
-"""Regenerates runbooks/staff-safety.md from the moderation rulings (F078, F100, F101, F102 in socialus-plan) so the runbook is
+"""Regenerates operations/staff-safety.md from the moderation rulings (F078, F100, F101, F102 in socialus-plan) so the runbook is
 generated, not maintained. The steps are this script's template; every ruling it cites is read live and quoted, and a hash of
 the cited rulings is stamped in the file. `--check` fails when a cited ruling has changed since the file was written.
 Usage: python3 scripts/regen_safety_runbook.py [--check] [--no-write]"""
@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from score_lib import PROJECTS, ROOT
 
 PLAN = os.path.join(PROJECTS, 'socialus-plan')
-OUT = os.path.join(ROOT, 'runbooks', 'staff-safety.md')
+OUT = os.path.join(ROOT, 'operations', 'staff-safety.md')
 
 
 def clean(t):
@@ -151,4 +151,4 @@ print(doc[:160] + '...')
 if '--no-write' not in sys.argv:
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, 'w').write(doc)
-    print('wrote runbooks/staff-safety.md, rulings-hash', stamp)
+    print('wrote operations/staff-safety.md, rulings-hash', stamp)
