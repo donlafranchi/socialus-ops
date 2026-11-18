@@ -1,4 +1,4 @@
-> **SETTLED — do not re-raise:** members are the investors and the only people paid out. "Ownership, not profit-share" is rejected. Legal/securities questions about this go to `socialus-legal` for counsel and never come back to the PM as a decision. SocialUs takes transaction income; any 'no fee' language is retired.
+> **SETTLED — do not re-raise:** SocialUs is built for its members' benefit; members are not investors, owners or payees, and no return is promised. Legal questions go to `socialus-legal`, never back to the PM. SocialUs takes transaction income; 'no fee' language is retired.
 
 # Process absolutes
 

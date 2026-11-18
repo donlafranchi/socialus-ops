@@ -22,7 +22,7 @@ or hold (not now). The id after each line is its record in the knowledge store.
 - **Before deciding anything, name 2 to 3 established precedents with links.** rule, adopt. Why: Most decisions were already made well elsewhere. (practice.look-first-precedents)
 - **New territory (a ruling, legal, privacy, money or member trust) goes to the PM as A/B/C before building.** rule, adopt. Why: A wrong guess there costs members or trust. (practice.new-territory-goes-as-abc)
 - **Every Issue and PR in the code repo carries a Path line, well-worn or new territory, with its precedents beside it.** rule, adopt. Why: It says who decides. (practice.path-line-on-every-issue-pr)
-- **Settled ground (members are the investors and only payees) is not re-raised; legal goes to counsel.** rule, adopt. Why: Re-arguing spends PM time. (practice.settled-not-reraised)
+- **Settled ground (SocialUs is built for its members' benefit; members are not investors or payees) is not re-raised; legal goes to counsel.** rule, adopt. Why: Re-arguing spends PM time. (practice.settled-not-reraised)
 - **On a well-worn path agents build the simplest fitting option; when unsure, lean toward deciding.** rule, adopt. Why: The PM's time is the scarcest resource. (practice.well-worn-decide-and-build)
 - **Decisions and patterns live in one database with history, queried instead of read as files.** rule, trial. Why: Hundreds of files went stale. (practice.knowledge-store)
 - **A ruling changed by member action carries an [evidence] tag; a judgement ruling carries none.** rule, assess. Why: Feedback's effect should be a scan. (practice.evidence-tag-on-member-driven-rulings)
