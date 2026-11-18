@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# GENERATES: audits/criterion-rollup.md
+# WHY: audits the chain that rolls criterion results up to the dashboard: which step feeds which, and how stale each is
+# READ BY: only a comment in socialus-plan .github/workflows/dashboard.yml was found; no script reads it
+# NEEDED WHEN: when the dashboard's criterion roll-up is in doubt; not on a schedule
+# REVIEW BY: 2026-12-18
 """Audit of the criterion roll-up chain, regenerated from live sources (never hand-written).
 Writes audits/criterion-rollup.md. Usage: python3 scripts/audit_criterion_rollup.py [--no-write]
 Reads: socialus-plan (scenarios, STATUS.md, DASHBOARD.md, dashboard html, scripts) and socialus-web (reports, Issues, PRs, runs) via gh and sibling checkouts."""

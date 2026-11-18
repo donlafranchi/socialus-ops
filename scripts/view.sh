@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# GENERATES: README.md
+# WHY: the repo's root README for people, built from data
+# READ BY: people arriving at the repo on GitHub
+# NEEDED WHEN: as long as the repo's front page should show current status
+# REVIEW BY: 2026-12-18
 # Writes README.md from data. Never hand-edit README.md — re-run this instead.
 set -uo pipefail
 

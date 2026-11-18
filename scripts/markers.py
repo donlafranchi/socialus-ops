@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# GENERATES: constraints/planning.md, constraints/code.md, constraints/for-now.md, PLATFORM-IOS.md, PLATFORM-ANDROID.md
+# WHY: lists every live ruling that binds a tier, the rulings to revisit at the next release, and what each screen needs from a native platform, all built from inline tags
+# READ BY: agents of each tier before building; the release-planning pass reads for-now; lint compares them
+# NEEDED WHEN: while rulings live in files; goes away as rulings move to the knowledge store
+# REVIEW BY: 2027-01-31
 """Markers: facts written inline where they are true, and everything built from them.
 
 The pattern is `ops-pattern/process/LIVING-DOCS.md`. Three
@@ -402,7 +407,7 @@ def render_constraints(tier):
          ">",
          f"> Every ratified decision whose tag binds the **{tier}** tier, newest first. The rulings hold",
          "> only live decisions — a superseded one is deleted — so nothing below conflicts with anything",
-         "> else here. If two lines ever seem to, the newer wins (`[newer-decision-wins]`).",
+         "> else here. If two lines ever seem to conflict, one is retired in the knowledge store.",
          f"> **{untagged} older decisions carry no tag yet and are not listed** — tagging is required from",
          f"> {BINDS_FROM.isoformat()} onward. Absent here is not the same as not binding.", ""]
     o += [f"- **{e['date']}**{' · [' + e['lasts'] + ']' if e['lasts'] else ''} · {', '.join(e['binds'][1])} — {e['headline']} ({e['file']})" for e in rows] or ["None tagged."]

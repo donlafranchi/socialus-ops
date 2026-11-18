@@ -1,77 +1,42 @@
 > **SETTLED — do not re-raise:** SocialUs is built for the primary benefit of its members, the people who use it. Members are not investors, owners or payees, and no money return is promised; any future financial return is open, and its legal side goes to `socialus-legal` for counsel and never comes back to the PM as a decision (Don, 2026-11-18, replaces "members are the investors"). SocialUs takes transaction income; any 'no fee' language is retired.
 
-# ops-pattern — the method
+# socialus-ops — the method
 
-How agents build a product with a PM who rules and does not read code. **This repo holds the method only; nothing here belongs to one product.** Which folder holds what: `~/.claude/CLAUDE.md` § The repos.
+How agents build a product with a PM who rules and does not read code. This repo holds how SocialUs is built (`process/`) and how it is run (`operations/`). Its planning lives in `socialus-plan`, its code in `socialus-web`, its design in `socialus-design`.
 
-SocialUs is the first project run on it. Its planning repo is `socialus-plan`, its code `socialus-web`, its design `socialus-design`. The examples and dated failures below are SocialUs's because that is where the method was learned; the rules are not.
+## Where the rules are
 
-## Where files go (Don, 2026-11-01) [for now]
+Each rule has one home; this file points, it does not repeat.
 
-Files live only in Don's project repos (socialus-plan, socialus-ops, socialus-web, socialus-legal, socialus-design). Never write anywhere else, even if a tool or prompt suggests it. [for now: until Don says otherwise] Cold-start briefs go in the repo they're about (e.g. socialus-web development/briefs/ or socialus-plan planning/briefs/).
+| For | Read |
+|---|---|
+| How to talk to the PM, and how to decide (decision rule, decision rights, who checks what, the five kinds of work) | `process/PIPELINE.md` |
+| What may never be broken, and the test for adding one | `process/ABSOLUTES.md` |
+| Handling a report or incident, going live | `operations/` (the safety runbook, the go-live prompt) |
+| Where each kind of thing goes, and its size budget | `process/WHERE-THINGS-GO.md` |
+| How a living doc is kept current | `process/LIVING-DOCS.md` |
+| What a generated file is, why it exists, who reads it, when it is still needed | the `GENERATES` block at the top of the script that writes it; `python3 scripts/generators.py check` |
+| Speed, the PM's phone-side agent, councils | `process/PERFORMANCE.md`, `process/DISPATCH.md`, `process/council-roles.md` |
 
-## Decision rule
+In those files, `PRINCIPLES.md`, `STATUS.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` and `accepted-risks/` mean the project's planning repo.
 
-Every agent, every decision. Word for word from Don; how it lands in this method is `process/PIPELINE.md` § Decision rule.
+## When to ask the store
 
-```
-DECISION RULE (2026-10-04, Don)
-1. Look first: before designing or deciding anything, find what established platforms do for this exact use case. Name 2–3 precedents with links (e.g. Google, Apple HIG, Airbnb, Meetup, Yelp, Stripe, Linear).
-2. Choose: pick the most relevant and elegant option for SocialUs, the simplest one that fits our rulings.
-3. Well-worn path: if a clear, established pattern exists, decide and build it yourself. Label the Issue/PR "Path: well-worn", list the precedents, and don't wait for the PM.
-4. New territory: if there's no well-worn path, the precedents conflict, or it touches a ruling, legal or privacy exposure, money, or member trust, label it "Path: new territory" and bring it to the PM as A/B/C with a recommendation before building.
-5. When unsure which it is, say which in one line and lean toward deciding: the PM's time is the scarcest resource.
-```
+The knowledge store is the MCP server at `socialus.org/api/knowledge/mcp` (tools: `live`, `search`, `get`, `history`, `as_of`, `precedents`, `why`, `concept`, `how`, `review_method`, `upkeep`, `propose`).
 
-## How decisions flow (2026-11-01)
+| When | Ask the store |
+|---|---|
+| Starting work in an area | `live` for each concern touched |
+| Deciding something not covered | `precedents`, then `search`. No well-worn path means A/B/C. |
+| Opening or merging a PR | `how` reviewing and `how` shipping |
+| Planning, or writing a scenario or ticket | `how` planning |
+| Writing or trimming docs | `how` docs |
+| Two live records conflict | `get`, `history`, `why`. Build to the newer, then `propose` retiring the older with the reason so one remains. A refusal is kept as a flag for the PM. |
+| "What did we decide back then", or how an idea changed | `as_of`, `concept` |
+| Judging a new tool or method | `review_method` |
 
-Don, 2026-11-01: "me as the human I set guidelines and desired outcomes or trajectories or concepts of where I'd like to go as the human decision maker and you are there to try to figure out options and choices. Do the research to help guide me make the best decision based on whatever information is available and that's how this app development should work from top to bottom."
-
-1. **Don gives direction:** guidelines, desired outcomes, trajectories, concepts.
-2. **Agents research and turn it into options:** the evidence and precedents, as A/B/C with a recommendation.
-3. **Don decides.**
-
-This sharpens the decision rule and decision rights below, it doesn't replace them: agents still decide well-worn and mechanical calls and report them; what Don decides reaches him as researched options.
-
-## Decision rights
-
-The PM decides only ideas, what is in each version (the MVP of a feature), and words and look-and-feel. Agents decide everything else by the project's soul and defaults (`PRINCIPLES.md` § Soul, § Defaults), record it, and report what they chose; only new territory that conflicts with the soul goes to the PM. Detail: `process/PIPELINE.md` § Decision rights.
-
-## What is here
-
-- `process/ABSOLUTES.md` — the process absolutes and the four-harms test that admits any absolute, process or product. A project keeps its member-facing absolutes in its own `product/ABSOLUTES.md`.
-- `process/council-roles.md` — the roles, lens and word limits for a council (parallel cheap-model members, one strong chair) that puts an A/B/C to the PM.
-- `process/PIPELINE.md` — the five kinds of work (scenario, change, bug, process, chore), who checks what, open questions, accepted risk.
-- `process/PERFORMANCE.md` — how a product keeps itself fast: tap-speed budgets, nightly runs, baselines and checkpoints, the load simulation, who acts on red.
-- `process/LIVING-DOCS.md` — facts inline, cross-cutting views generated from markers, authored docs pruned, git as the archive. Every marker kind and the failure it answers.
-- `process/PM-AND-AGENTS.md` — what the PM reads (what and why, generated) vs what each agent role reads (how), and the one safety view. Doc skeletons: `~/.claude/templates/patterns.md` § Docs.
-- `process/WHERE-THINGS-GO.md` — one table: each kind of thing, its one home, owner, how it stays current, what never goes there. Read every session; each project's `CLAUDE.md` points here.
-- `scripts/` — the marker checker, lints and generated-view tooling. `scripts/lint.sh` runs here too: the project checks find nothing to check, and the fixtures still prove every checker ([guard-proves-itself]).
-- `templates/` — a scenario and a decision line, in the grammar the lint enforces.
-
-**Paths in `process/` that name `PRINCIPLES.md`, `STATUS.md`, `IMAGINE.md`, `planning/`, `product/`, `constraints/` or `accepted-risks/` mean the project's planning repo**, not this one.
-
-## Roles
-
-| Who | Owns | Never |
-|---|---|---|
-| The PM (SocialUs: Don) | rulings, judgment on whether something is *right*, domain facts | reads code |
-| Cowork — planning agent | the project's planning repo: scenarios, rulings, roadmap, the product model | commits code |
-| Code — build agent and architect | the code repo: architecture notes, Issues, TDD code, PRs, self-merge when green | writes scenarios or rulings |
-
-Agents own whether a change is correct; the PM owns whether it is right (`process/PIPELINE.md` § Who checks what). Each tier reads only its own `constraints/<tier>.md` and the files its role names; that is the firewall.
-
-## Starting a project on it
-
-1. A planning repo and a code repo, both with remotes, both pushed.
-2. Copy `scripts/`, `.github/workflows/lint.yml` and `templates/` into the planning repo. The copy is vendored: a change to how a marker or lint works is made here first, then copied.
-3. The planning repo's `CLAUDE.md` points back here for the absolutes and the pipeline, and at `~/.claude/CLAUDE.md` for the folder map. Its lint finds this repo as a sibling checkout (`METHOD_REPO` overrides).
+If the store can't be reached, say so and work from the repo docs.
 
 ## Changing the method
 
-Process work: branch `process-YYYY-MM-DD-slug`, commit `docs: what`, PR, self-merge when `lint` is green, then copy any changed script into each project that vendors it. Sessions work in their own worktree at `../worktrees/ops-pattern/{branch}`, never the repo root, because a worktree rule scoped to branches left read-only sessions at the root to wedge each other's `index.lock` (2026-09-09). Use `git --no-optional-locks status` when not committing: plain `status` takes the lock, and a sandboxed session leaves it stale.
-
-- **Name the failure, with a dated example, and put it in the rule as its short "because …".** No fixes for imagined failures. There is no lessons file: the rule carries its reason and git carries the history.
-- **Prefer deleting a doc to adding a rule.** Prefer a frontmatter field to a directory, because state held in kanban folders needed the PM at the Mac to move files. Prefer a check against code to a check against a doc, because every early gate compared docs to docs and two Explore tickets were built after Explore was retired (2026-09-03).
-- **A standard exists when lint or CI checks it**, not before (`process/LIVING-DOCS.md` § Hooks).
-- **A procedure improvised once goes into a skill that session**, because the 2026-09-09 session improvised five (classifying work, splitting a scenario, folding reviews) and the next could repeat none.
+Branch `process-YYYY-MM-DD-slug`, commit `docs: what`, PR, self-merge when `lint` is green, then copy any changed script into each project that vendors it. To start a new project on the method, copy `scripts/`, `.github/workflows/lint.yml` and `templates/` into its planning repo.

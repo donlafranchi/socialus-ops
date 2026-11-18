@@ -1,3 +1,8 @@
+# GENERATES: scores/history.tsv
+# WHY: one row per score reading (CI health, doc drift, gap leakage) so trends show
+# READ BY: socialus-plan scripts/dashboard.py reads it for the pipeline-health panel
+# NEEDED WHEN: while the score trial runs (started 2026-10-10; thresholds are assumed until two weeks of readings exist)
+# REVIEW BY: 2026-12-18
 """Shared helpers for the score-* scripts. TRIAL (started 2026-10-10): thresholds are assumed until two weeks of readings exist."""
 import json, os, subprocess, sys
 from datetime import date, datetime, timedelta, timezone

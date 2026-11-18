@@ -1,0 +1,9 @@
+# Generated files are marked, not reviewed (process/PIPELINE.md § Generated files; each is declared by the
+# script that writes it: scripts/generators.py check). linguist-generated collapses them in PR diffs.
+constraints/*.md linguist-generated=true
+audits/*.md linguist-generated=true
+operations/staff-safety.md linguist-generated=true
+reports/doc-garden/*.md linguist-generated=true
+scores/history.tsv linguist-generated=true
+scores/tend-docs/latest.json linguist-generated=true
+README.md linguist-generated=true

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# GENERATES: reports/doc-garden/*.md, scores/tend-docs/latest.json
+# WHY: inventories every markdown doc across the repos and lists what to tidy; latest.json carries the numbers for the dashboard's pipeline-health panel
+# READ BY: socialus-plan scripts/dashboard.py reads latest.json; the weekly tend-docs pass reads the report
+# NEEDED WHEN: weekly while docs are files; shrinks as docs move into the knowledge store
+# REVIEW BY: 2027-01-31
 """tend-docs: inventory every Markdown doc in the four repos, find what to tidy, optionally fix the mechanical part.
 Usage: python3 scripts/tend_docs.py [--fix] [--no-write]
 Reads sibling checkouts under ~/Projects (socialus-web, socialus-plan, socialus-ops, skills). Writes reports/doc-garden/<date>.md and

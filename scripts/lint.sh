@@ -270,9 +270,18 @@ if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; th
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
 
+# Generators declare themselves (scripts/generators.py): the checker proves itself on 5 planted faults, then checks this repo.
+gf=scripts/fixtures/generators
+got=0; for d in "$gf"/bad-*/; do python3 scripts/generators.py check --root "$d" --quiet >/dev/null 2>&1 || got=$((got+1)); done
+[ "$got" -eq 5 ] || { echo "lint: generators checker is inert — rejected $got of 5 bad fixtures"; fail=1; }
+python3 scripts/generators.py check --root "$gf/good" --quiet >/dev/null || { echo "lint: generators checker rejects the good fixture"; fail=1; }
+if ! out="$(python3 scripts/generators.py check --quiet)"; then
+  echo "$out" | sed 's/^/lint: /'; fail=1
+fi
+
 # The PM-approval guard proves itself, and the shared script library must compile.
 node scripts/pm-approved-guard.cjs --self-test >/dev/null || { echo "lint: pm-approved guard is inert or wrong"; fail=1; }
-for f in scripts/score_lib.py; do
+for f in scripts/score_lib.py scripts/generators.py; do
   python3 -m py_compile "$f" 2>/dev/null || { echo "lint: $f does not compile"; fail=1; }
 done
 
