@@ -132,7 +132,7 @@ fi
 #    README.md (scripts/view.sh), PLATFORM-*.md (scripts/markers.py platform) and
 #    DASHBOARD.md (scripts/dashboard.py),
 #    never hand-edited, so not link-checked below.
-allowed="CLAUDE.md STATUS.md PRINCIPLES.md UNPLACED.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
+allowed="CLAUDE.md STATUS.md PRINCIPLES.md UNPLACED.md IMAGINE.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
 for f in *.md; do
   [ -f "$f" ] || continue
   case " $allowed " in
@@ -269,6 +269,12 @@ got=$(BUDGETS_MOVE=1 BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py 
 if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; then
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
+
+# Every markdown file earns its place (scripts/docs_guard.py): proves itself on 3 planted faults, then checks this repo.
+got=0; for d in scripts/fixtures/docs/bad-*/; do python3 scripts/docs_guard.py check --root "$d" >/dev/null 2>&1 || got=$((got+1)); done
+[ "$got" -eq 3 ] || { echo "lint: docs guard is inert — rejected $got of 3 bad fixtures"; fail=1; }
+python3 scripts/docs_guard.py check --root scripts/fixtures/docs/good >/dev/null || { echo "lint: docs guard rejects the good fixture"; fail=1; }
+if [ -f docs.tsv ] && ! out="$(python3 scripts/docs_guard.py check)"; then echo "$out"; fail=1; fi
 
 # Generators declare themselves (scripts/generators.py): the checker proves itself on 5 planted faults, then checks this repo.
 gf=scripts/fixtures/generators

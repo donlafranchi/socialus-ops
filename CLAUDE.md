@@ -13,7 +13,7 @@ Each rule has one home; this file points, it does not repeat.
 | How to talk to the PM, and how to decide (decision rule, decision rights, who checks what, the five kinds of work) | `process/PIPELINE.md` |
 | What may never be broken, and the test for adding one | `process/ABSOLUTES.md` |
 | Handling a report or incident, going live | `operations/` (the safety runbook, the go-live prompt) |
-| Where each kind of thing goes, and its size budget | `process/WHERE-THINGS-GO.md` |
+| Whether something may be a file at all | `docs.tsv`. Content that is a rule, decision, practice or how-to goes in the store; a new `.md` fails lint unless listed there with why and a review-by date. |
 | How a living doc is kept current | `process/LIVING-DOCS.md` |
 | What a generated file is, why it exists, who reads it, when it is still needed | the `GENERATES` block at the top of the script that writes it; `python3 scripts/generators.py check` |
 | Speed, the PM's phone-side agent, councils | `process/PERFORMANCE.md`, `process/DISPATCH.md`, `process/council-roles.md` |
