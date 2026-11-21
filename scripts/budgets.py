@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Doc budgets (process/WHERE-THINGS-GO.md): no doc grows past its budget unrefined.
 
-  budgets.py report [--root DIR]   docs at >=80% of their size budget, or past their age
+  budgets.py report [--root DIR]   docs at >=80% of their size budget, or past their age with no `decided:`
   budgets.py check  [--root DIR]   lint: fails when an over-budget doc grew against the base,
-                                   a dated note is past its age budget, or UNPLACED.md has an
+                                   a dated note says `decided:` in its first 30 lines (delete it), or UNPLACED.md has an
                                    item older than 14 days, a line without its marker, or >20 items
 
 Config: <root>/scripts/budgets.tsv (or <root>/budgets.tsv), `glob<TAB>KB<TAB>age-days`, first
@@ -17,6 +17,7 @@ import datetime, fnmatch, os, re, subprocess, sys
 
 UNPLACED_DAYS, UNPLACED_MAX = 14, 20
 DATE = re.compile(r'(20\d\d-\d\d-\d\d)')
+DECIDED = re.compile(r'^decided:\s*\S', re.M)
 
 
 def config(root):
@@ -120,8 +121,10 @@ def run(mode, root):
         size = body(text)
         if age is not None and (d := DATE.search(os.path.basename(path))):
             days = (today - datetime.date.fromisoformat(d.group(1))).days
-            if days > age:
-                fails.append(f'{path}: dated note is {days} days old, past its {age}-day budget — delete it once its result has a home')
+            if DECIDED.search('\n'.join(text.split('\n')[:30])):
+                fails.append(f'{path}: dated note says it is decided — delete it; the decision has a home and git holds the note')
+            elif days > age:
+                warns.append(f'{path}: dated note is {days} days old with no decision recorded — decide it, or delete it if it is dead')
         if kb is None:
             continue
         pct = size / (kb * 1000)

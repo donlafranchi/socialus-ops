@@ -15,7 +15,9 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Copy rules | `product/foundation/voice-and-tone.md`; strings live in the code | PM approves new copy | Ruled strings become a scenario criterion (10k) | `PRINCIPLES.md` |
 | Idea with no noun, verb or surface | `IMAGINE.md` | planning agent | Moves to the spine once it has a shape; idle 60 days → deleted (15k) | Anything with a shape |
 | Not yet decided | `[open-question owner= raised=]` inline, where the answer lands | whoever raised it | Removed when answered | A list of questions |
-| Research, options, briefs | `planning/research/`, `product/exploration/`, `planning/briefs/` | any agent | Deleted once ruled and placed (30 days) | Rulings |
+| Research, options, briefs | `planning/research/`, `product/exploration/`, `planning/briefs/` | any agent | Deleted once ruled and placed; a note past 30 days with no decision only shows in `report` | Rulings |
+| How a person (or an operations agent, never a build agent) responds to a situation in the app: reports, incidents, going live | `operations/` | the PM; counsel reviews the safety runbook | The safety runbook is generated from the moderation rulings (`scripts/regen_safety_runbook.py`); the rest by hand | Build rules, product specs, legal advice (those live in `process/`, `socialus-plan`, `socialus-legal`) |
+| Overview for an outside chat or Claude Desktop Project: what we are building and how | `planning/briefing/` (`how-socialus-works.md`, `ai-and-models.md`, `near-term-plans.md`) | planning agent | Refreshed in place when a ruling changes what one says, with its "As of" date moved | Rulings; a second copy of the spine; a new brief written beside it |
 | Accepted risk | `accepted-risks/*.json` | code agent | Lint on `review_by` | A ruling restating it |
 | How agents work (method) | `process/` here | method | The rule's own "because" holds the failure that earned it (20k each) | Product specifics, history |
 | How to work in a repo | that repo's `CLAUDE.md` | repo's agent | Points here for routing (8k) | Routing tables, history |
@@ -43,9 +45,13 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Capabilities, criterion reports, launch report | `regen-*` skills | On request; not committed |
 | Build history | git and PR bodies | Never written as files |
 
+## Asked for an overview to hand to an outside chat or Project?
+
+**Start at `planning/briefing/` in the planning repo; refresh a stale file there in place instead of writing a new brief; check against the code or knowledge store only the claims you quote; hand the file over directly.** A PR and an Issue change a repo doc; they are not how a copy reaches the PM (a cold-start brief for an agent still goes in its repo). Because on 2026-11-18 a session wrote a fresh brief from the code alone, in about 40 tool calls, missed that the assistant direction was already ruled (F119, F120, `AGENT-ANSWERING.md`), skipped the briefings that already existed, and opened a PR and an Issue to deliver a file the PM did not want in a repo. If the planning repo is not in the session, add it read-only first.
+
 ## Refinement
 
-- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note passes its age, or `UNPLACED.md` holds an item past 14 days or more than 20 items. Sizes count the body, not frontmatter. A PR with a `docs: move …` commit (text moved verbatim) may grow a doc; the refine pass condenses it.
+- `scripts/budgets.py` (budgets in `scripts/budgets.tsv`; a doc's frontmatter `budget:` overrides). `report` lists docs at 80% or more. `check`, in `lint.sh`, fails when an over-budget doc grows, a dated note says `decided:` in its first lines (delete it), or `UNPLACED.md` holds an item past 14 days or more than 20 items. Sizes count the body, not frontmatter. A PR with a `docs: move …` commit (text moved verbatim) may grow a doc; the refine pass condenses it.
 - The weekly `tend-docs` pass rewrites any doc over 80%, or touched 10 times since its last refine, into current understanding plus the why. It opens one PR per doc, and only judgement calls go to the PM.
 
 **Leaving the junk drawer:** every item goes to its row above, an open-question marker, `IMAGINE.md`, an Issue, or is deleted. The line is then removed, never copied or annotated.

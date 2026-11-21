@@ -132,7 +132,7 @@ fi
 #    README.md (scripts/view.sh), PLATFORM-*.md (scripts/markers.py platform) and
 #    DASHBOARD.md (scripts/dashboard.py),
 #    never hand-edited, so not link-checked below.
-allowed="CLAUDE.md STATUS.md PRINCIPLES.md UNPLACED.md IMAGINE.md README.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
+allowed="CLAUDE.md STATUS.md PRINCIPLES.md UNPLACED.md IMAGINE.md PLATFORM-IOS.md PLATFORM-ANDROID.md DASHBOARD.md"
 for f in *.md; do
   [ -f "$f" ] || continue
   case " $allowed " in
@@ -259,7 +259,7 @@ if [ -f PRINCIPLES.md ] && ! out="$(python3 scripts/markers.py lint)"; then
   fail=1
 fi
 
-# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults, then checks this repo.
+# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults (an aged note that is not decided only warns), then checks this repo.
 bf=scripts/fixtures/budgets
 got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
 [ "$got" -eq 4 ] || { echo "lint: budget checker is inert — rejected $got of 4 bad fixtures"; fail=1; }
@@ -270,9 +270,24 @@ if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; th
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
 
+# Every markdown file earns its place (scripts/docs_guard.py): proves itself on 3 planted faults, then checks this repo.
+got=0; for d in scripts/fixtures/docs/bad-*/; do python3 scripts/docs_guard.py check --root "$d" >/dev/null 2>&1 || got=$((got+1)); done
+[ "$got" -eq 3 ] || { echo "lint: docs guard is inert — rejected $got of 3 bad fixtures"; fail=1; }
+python3 scripts/docs_guard.py check --root scripts/fixtures/docs/good >/dev/null || { echo "lint: docs guard rejects the good fixture"; fail=1; }
+if [ -f docs.tsv ] && ! out="$(python3 scripts/docs_guard.py check)"; then echo "$out"; fail=1; fi
+
+# Generators declare themselves (scripts/generators.py): the checker proves itself on 5 planted faults, then checks this repo.
+gf=scripts/fixtures/generators
+got=0; for d in "$gf"/bad-*/; do python3 scripts/generators.py check --root "$d" --quiet >/dev/null 2>&1 || got=$((got+1)); done
+[ "$got" -eq 5 ] || { echo "lint: generators checker is inert — rejected $got of 5 bad fixtures"; fail=1; }
+python3 scripts/generators.py check --root "$gf/good" --quiet >/dev/null || { echo "lint: generators checker rejects the good fixture"; fail=1; }
+if ! out="$(python3 scripts/generators.py check --quiet)"; then
+  echo "$out" | sed 's/^/lint: /'; fail=1
+fi
+
 # The PM-approval guard proves itself, and the shared script library must compile.
 node scripts/pm-approved-guard.cjs --self-test >/dev/null || { echo "lint: pm-approved guard is inert or wrong"; fail=1; }
-for f in scripts/score_lib.py; do
+for f in scripts/score_lib.py scripts/generators.py; do
   python3 -m py_compile "$f" 2>/dev/null || { echo "lint: $f does not compile"; fail=1; }
 done
 

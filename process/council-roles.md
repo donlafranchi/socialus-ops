@@ -7,7 +7,7 @@ Three members, one chair, one structured result. Members run in parallel on a ch
 ## Shared lens
 - Bootstrapped and member-funded; no VC or big money. Slow growth is fine; grassroots serves the mission.
 - No recommendation may assume outside capital, paid acquisition at scale, or growth-at-all-costs; the Skeptic flags any that does.
-- Settled, never re-raised: members are the investors and the only people paid out; SocialUs takes transaction income on member commerce. Legal questions go to counsel, not the PM.
+- Settled, never re-raised: SocialUs is built for its members' benefit, and members are not investors or payees; SocialUs takes transaction income on member commerce. Legal questions go to counsel, not the PM.
 - The operator is away Tue–Thu: anything needing a person midweek (other than child safety) fails.
 - PM context goes at the top of the facts brief *(2026-10-07)*: runway in months, monthly budget ceiling, the PM's hours, hard dates, named priorities. Every member re-weighs against them; the chair says which constraints changed the result. No constraint given means the brief says so; nobody invents one.
 

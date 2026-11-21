@@ -1,4 +1,4 @@
-> **SETTLED — do not re-raise:** members are the investors and the only people paid out. "Ownership, not profit-share" is rejected. Legal/securities questions about this go to `socialus-legal` for counsel and never come back to the PM as a decision. SocialUs takes transaction income; any 'no fee' language is retired.
+> **SETTLED — do not re-raise:** SocialUs is built for its members' benefit; members are not investors, owners or payees, and no return is promised. Legal questions go to `socialus-legal`, never back to the PM. SocialUs takes transaction income; 'no fee' language is retired.
 
 # Process absolutes
 
@@ -60,44 +60,6 @@ that's wrong. Record it at the scope the PM gave: a wider reading is labelled
 as a reading, because "the other side is patron", internal shorthand, was
 recorded as a user-facing rule that retired four others (2026-09-14).
 
-### newer-decision-wins
-
-**When a newer decision contradicts an older one, the newer one wins and work
-continues.** Do not stop to ask Don which is true — he answered when he made the
-newer one. Build to the newer ruling.
-
-**Structural, not remembered:**
-
-- **Rulings are live only.** A superseded entry, or the clause
-  of one that no longer holds, is deleted; git holds it. The same goes for a
-  superseded criterion, story sentence or scenario.
-- **The replacing entry names what it replaced in one tag** —
-  `[replaces 2026-09-22: exact old text]`, `[replaces F059: old text]` or
-  `[replaces path.md]` — enough for `git log -S`, and no more.
-- **`constraints/<tier>.md` is generated from that file**, so it holds no
-  conflict for an agent to find.
-- **`scripts/lint.sh` fails** on a decision that says it reverses or replaces
-  something and names nothing, and on a named thing still present. It proves
-  itself on `scripts/fixtures/markers/replaces-bad/` every run
-  ([guard-proves-itself]).
-
-**Found a contradiction nobody pruned?** If the dates differ, the newer wins:
-delete the old text, add the `[replaces …]` tag to the newer entry, and carry
-on. Pruning a supersession Don already made is bookkeeping, not a ruling.
-
-**The one case worth raising: two live decisions that conflict and neither
-replaces the other** — the same date, or rulings on different things that one
-case needs both of. Mark `[open-question owner=don raised=…]` where the
-conflict bites, with A/B and a recommendation; build everything it does not
-touch; **never block on a chat message.** **An agent never splits the
-difference:** a third position neither ruling took is a decision made without
-Don.
-
-**Which harm:** a decision made without Don, which is what splitting the
-difference is. **Dated failure:** `socialus-web` #220 (2026-09-26) asked Don to
-confirm a 2026-09-14 ruling over a 2026-09-13 one, a pattern the PM hits
-repeatedly; a guideline in the rulings file's header did not prevent it.
-
 ## Verification
 
 ### guard-proves-itself
@@ -142,7 +104,7 @@ the same job does.
 
 ## Adding an absolute
 
-Eight is a result, not a cap. A new absolute needs a dated failure that a guideline
+The count is a result, not a cap. A new absolute needs a dated failure that a guideline
 demonstrably didn't prevent, and must name which of the four harms it falls
 under. If it can't, it's a guideline. Prefer a precise permission to a broad
 ban, because "Code never writes to the planning repo" broke the first session

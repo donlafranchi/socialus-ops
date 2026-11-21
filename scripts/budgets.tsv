@@ -1,14 +1,11 @@
 # glob	KB	age-days — first match wins; - for none (process/WHERE-THINGS-GO.md)
-README.md	9	-
 reports/*	-	30
 scores/*	-	30
 audits/*	-	30
-process/research/*	-	30
 process/experiments/*	-	30
 process/ABSOLUTES.md	8	-
 process/*.md	20	-
 CLAUDE.md	8	-
 runs/*	-	-
-packs/*	-	-
 templates/*	4	-
 *.md	12	-
