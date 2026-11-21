@@ -1,6 +1,6 @@
 # How we work
 
-Written 2026-11-12 from the knowledge store. 99 live practices, about 5,102 tokens.
+Written 2026-11-21 from the knowledge store. 100 live practices, about 5,219 tokens.
 
 How to read it: each line is one live practice. Strictness is absolute (never broken), rule (broken only with
 a recorded reason) or guideline. Ring is adopt (how we work), trial (being tried), assess (being looked at)
@@ -22,7 +22,7 @@ or hold (not now). The id after each line is its record in the knowledge store.
 - **Before deciding anything, name 2 to 3 established precedents with links.** rule, adopt. Why: Most decisions were already made well elsewhere. (practice.look-first-precedents)
 - **New territory (a ruling, legal, privacy, money or member trust) goes to the PM as A/B/C before building.** rule, adopt. Why: A wrong guess there costs members or trust. (practice.new-territory-goes-as-abc)
 - **Every Issue and PR in the code repo carries a Path line, well-worn or new territory, with its precedents beside it.** rule, adopt. Why: It says who decides. (practice.path-line-on-every-issue-pr)
-- **Settled ground (members are the investors and only payees) is not re-raised; legal goes to counsel.** rule, adopt. Why: Re-arguing spends PM time. (practice.settled-not-reraised)
+- **Settled ground (SocialUs is built for its members' benefit; members are not investors or payees) is not re-raised; legal goes to counsel.** rule, adopt. Why: Re-arguing spends PM time. (practice.settled-not-reraised)
 - **On a well-worn path agents build the simplest fitting option; when unsure, lean toward deciding.** rule, adopt. Why: The PM's time is the scarcest resource. (practice.well-worn-decide-and-build)
 - **Decisions and patterns live in one database with history, queried instead of read as files.** rule, trial. Why: Hundreds of files went stale. (practice.knowledge-store)
 - **A ruling changed by member action carries an [evidence] tag; a judgement ruling carries none.** rule, assess. Why: Feedback's effect should be a scan. (practice.evidence-tag-on-member-driven-rulings)
@@ -73,6 +73,7 @@ or hold (not now). The id after each line is its record in the knowledge store.
 - **A PR changing what the reviewer checks needs the PM's pm-approved label; bookkeeping merges.** rule, adopt. Why: The review must not loosen itself. (practice.meta-change-needs-pm-approved)
 - **The PM never reads code; he looks at the live app after merge, only for words, look, scope or trade-offs.** rule, adopt. Why: Agents own correct; the PM owns right. (practice.pm-looks-at-running-app)
 - **Every PR opens with 'Don doesn't need to look' and why, or three phone steps and human-review.** rule, adopt. Why: The PM reads from a phone and has not read the ticket. (practice.pr-opens-look-or-not)
+- **Every PR opens with "PM doesn't need to review" and why, or where to look and what to expect, in plain, brief steps. A change that can't be explained simply and briefly needs the PM's review more, not less: the PR says so and carries the label anyway.** rule, adopt. Why: PM review is the bottleneck, so a simple, brief explanation keeps it quick. An agent that can't explain a change without jargon has found something worth the PM's attention. (practice.pr-review-call)
 - **The reviewer fixes rule violations in at most two loops; only judgement calls reach the PM.** rule, adopt. Why: A broken rule that reaches the PM is a missed review. (practice.reviewer-checks-rules-pm-gets-judgement)
 - **A UI, action or schema PR gets a GitHub review from a second session; a skipped one is labelled.** rule, adopt. Why: A gate judged by the party it constrains is waived. (practice.second-session-review)
 - **Who sees what is tested in CI per resource and persona, and the test proves itself on an open policy.** rule, adopt. Why: Leaks are invisible to screen tests. (practice.visibility-matrix)
