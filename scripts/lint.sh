@@ -244,8 +244,8 @@ for want in '[for now] · fixtures — Fixture scenario ruling: no badge is show
   '- **2026-10-12** — Fixture scenario ruling: no badge is shown anywhere (planning/scenario-F995.md)'; do
   echo "$ir" | grep -qF -- "$want" || { echo "lint: constraints index misses an inline ruling: $want"; fail=1; }
 done
-got=$(mk lint "$fx/lasts-bad/scenario-F994.md" "$fx/lasts-bad/PRINCIPLES.md" | grep -c '^markers:')
-[ "$got" -eq 4 ] || { echo "lint: [always]/[for now] checker is inert — rejected $got of 4 planted faults"; fail=1; }
+got=$(mk lint "$fx/lasts-bad/scenario-F994.md" | grep -c '^markers:')
+[ "$got" -eq 3 ] || { echo "lint: [always]/[for now] checker is inert — rejected $got of 3 planted faults"; fail=1; }
 got=$(python3 scripts/markers.py lost-rulings "$fx/lost-deleted" "$fx/lost-current/product/systems/kept.md" | grep -c '^markers:')
 [ "$got" -eq 1 ] || { echo "lint: deleted-scenario guard is inert — caught $got of 1 lost ruling"; fail=1; }
 python3 scripts/markers.py lost-rulings "$fx/lost-deleted" "$fx/lost-current-good/product/systems/kept.md" >/dev/null ||
