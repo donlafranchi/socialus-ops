@@ -3,13 +3,12 @@
 # link to a path that doesn't exist, a scenario whose SPEC runs over 40 lines, a
 # scenario section outside Story/Acceptance/Why/Not this, a scenario from F103
 # on that doesn't answer the value test, an absolute cited
-# by a slug that no longer exists, or a marker the markers checker rejects. Run
+# or a marker the markers checker rejects. Run
 # from the repo root.
 #
 # One script for both repos. In the method repo (ops-pattern) the project
 # checks find nothing to check and the fixtures still prove the checkers; in a
-# project repo (socialus-plan, which vendors this copy) everything runs. The
-# process absolutes live in the method repo, so a project finds them there.
+# project repo (socialus-plan, which vendors this copy) everything runs.
 #
 # `## Why` (added 2026-09-17) carries rationale — why this shape, what was
 # rejected, how it relates to a neighbouring scenario. It exists because 12 of
@@ -25,18 +24,6 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 fail=0
-
-if [ -f process/ABSOLUTES.md ]; then
-  METHOD="$ROOT"
-else
-  METHOD=""
-  for c in "${METHOD_REPO:-}" "$ROOT/../ops-pattern" "$HOME/Projects/ops-pattern"; do
-    [ -n "$c" ] && [ -f "$c/process/ABSOLUTES.md" ] && { METHOD="$(cd "$c" && pwd)"; break; }
-  done
-  [ -n "$METHOD" ] || { echo "lint: no ops-pattern checkout found — the process absolutes live there; set METHOD_REPO"; exit 1; }
-fi
-absolutes="$METHOD/process/ABSOLUTES.md"
-[ -f product/ABSOLUTES.md ] && absolutes="$absolutes product/ABSOLUTES.md"
 
 # 1. Every planning/*.md carries a status field.
 for f in planning/*.md; do
@@ -173,18 +160,7 @@ for f in CLAUDE.md STATUS.md PRINCIPLES.md UNPLACED.md IMAGINE.md process/*.md p
   fi
 done
 
-# 4. Every bracketed absolute-slug citation resolves to a heading in one of the
-#    two ABSOLUTES files. This is the point of slugs: a renamed or deleted
-#    absolute breaks the build instead of leaving a citation that reads fine and
-#    points at nothing.
-slugs="$(grep -hoE '^### [a-z][a-z0-9-]+$' $absolutes | sed 's/^### //')"
-for hit in $(grep -roE '\[[a-z][a-z0-9]*(-[a-z0-9]+)+\]' --include='*.md' --exclude-dir=fixtures . | sort -u); do
-  slug="${hit##*:[}"; slug="${slug%]}"
-  if ! printf '%s\n' "$slugs" | grep -qx "$slug"; then
-    echo "lint: [$slug] cites an absolute that does not exist — ${hit%%:*}"
-    fail=1
-  fi
-done
+# 4. (Retired 2026-11-25: absolutes live in the knowledge store, which is where a slug is checked.)
 
 # 5. Markers (process/LIVING-DOCS.md in ops-pattern): open
 #    questions, guard claims (full or partial), decision bindings and whether a

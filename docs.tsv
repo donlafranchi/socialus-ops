@@ -4,7 +4,6 @@ operations/staff-safety.md	generated from moderation records; staff read it away
 operations/go-live-paid-tools.md	a one-time prompt run at go-live, not a rule	2027-03-31
 process/PIPELINE.md	method not yet fully in the store; delete section by section as records cover it	2026-12-31
 process/PIPELINE-build.md	same: build method not yet fully in the store	2026-12-31
-process/ABSOLUTES.md	staging copy; delete when every absolute has a store record	2026-12-15
 process/WHERE-THINGS-GO.md	replaced by this file and the store `how docs` practice; delete once that practice says it	2026-12-15
 process/LIVING-DOCS.md	pattern doc; move to a store pattern record and delete	2026-12-31
 process/PERFORMANCE.md	move to store practices and delete	2026-12-31
