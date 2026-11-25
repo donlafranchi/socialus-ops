@@ -8,7 +8,7 @@
 #
 # One script for both repos. In the method repo (ops-pattern) the project
 # checks find nothing to check and the fixtures still prove the checkers; in a
-# project repo (socialus-plan, which vendors this copy) everything runs. The Absolutes live in the knowledge store, not a file.
+# project repo (socialus-plan, which vendors this copy) everything runs.
 #
 # `## Why` (added 2026-09-17) carries rationale — why this shape, what was
 # rejected, how it relates to a neighbouring scenario. It exists because 12 of
