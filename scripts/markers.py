@@ -86,9 +86,9 @@ TRIGGER = re.compile(r"(?i)\bnever\b|\bwon[’']?t\b|\balways\b|\bno\b[^.]{0,60}
 
 
 def lasts(path, line):
+    m = LASTS.search(re.sub(B + r"replaces [^\]]*\]", "", line))
     if os.path.basename(path) == PRINCIPLES:
-        return "always"
-    m = LASTS.search(line)
+        return m.group(1) if m else "for now"  # only never-extractive is [always]; every other principle can change
     return m.group(1) if m else None
 
 
@@ -103,10 +103,8 @@ def lasts_errors(path):
         if DECISION.match(l):
             close(block)
             block = (n, l, [l])
-            if len(LASTS.findall(l)) > 1:
+            if len(LASTS.findall(re.sub(B + r"replaces [^\]]*\]", "", l))) > 1:
                 errs.append(f"{path}:{n}: a ruling is `[always]` or `[for now]`, not both")
-            if os.path.basename(path) == PRINCIPLES and "[for now]" in l:
-                errs.append(f"{path}:{n}: a principle is always; a `[for now]` decision is a dated ruling in the doc it governs")
         elif block and l.startswith("  "):
             block[2].append(l)
     close(block)
