@@ -188,6 +188,9 @@ got=$(MARKERS_PRINCIPLES="$fx/derives-bad/PRINCIPLES.md" mk lint "$fx"/derives-b
 [ "$got" -eq 4 ] || { echo "lint: derives marker checker is inert — rejected $got of 4 bad fixture lines"; fail=1; }
 MARKERS_PRINCIPLES="$fx/derives-good/PRINCIPLES.md" mk lint "$fx"/derives-good/scenario-F990.md >/dev/null ||
   { echo "lint: derives marker checker rejects the good fixture"; fail=1; }
+got=$(mk lint "$fx"/direction-bad/scenario-F988.md | grep -c '^markers:')
+[ "$got" -eq 4 ] || { echo "lint: direction marker checker is inert — rejected $got of 4 bad fixture lines"; fail=1; }
+mk lint "$fx"/direction-good/scenario-F989.md >/dev/null || { echo "lint: direction marker checker rejects the good fixture"; fail=1; }
 cov=$(MARKERS_SOURCES="$fx/good.md" mk coverage F999; MARKERS_SOURCES="$fx/good.md" mk coverage --summary F999)
 echo "$cov" | grep -q '^- \*\*1\*\* — \[' && echo "$cov" | grep -q '^- \*\*2\*\* — \*\*partial\*\*' &&
   echo "$cov" | grep -q '1 of 2 covered · \*\*partial: 2\*\*' ||
