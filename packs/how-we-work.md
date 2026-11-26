@@ -1,6 +1,6 @@
 # How we work
 
-Written 2026-11-21 from the knowledge store. 100 live practices, about 5,219 tokens.
+Written 2026-11-26 from the knowledge store. 99 live practices, about 5,166 tokens.
 
 How to read it: each line is one live practice. Strictness is absolute (never broken), rule (broken only with
 a recorded reason) or guideline. Ring is adopt (how we work), trial (being tried), assess (being looked at)
@@ -72,7 +72,6 @@ or hold (not now). The id after each line is its record in the knowledge store.
 - **Whoever does the work merges it on green; the PM is held only for what he must judge.** rule, adopt. Why: Waiting on him parks finished work. (practice.merge-on-green-self)
 - **A PR changing what the reviewer checks needs the PM's pm-approved label; bookkeeping merges.** rule, adopt. Why: The review must not loosen itself. (practice.meta-change-needs-pm-approved)
 - **The PM never reads code; he looks at the live app after merge, only for words, look, scope or trade-offs.** rule, adopt. Why: Agents own correct; the PM owns right. (practice.pm-looks-at-running-app)
-- **Every PR opens with 'Don doesn't need to look' and why, or three phone steps and human-review.** rule, adopt. Why: The PM reads from a phone and has not read the ticket. (practice.pr-opens-look-or-not)
 - **Every PR opens with "PM doesn't need to review" and why, or where to look and what to expect, in plain, brief steps. A change that can't be explained simply and briefly needs the PM's review more, not less: the PR says so and carries the label anyway.** rule, adopt. Why: PM review is the bottleneck, so a simple, brief explanation keeps it quick. An agent that can't explain a change without jargon has found something worth the PM's attention. (practice.pr-review-call)
 - **The reviewer fixes rule violations in at most two loops; only judgement calls reach the PM.** rule, adopt. Why: A broken rule that reaches the PM is a missed review. (practice.reviewer-checks-rules-pm-gets-judgement)
 - **A UI, action or schema PR gets a GitHub review from a second session; a skipped one is labelled.** rule, adopt. Why: A gate judged by the party it constrains is waived. (practice.second-session-review)
