@@ -1,3 +1,3 @@
 - **2026-09-27 — Replaces what is gone, and cites the evidence that changed it.** [binds tiers=code surfaces=x build=none] [replaces 2026-09-02: A ruling deleted from this file] [replaces F993: retired sentence] [replaces planning/never-here.md] [evidence 2026-09-26 from=report#12: three members could not find the waitlist]
 - **2026-09-27 — If agent search replaces keyword search, nothing is superseded.** [binds tiers=none] [replaces none]
-- **2026-09-27 — Don's judgement, the normal case: no evidence tag and no supersession.** [binds tiers=none]
+- **2026-09-27 — the PM's judgement, the normal case: no evidence tag and no supersession.** [binds tiers=none]

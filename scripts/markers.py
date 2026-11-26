@@ -840,7 +840,7 @@ def main():
         print("Oldest first. Rule and grammar: `ops-pattern/process/PIPELINE.md` § Open questions.\n")
         if not good:
             print("None marked.")
-        labels = {"don": "Waiting on Don", "cowork": "Cowork owes an answer", "code": "Code owes an answer"}
+        labels = {"don": "Waiting on the PM", "cowork": "Cowork owes an answer", "code": "Code owes an answer"}
         for owner in OWNERS:
             mine = [g for g in good if g[2][0] == owner]
             if mine:

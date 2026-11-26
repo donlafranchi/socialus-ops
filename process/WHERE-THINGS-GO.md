@@ -8,7 +8,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 |---|---|---|---|---|
 | Principle: the why behind the Charter and rulings | `PRINCIPLES.md` (the lint fails any non-principle and names its home) | PM rules; planning agent words it | Reworded in place as rulings sharpen it; old wording pruned (15k) | Dated rulings, copy, criteria, process, history |
 | Never-break rules | the knowledge store (strength: absolute); `product/ABSOLUTES.md` in the plan repo until its last rule is there | PM | Four-harms test admits (3k) | Preferences, feature rules |
-| Dated ruling with `[binds]`; one that says never / won't / always / anywhere also says `[always]` (every version) or `[for now]` (revisited at the next release). In `PRINCIPLES.md` a principle is `[for now]` unless tagged: only never-extractive is `[always]` (Don, 2026-11-21) | Under `## Rulings` in the scenario it governs; moves verbatim to the spine or system doc when the scenario ships (the lint blocks deleting it first). A ruling spanning many features goes to the area's spine doc or becomes a principle, never one scenario | PM rules; planning agent records | Words never edited; deleted when superseded (its scope's budget) | Rationale essays, copy strings, who-said-it |
+| Dated ruling with `[binds]`; one that says never / won't / always / anywhere also says `[always]` (every version) or `[for now]` (revisited at the next release). In `PRINCIPLES.md` a principle is `[for now]` unless tagged: only never-extractive is `[always]` (the PM, 2026-11-21) | Under `## Rulings` in the scenario it governs; moves verbatim to the spine or system doc when the scenario ships (the lint blocks deleting it first). A ruling spanning many features goes to the area's spine doc or becomes a principle, never one scenario | PM rules; planning agent records | Words never edited; deleted when superseded (its scope's budget) | Rationale essays, copy strings, who-said-it |
 | What a thing is, and its status | `product/` spine: nouns, verbs, surfaces | planning agent | Fixed the session a mismatch is seen (30k each) | A second description |
 | How a thing works | `product/systems/` | planning agent | `trim-product-docs` (10k each) | Whether it ships |
 | Acceptance criteria | the scenario file | planning agent | Amended in place; deleted on ship (8k) | Restated rulings |
@@ -26,7 +26,7 @@ Read this every session, before you write anything down. **Each kind of thing ha
 | Handoff state | `handoff/state.md`, one file | Dispatch | Overwritten at each handoff the PM asks for | Anything dated |
 | Legal, entity, securities | the legal repo | counsel track | Its own rules | Product repos, beyond the SETTLED banner |
 | Palette, screens, mockups | the design repo | design | — | Product rulings |
-| **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; a loose file goes in the repo it's about, never outside the repos (Don, 2026-11-01) | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
+| **Junk drawer** | `UNPLACED.md`: one dated line with `[unplaced raised= owner=]`; a loose file goes in the repo it's about, never outside the repos (the PM, 2026-11-01) | whoever adds it | Drained at each handoff; lint fails after 14 days or 20 lines | Anything with a home |
 
 ## Generated: human docs, never edited
 

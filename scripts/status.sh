@@ -303,7 +303,7 @@ if risks:
 
 # ------------------------------------------------------------ open questions
 # Generated from inline `[open-question]` markers. Until 2026-09-27 this was a
-# Waiting-on-Don list carried forward verbatim and never re-verified — a
+# Waiting-on-PM list carried forward verbatim and never re-verified — a
 # register, and it had gone stale. The marker's owner=don rows replace it.
 code_arg = ["--code", os.environ["STATUS_CODE"]] if os.environ.get("STATUS_CODE") else []
 for mode, title in (("index", "Open questions"), ("coverage", "Guard coverage"), ("building", "Is `building` backed by code?"), ("gating", "Gating launch")):
@@ -361,7 +361,7 @@ w()
 if counts.get("draft"):
     unverified.append(
         f"**The {counts['draft']} drafts.** Status alone does not say which are waiting\n"
-        "  on Don and which are simply unfinished.")
+        "  on the PM and which are simply unfinished.")
 if not unverified:
     w("Nothing. Every claim above came from a source this run read.")
 else:

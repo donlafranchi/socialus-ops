@@ -2,7 +2,7 @@
 
 **As of 2026-10-08** · Source: hand-written · Maintained by: hand (set by tend-docs from the last commit date; the owner confirms on next edit)
 
-How a product keeps itself fast with a PM who does not read code (Don, 2026-10-08: "I want this as a system"). Nothing here belongs to one product; SocialUs is the first. Its pieces live in `socialus-web` (`evals/speed/`, `src/lib/speed/`, `.github/workflows/smoke-live.yml`).
+How a product keeps itself fast with a PM who does not read code (the PM, 2026-10-08: "I want this as a system"). Nothing here belongs to one product; SocialUs is the first. Its pieces live in `socialus-web` (`evals/speed/`, `src/lib/speed/`, `.github/workflows/smoke-live.yml`).
 
 ## What "fast" means
 
@@ -44,11 +44,11 @@ A red reading is measured twice more and the middle one is used, so one bad run 
 
 ## Who acts
 
-Agents. A red night is a bug: the next loop picks up the issue, diagnoses from the table (requests, waterfall depth, long tasks, whether the route was prefetched, the slowest request and its cache and region), fixes or files the cause, and re-baselines. **Don is told about red only** (the dashboard, or a message from dispatch); amber and green are never a message. A change that makes a screen slower on purpose (a richer Page) is Don's call, as any trade-off is.
+Agents. A red night is a bug: the next loop picks up the issue, diagnoses from the table (requests, waterfall depth, long tasks, whether the route was prefetched, the slowest request and its cache and region), fixes or files the cause, and re-baselines. **The PM is told about red only** (the dashboard, or a message from dispatch); amber and green are never a message. A change that makes a screen slower on purpose (a richer Page) is the PM's call, as any trade-off is.
 
 ## Load simulation (phase 2)
 
-Question Don asked: what happens when many people use the same Page at once, and what breaks first?
+Question the PM asked: what happens when many people use the same Page at once, and what breaks first?
 
 **Built 2026-11-12** (socialus-web #1264): Actions, *Load simulation*, or `npm run load` on the Mac. It runs on the CI runner's own local stack rather than Docker Desktop, so a cloud session or a phone can start it. First run: rendering broke first, at 200 viewers of one Page; the database never did.
 
@@ -62,4 +62,4 @@ Question Don asked: what happens when many people use the same Page at once, and
 
 ## Why it is built this way
 
-The first tap-speed run on 2026-10-08 found the bug Don described within minutes: opening a Page took 2.2 s and the address only changed at 2.2 s, because the Page had no loading screen and every visitor downloaded a 480 KB map library through the owner's composer. Nothing in the existing checks could have seen it: they test what a screen shows, not how long a tap takes.
+The first tap-speed run on 2026-10-08 found the bug the PM described within minutes: opening a Page took 2.2 s and the address only changed at 2.2 s, because the Page had no loading screen and every visitor downloaded a 480 KB map library through the owner's composer. Nothing in the existing checks could have seen it: they test what a screen shows, not how long a tap takes.
