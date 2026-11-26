@@ -1,6 +1,6 @@
 # Review a method against how we work
 
-Written 2026-11-21 from the knowledge store (practice.review-a-method). Use with how-we-work.md.
+Written 2026-11-26 from the knowledge store (practice.review-a-method). Use with how-we-work.md.
 
 **As of 2026-11-10** · Source: socialus-plan scenario F128, criterion 4 · Maintained by: hand (research note; companion to the pack draft; deleted at 30 days)
 
