@@ -25,7 +25,7 @@ def check(root, today=None):
             fails.append(f'docs.tsv: "{f[0]}" needs a reason and a review-by (or -)')
             continue
         listed[f[0]] = f[2].strip()
-    files = tracked(root) if os.path.isdir(os.path.join(root, '.git')) else sorted(
+    files = tracked(root) if os.path.exists(os.path.join(root, '.git')) else sorted(
         os.path.relpath(os.path.join(d, n), root) for d, _, ns in os.walk(root) for n in ns if n.endswith('.md'))
     for f in files:
         if f not in listed:
