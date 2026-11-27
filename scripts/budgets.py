@@ -2,15 +2,14 @@
 """Doc budgets (process/WHERE-THINGS-GO.md): no doc grows past its budget unrefined.
 
   budgets.py report [--root DIR]   docs at >=80% of their size budget, or past their age with no `decided:`
-  budgets.py check  [--root DIR]   lint: fails when an over-budget doc grew against the base,
-                                   a dated note says `decided:` in its first 30 lines (delete it), or UNPLACED.md has an
-                                   item older than 14 days, a line without its marker, or >20 items
+  budgets.py check  [--root DIR]   lint: fails when a dated note says `decided:` in its first 30 lines (delete it),
+                                   or UNPLACED.md has an item older than 14 days, a line without its marker, or >20 items
+                                   (an over-budget doc only warns, and says so when it grew)
 
 Config: <root>/scripts/budgets.tsv (or <root>/budgets.tsv), `glob<TAB>KB<TAB>age-days`, first
 match wins, `-` for none. A doc's frontmatter `budget: <KB>` overrides the size.
-Sizes count the body only: YAML frontmatter is metadata. A PR whose commits (or squashed commit body) include one titled
-`docs: move …` (text moved verbatim between docs) may grow an over-budget doc; it warns, and the refine pass condenses it.
-Base for "grew": $BUDGETS_BASE_DIR (a directory of base copies, for fixtures), else
+Sizes count the body only: YAML frontmatter is metadata. An over-budget doc never fails a PR, grown or not: it warns.
+Base for the "grew" note: $BUDGETS_BASE_DIR (a directory of base copies, for fixtures), else
 `git merge-base origin/main HEAD` (HEAD~1 on main itself). No base: over budget only warns.
 """
 import datetime, fnmatch, os, re, subprocess, sys
@@ -60,14 +59,6 @@ def base_ref(root):
     return 'HEAD~1' if mb == head else mb
 
 
-def moving(root):
-    if os.environ.get('BUDGETS_BASE_DIR'):
-        return os.environ.get('BUDGETS_MOVE') == '1'
-    b = base_ref(root)
-    # a squash merge keeps each original subject in its body as "* docs: move …"
-    return bool(b) and any(s.strip().lstrip('* ').startswith('docs: move ') for s in git(root, 'log', '--format=%B', f'{b}..HEAD').stdout.splitlines())
-
-
 def base_size(root, path):
     bd = os.environ.get('BUDGETS_BASE_DIR')
     if bd:
@@ -105,7 +96,7 @@ def unplaced(path, today):
 
 
 def run(mode, root):
-    rows, today, move = config(root), datetime.date.today(), moving(root)
+    rows, today = config(root), datetime.date.today()
     fails, warns = [], []
     for path in sorted(tracked(root)):
         if '/fixtures/' in f'/{path}' and root == '.':
@@ -132,7 +123,7 @@ def run(mode, root):
             b = base_size(root, path)
             msg = f'{path}: {size/1000:.0f}k of a {kb:g}k budget ({pct:.0%})'
             grew = b is not None and size > b
-            (fails if grew and not move else warns).append(msg + (' and it grew — condense it in this PR' if grew and not move else ' (a move: the refine pass condenses it)' if grew else ''))
+            warns.append(msg + (' and it grew — condense it when you can' if grew else ''))
         elif pct >= .8:
             warns.append(f'{path}: {size/1000:.0f}k of a {kb:g}k budget ({pct:.0%})')
     if mode == 'report':

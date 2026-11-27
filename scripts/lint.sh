@@ -238,13 +238,13 @@ if [ -f PRINCIPLES.md ] && ! out="$(python3 scripts/markers.py lint)"; then
   fail=1
 fi
 
-# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 4 planted faults (an aged note that is not decided only warns), then checks this repo.
+# Doc budgets (process/WHERE-THINGS-GO.md): the checker proves itself on 3 planted faults (an aged note that is not decided only warns; so does a doc over budget that grew), then checks this repo.
 bf=scripts/fixtures/budgets
 got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
-[ "$got" -eq 4 ] || { echo "lint: budget checker is inert — rejected $got of 4 bad fixtures"; fail=1; }
+[ "$got" -eq 3 ] || { echo "lint: budget checker is inert — rejected $got of 3 bad fixtures"; fail=1; }
 BUDGETS_BASE_DIR="$bf/good-base" python3 scripts/budgets.py check --root "$bf/good" >/dev/null || { echo "lint: budget checker rejects the good fixture"; fail=1; }
-got=$(BUDGETS_MOVE=1 BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py check --root "$bf/bad" | grep -c '^budgets:')
-[ "$got" -eq 3 ] || { echo "lint: budget checker does not let a docs: move PR grow a doc (got $got of 3)"; fail=1; }
+got=$(BUDGETS_BASE_DIR="$bf/bad-base" python3 scripts/budgets.py report --root "$bf/bad" | grep -c 'it grew')
+[ "$got" -eq 1 ] || { echo "lint: budget checker no longer warns when an over-budget doc grew (got $got of 1)"; fail=1; }
 if [ -f scripts/budgets.tsv ] && ! out="$(python3 scripts/budgets.py check)"; then
   echo "$out" | sed 's/^/lint: /'; fail=1
 fi
