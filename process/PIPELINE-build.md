@@ -128,7 +128,7 @@
 - **Owner:** the Code loop, light tier; migrations strictly in order (`DISPATCH.md` item 3).
 - **Order:** apply the batch's one migration with `gh workflow run apply.yml -R donlafranchi/socialus-web --ref <branch> -f confirm=apply` and confirm it in the database (agents do this until the first real member signs up; then the PM does) → `Migrations applied` turns green → `gh pr merge --auto --squash` → Vercel deploys main → deploy-health green → `git worktree remove` for any per-branch worktree, `.next` deleted.
 - **Gate:** required checks (ruleset), deploy-health (`/api/health/db`, `/api/health/schema`).
-- **On failure:** `applied` red → apply first. deploy-health red → a fix-forward PR labelled `launch-blocking`, which displaces everything. A production rollback asks the PM ([production-asks-don]).
+- **On failure:** `applied` red → apply first. deploy-health red → a fix-forward PR labelled `launch-blocking`, which displaces everything. A production rollback asks the PM ([production-asks-pm]).
 
 ### 14 · Live smoke check (new gate)
 - **Purpose:** confirm on socialus.org that what passed locally works live.

@@ -6,7 +6,7 @@ This repo is read and written by agents, not maintained by people. **A fact live
 
 ### Generated on demand
 - **Problem.** Each question spanning the project was answered by a fresh sweep, and the one kept answer, `WHERE-IT-IS.md` (by hand, 2026-09-15), was stale the moment anything merged.
-- **Does.** `markers.py` scans and prints the answer. A result is committed only when something must read it without running a script: `STATUS.md` for Don on a phone, `constraints/` for an agent at session start.
+- **Does.** `markers.py` scans and prints the answer. A result is committed only when something must read it without running a script: `STATUS.md` for the PM on a phone, `constraints/` for an agent at session start.
 - **Every generated doc has a skill or script that runs it locally,** because on 2026-10-10 `STATUS.md` sat three days stale while Actions could not start and `status.sh` could not compose, each failure hiding the other.
 - **Not when.** The answer is judgement, not facts: `ROADMAP.md`'s sequencing.
 

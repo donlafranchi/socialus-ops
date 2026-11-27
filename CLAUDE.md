@@ -1,4 +1,4 @@
-> **SETTLED — do not re-raise:** SocialUs is built for the primary benefit of its members, the people who use it. Members are not investors, owners or payees, and no money return is promised; any future financial return is open, and its legal side goes to `socialus-legal` for counsel and never comes back to the PM as a decision (Don, 2026-11-18, replaces "members are the investors"). SocialUs takes transaction income; any 'no fee' language is retired.
+> **SETTLED — do not re-raise:** SocialUs is built for the primary benefit of its members, the people who use it. Members are not investors, owners or payees, and no money return is promised; any future financial return is open, and its legal side goes to `socialus-legal` for counsel and never comes back to the PM as a decision (the PM, 2026-11-18, replaces "members are the investors"). SocialUs takes transaction income; any 'no fee' language is retired.
 
 # socialus-ops — the method
 

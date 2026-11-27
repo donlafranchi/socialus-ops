@@ -52,7 +52,7 @@ for f in planning/scenario-*.md; do
   fi
 done
 
-# 1c. The value test (Don, 2026-10-05): every scenario from F103 on answers its
+# 1c. The value test (the PM, 2026-10-05): every scenario from F103 on answers its
 #     six questions in `## Why`, one line each, led by these exact labels.
 #     F102 and earlier are grandfathered — they were approved before the test.
 VALUE_TEST_FROM=103

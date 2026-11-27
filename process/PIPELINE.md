@@ -6,11 +6,11 @@ Five kinds of work, because bugs, UX changes and process fixes forced through th
 
 | Kind | What it is | Opened by | Approval | Tracked as |
 |---|---|---|---|---|
-| **Scenario** | New feature or behavior a person experiences | Cowork, from IMAGINE or Don | Cowork approves the scenario; Don rules only on scope or a contested call | `planning/scenario-*.md` → Issues labeled `scenario` |
-| **Change** | UX/UI polish, copy, layout, a small tweak to existing behavior | Anyone | User-facing copy: Don ([public-is-draft]). Otherwise none | Issue labeled `change` |
+| **Scenario** | New feature or behavior a person experiences | Cowork, from IMAGINE or the PM | Cowork approves the scenario; the PM rules only on scope or a contested call | `planning/scenario-*.md` → Issues labeled `scenario` |
+| **Change** | UX/UI polish, copy, layout, a small tweak to existing behavior | Anyone | User-facing copy: the PM ([public-is-draft]). Otherwise none | Issue labeled `change` |
 | **Bug** | Something built doesn't do what its scenario or the code intends | Anyone | None. `launch-blocking` label if it is | Issue labeled `bug` |
-| **Process** | A change to this repo's structure, rules, or lint — or to a skill in `~/Projects/skills` | Cowork, Code or Don | Names the failure with a dated example, as the rule's "because" | A PR in the repo that owns the file. Cowork merges |
-| **Chore** | Dependencies, config, deploy, tooling — nothing a member sees | Code | None unless it touches production ([production-asks-don]) | Issue labeled `chore` |
+| **Process** | A change to this repo's structure, rules, or lint — or to a skill in `~/Projects/skills` | Cowork, Code or the PM | Names the failure with a dated example, as the rule's "because" | A PR in the repo that owns the file. Cowork merges |
+| **Chore** | Dependencies, config, deploy, tooling — nothing a member sees | Code | None unless it touches production ([production-asks-pm]) | Issue labeled `chore` |
 
 ## Paths
 
@@ -22,7 +22,7 @@ The build pipeline, fifteen steps from intake to the PM's look, and which steps 
 
 - Anyone may open an Issue in `socialus-web`, including Cowork via Dispatch. Only Code commits code there.
 - A scenario's **spec** is ≤40 lines across three sections: Story, Acceptance, Not this. If the spec needs more, it's two scenarios.
-- **Every scenario from F103 on answers the value test in `## Why`** (Don, 2026-10-05; the six questions and a worked example: the project's `product/foundation/value-test.md`). One line each, led by its label: **Lives somewhere better?**, **Only locals know?**, **Gets people together?**, **Stays fresh on its own?**, **Who keeps it current?**, **Better as more people join?** `scripts/lint.sh` fails a new scenario missing any; F102 and earlier are grandfathered. It answers *should this exist here at all* before anyone writes acceptance criteria for it, because business hours were built because they were possible, cluttered the Page and were hidden (2026-10-05).
+- **Every scenario from F103 on answers the value test in `## Why`** (the PM, 2026-10-05; the six questions and a worked example: the project's `product/foundation/value-test.md`). One line each, led by its label: **Lives somewhere better?**, **Only locals know?**, **Gets people together?**, **Stays fresh on its own?**, **Who keeps it current?**, **Better as more people join?** `scripts/lint.sh` fails a new scenario missing any; F102 and earlier are grandfathered. It answers *should this exist here at all* before anyone writes acceptance criteria for it, because business hours were built because they were possible, cluttered the Page and were hidden (2026-10-05).
 - A fourth section, **Why**, carries rationale (why this shape, what was rejected, the neighbouring scenario). **It is not counted toward the 40 lines**: the cap keeps a spec small enough to hold in your head, and rationale is not spec.
 - A scenario says what it needs from a native platform — push, a deep link, the camera or photos, location, background work, a native sign-in, a store review topic — with a `[platform …]` marker, or `[platform none]`. Required from 2026-09-29; `process/LIVING-DOCS.md` § Platform readiness. When `sync` deletes a shipped scenario, its markers move to the spine entry for what shipped.
 - If a Change starts needing acceptance checks, it's a Scenario. If a Bug fix changes what a scenario promises, it's a Change to the scenario first.
@@ -43,7 +43,7 @@ A claim that something works is worth what the check behind it was worth. So say
 Word for word. It applies to every agent and every decision, not only UI.
 
 ```
-DECISION RULE (2026-10-04, Don)
+DECISION RULE (2026-10-04, the PM)
 1. Look first: before designing or deciding anything, find what established platforms do for this exact use case. Name 2–3 precedents with links (e.g. Google, Apple HIG, Airbnb, Meetup, Yelp, Stripe, Linear).
 2. Choose: pick the most relevant and elegant option for SocialUs, the simplest one that fits our rulings.
 3. Well-worn path: if a clear, established pattern exists, decide and build it yourself. Label the Issue/PR "Path: well-worn", list the precedents, and don't wait for the PM.
@@ -56,11 +56,11 @@ DECISION RULE (2026-10-04, Don)
 
 ## Decision rights
 
-**The PM decides only ideas, what is in each version (the MVP of a feature), and words and look-and-feel.** Agents decide the rest by the soul and defaults (`PRINCIPLES.md`) and the well-worn path, record a dated ruling where it governs, and report what they chose; **only new territory that conflicts with the soul goes to the PM**, as A/B/C (2026-10-25, because most open questions were ones the soul already answered). A PM-owned open question the soul answers is decided by whoever finds it. Money, legal and entity go to counsel. Beside the absolutes, not over them: copy stays a draft until approved ([public-is-draft]); production asks first ([production-asks-don]).
+**The PM decides only ideas, what is in each version (the MVP of a feature), and words and look-and-feel.** Agents decide the rest by the soul and defaults (`PRINCIPLES.md`) and the well-worn path, record a dated ruling where it governs, and report what they chose; **only new territory that conflicts with the soul goes to the PM**, as A/B/C (2026-10-25, because most open questions were ones the soul already answered). A PM-owned open question the soul answers is decided by whoever finds it. Money, legal and entity go to counsel. Beside the absolutes, not over them: copy stays a draft until approved ([public-is-draft]); production asks first ([production-asks-pm]).
 
 ## Who checks what
 
-**Agents own whether a change is correct. Don owns whether it is right.** Correct is testable — it compiles, the tests pass, the migration applies, the rule is enforced. Right is a judgment about the product, and no test has an opinion about it.
+**Agents own whether a change is correct. The PM owns whether it is right.** Correct is testable — it compiles, the tests pass, the migration applies, the rule is enforced. Right is a judgment about the product, and no test has an opinion about it.
 
 The PM reads no code and nothing asks them to; they look at the running page after merge (from the freeze, the labelled preview).
 
@@ -68,7 +68,7 @@ The PM reads no code and nothing asks them to; they look at the running page aft
 
 - **`Path: new territory`** that conflicts with the soul, as A/B/C *before* building; **tone**, new or changed copy ([public-is-draft]); **a deviation** from the scenario or a criterion with a judgment word (*clear*, *easy*).
 
-**`Path: well-worn` work that has passed the reviewer's first pass merges without him** — the PR opens "Don doesn't need to look" and lists the precedents.
+**`Path: well-worn` work that has passed the reviewer's first pass merges without him** — the PR opens "PM doesn't need to review" and lists the precedents.
 
 **He does not look at:** migrations with no visible effect, tests, refactors, docs, infrastructure, dependency bumps.
 
@@ -76,7 +76,7 @@ The PM reads no code and nothing asks them to; they look at the running page aft
 
 Every PR opens with one of exactly two things, before anything else in the body:
 
-1. **"Don doesn't need to look."** — and one line saying why not.
+1. **"PM doesn't need to review."** — and one line saying why not.
 2. **The page on socialus.org (after merge; from the freeze, the labelled preview), three numbered steps, and what he should expect to see.** Label the PR `human-review`. Only after the reviewer's first pass below.
 
 The steps are written for someone holding a phone who has not read the ticket: *"Open the link, tap Create, choose Business."* Not *"navigate to the composer route."* No file paths, no function names, no ticket numbers, no jargon.
@@ -85,7 +85,7 @@ The steps are written for someone holding a phone who has not read the ticket: *
 
 ### A reviewer's first pass, before the PM sees it
 
-*(Don, 2026-10-04.)* **Before a UI PR merges or is labelled `human-review`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the decision rule the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
+*(the PM, 2026-10-04.)* **Before a UI PR merges or is labelled `human-review`, a separate reviewer agent that did not write the code runs a first pass** (extended to every UI PR by the decision rule the same day). The PM then reviews judgement calls only, not rule violations: a broken rule that reaches him is a review that did not happen.
 
 - **Who.** A fresh agent with no part in the build: a subagent or another session, never the build agent checking its own work, because a gate judged by the party it constrains is waived (the self-declared accessibility review was marked N/A). It reads the diff, the Issue and its recorded precedents, the cited scenario, `constraints/code.md` and the project's copy and design rules, and runs the preview.
 - **Screenshots on demand, not per PR** *(the PM, 2026-10-27)*: the full matrix (every route, every persona, six widths) runs from Actions → CI → Run workflow → full, for a UX redesign. A PR's reviewer reads the diff and runs the app when a screen changed; nobody captures pictures for every PR, because the pictures were taken for two weeks and looked at once.
@@ -113,12 +113,12 @@ Nothing blocks it: a gate the PM can't bypass on his own repo is worse than the 
 - **Do the mechanical work.** Merges, env vars, issues and reruns get done with the tools at hand. Only judgement goes to the PM; anything the PM must do at the Mac is a process bug.
 - **No speculative rulings.** Prune decisions that are not a current concern and don't ask him to rule on them. Ruling wording: platform first, then members; never / won't / always carries `[always]` or `[for now]`.
 - **Repo boundaries.** plan = features, ops = method, web = code, legal = private legal, entity and anonymity work. Legal work never goes in plan or ops, and no personal names appear in a public repo (currently `socialus-web`); plan and ops keep them until they go public, when they are scrubbed.
-- **Migrations.** Each is applied from the apply workflow by branch name, in order, and confirmed in the database before the next. Until the first real (non-builder) member signs up, agents apply them (the time-boxed exception under `[production-asks-don]`, 2026-10-06); after that, the PM does.
+- **Migrations.** Each is applied from the apply workflow by branch name, in order, and confirmed in the database before the next. Until the first real (non-builder) member signs up, agents apply them (the time-boxed exception under `[production-asks-pm]`, 2026-10-06); after that, the PM does.
 - **Through Dispatch** (modes, copy-paste, scheduled runs, folders, the weekly tidy): `process/DISPATCH.md`.
 
 ## Build rules — the Mac's load
 
-*(Don, 2026-10-04; new Mac 2026-11-11.)* Mac only: cloud sessions don't share a machine, so nothing below caps them. The Mac stays a build host.
+*(the PM, 2026-10-04; new Mac 2026-11-11.)* Mac only: cloud sessions don't share a machine, so nothing below caps them. The Mac stays a build host.
 
 - **At most 4 changes building or testing at once.**
 - **Playwright runs with `--workers=4`.**
@@ -201,6 +201,6 @@ The PM's dated process rulings for SocialUs, moved verbatim from the planning re
 
 - **2026-10-25 — Decision rights: the PM decides only ideas, what is in each version, and words and look-and-feel; agents decide the rest by the soul and defaults, record it and report; only new territory that conflicts with the soul goes to the PM.** The PM approved the plan 2026-10-25. [always] [binds tiers=planning,code surfaces=process build=none]
 - **2026-10-11 — The pipeline guard is trimmed (option A): bookkeeping meta PRs self-merge on green; the PM owns two numbers, docs current and overrule rate; the other three (main stays green, reviews happen, nothing closes half-built) are Dispatch alarms that reach the PM only after two red readings in a row.** The PM, 2026-10-11, `socialus-ops` #106. [replaces none] [binds tiers=planning surfaces=process,dashboard build=none]
-- **2026-09-12 — A change that cannot be described in three plain steps needs Don's eyes more, not less.** The PR says so and carries the label anyway. An agent unable to explain a change without jargon has found something worth his attention, not grounds to skip him.
-- **2026-09-12 — Spine entries use labelled slots from a closed set: Now · Later · Blocked · Trigger · Never.** Don: *"minimize prose, maximize formatting for readability and differentiation."* One line when one line says it; slots when an entry carries more. **The closed vocabulary is the anti-sprawl mechanism** — a thing fitting none of the five slots is either systems-doc detail or a `DECISIONS.md` line, so the format cannot quietly grow back into prose. Replaces the same-day decision to compress multi-part entries onto one dense line, which was terse but unscannable.
-- **2026-09-12 — Entries added to `IMAGINE.md` carry a date, an owner, and one line saying what would make them real.** Plus a separation of Don's framing from any agent analysis, where both exist. Retiring an entry is the normal outcome, not a failure. Entries predating the rule are distillations with git history behind them and are not retro-fitted.
+- **2026-09-12 — A change that cannot be described in three plain steps needs the PM's eyes more, not less.** The PR says so and carries the label. An agent unable to explain it without jargon has found something worth his attention.
+- **2026-09-12 — Spine entries use labelled slots from a closed set: Now · Later · Blocked · Trigger · Never.** The PM: *"minimize prose, maximize formatting for readability and differentiation."* One line when one line says it; slots when an entry carries more. **The closed vocabulary is the anti-sprawl mechanism** — a thing fitting none of the five slots is either systems-doc detail or a `DECISIONS.md` line, so the format cannot quietly grow back into prose. Replaces the same-day decision to compress multi-part entries onto one dense line, which was terse but unscannable.
+- **2026-09-12 — Entries added to `IMAGINE.md` carry a date, an owner, and one line saying what would make them real.** Plus a separation of the PM's framing from any agent analysis, where both exist. Retiring an entry is the normal outcome, not a failure. Entries predating the rule are distillations with git history behind them and are not retro-fitted.
