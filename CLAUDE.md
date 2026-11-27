@@ -31,7 +31,7 @@ The knowledge store is the MCP server at `socialus.org/api/knowledge/mcp` (tools
 | Opening or merging a PR | `how` reviewing and `how` shipping |
 | Planning, or writing a scenario or ticket | `how` planning |
 | Writing or trimming docs | `how` docs |
-| Any work, first | `search` "direction": a ruling tagged `[direction replaces=…]` is the path forward. An older ruling about what it replaces is retired on sight with one line on what it becomes; rulings that protect members (privacy, safety, legal, money) are never retired by a direction. |
+| Any work, first | `git grep '\[direction'` in socialus-plan: a ruling tagged `[direction replaces=…]` is the path forward. An older ruling about what it replaces is retired on sight with one line on what it becomes; rulings that protect members (privacy, safety, legal, money) are never retired by a direction. |
 | Two live records conflict | `get`, `history`, `why`. Build to the newer, then `propose` retiring the older with the reason so one remains. A refusal is kept as a flag for the PM. |
 | "What did we decide back then", or how an idea changed | `as_of`, `concept` |
 | Judging a new tool or method | `review_method` |
