@@ -10,7 +10,8 @@ Each rule has one home; this file points, it does not repeat.
 
 | For | Read |
 |---|---|
-| How to talk to the PM, and how to decide (decision rule, decision rights, who checks what, the five kinds of work) | `process/PIPELINE.md` |
+| How to talk to the PM | the store: `get practice.talk-to-the-pm`, before your first reply to the PM or to Dispatch |
+| How to decide (decision rule, decision rights, who checks what, the five kinds of work) | `process/PIPELINE.md` |
 | What may never be broken, and the test for adding one | the store: `live` for how-deciding, ci-and-deploys, words-and-voice, moderation-and-reports, privacy (absolutes come first); the test is `practice.absolute-needs-four-harms` |
 | Handling a report or incident, going live | `operations/` (the safety runbook, the go-live prompt) |
 | Whether something may be a file at all | `docs.tsv`. Content that is a rule, decision, practice or how-to goes in the store; a new `.md` fails lint unless listed there with why and a review-by date. |
